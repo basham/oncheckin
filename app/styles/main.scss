@@ -89,3 +89,13 @@ body {
         border-bottom: 0;
     }
 }
+
+/* angularfire:app styles/angularfire.css */
+.hide { /* used by ngcloakauth.js */
+  display: none;
+}
+
+.error { /* used by views/login.html */
+  color: red;
+}
+/* angularfire:app(end) styles/angularfire.css */

@@ -1,0 +1,58 @@
+<!-- wait for auth to resolve (avoid flashing login page before redirect -->
+<div ng-cloak-auth class="row">
+    <div class="col-md-12">
+
+        <legend>You need to add a logout button!</legend>
+<pre><code>
+  // like this
+  &lt;p&gt;&lt;button class="btn btn-default" ng-click="logout()"&gt;log out&lt;/button&gt;&lt;/p&gt;
+
+  // and a controller to run it
+  function($scope, simpleLogin) {
+    $scope.logout = simpleLogin.logout;
+  }
+</code></pre>
+
+        <!-- examples for fun and profit -->
+        <!--<div ng-show-auth="login">{{auth.user|json}}</div>-->
+        <!--<div ng-show-auth="error,logout">Logged out</div>-->
+        <!--<div ng-show-auth="error">{{auth.error}}</div>-->
+        
+
+        
+        <p>&nbsp;</p>
+        <form role="form">
+            <fielset>
+                <legend>Email/Password</legend>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>email</label>
+                            <input class="form-control" type="text" ng-model="email" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>password</label>
+                            <input class="form-control" type="password" ng-model="pass" />
+                        </div>
+
+                        <div class="form-group" ng-show="createMode">
+                            <label>confirm pass</label>
+                            <input class="form-control" type="password" ng-model="confirm" />
+                        </div>
+
+                        <button class="btn btn-primary" ng-click="loginPassword()" ng-hide="createMode">Log In</button>
+                        <button class="btn btn-default" ng-click="createMode = true" ng-hide="createMode">Register</button>
+                        <button class="btn btn-success" ng-cloak ng-show="createMode" ng-click="createAccount()">Create Account</button>
+                        <button class="btn btn-default" ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
+                    </div>
+                </div>
+            </fielset>
+        </form>
+        
+
+        <p ng-show="err" class="error">{{err}}</p>
+    </div>
+</div>
+
