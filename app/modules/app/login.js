@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('LoginController', function($scope, simpleLogin, $location) {
+  .controller('AppLoginCtrl', function($scope, simpleLogin, $location) {
     $scope.pass = null;
     $scope.err = null;
     $scope.email = null;
