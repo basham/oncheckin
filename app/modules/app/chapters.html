@@ -1,9 +1,12 @@
-<div ng-repeat="chapter in chapters">
+<div ng-repeat="(chapterKey, chapter) in chapters">
   <h1>{{chapter.name}} ({{chapter.shortName}})</h1>
+  <div>
+    <a class="btn btn-primary" ng-click="addEvent(chapterKey)">New Event</a>
+  </div>
   <div>
     <span
       ng-pluralize
-      count="{{chapter.events | keyCount}}"
+      count="(chapter.events | keyCount)"
       when="{
         '0': 'No events',
         'one': '1 event',
@@ -11,14 +14,25 @@
     &bull;
     <span
       ng-pluralize
-      count="{{chapter.participants | keyCount}}"
+      count="(chapter.participants | keyCount)"
       when="{
         '0': 'No participants',
         'one': '1 participant',
         'other': '{} participants'}"></span>
   </div>
-  <div ng-repeat="(eventKey, event) in chapter.events" ng-init="event = events[eventKey]">
-    <strong>{{event.name}}</strong> {{event.date}} &bull; {{(event.participants | keys).length}} participants
+  <div ng-repeat="(eventKey, event) in chapter.events">
+    <strong>{{events[eventKey].name}}</strong>
+    {{events[eventKey].date}}
+    &bull;
+    <span
+      ng-pluralize
+      count="(events[eventKey].participants | keyCount)"
+      when="{
+        '0': 'No participants',
+        'one': '1 participant',
+        'other': '{} participants'}"></span>
+    &bull;
+    <a ng-click="removeEvent(eventKey, chapterKey)" href>Remove event</a>
   </div>
 
 </div>
