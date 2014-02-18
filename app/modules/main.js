@@ -8,7 +8,8 @@ angular.module('oncheckinApp', [
   'ui.router',
   'angularfire.firebase',
   'angularfire.login',
-  'firebase'
+  'firebase',
+  'angular-underscore'
 ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider) {
     /*
@@ -37,9 +38,10 @@ angular.module('oncheckinApp', [
         templateUrl: 'modules/app.html',
         controller: 'AppCtrl'
       })
-      .state('app.index', {
+      .state('app.chapters', {
         url: '/',
-        templateUrl: 'modules/app/index.html'
+        templateUrl: 'modules/app/chapters.html',
+        controller: 'AppChaptersCtrl'
       })
       .state('app.login', {
         url: '/login',

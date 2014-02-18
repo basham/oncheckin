@@ -1,0 +1,24 @@
+<div ng-repeat="chapter in chapters">
+  <h1>{{chapter.name}} ({{chapter.shortName}})</h1>
+  <div>
+    <span
+      ng-pluralize
+      count="{{chapter.events | keyCount}}"
+      when="{
+        '0': 'No events',
+        'one': '1 event',
+        'other': '{} events'}"></span>
+    &bull;
+    <span
+      ng-pluralize
+      count="{{chapter.participants | keyCount}}"
+      when="{
+        '0': 'No participants',
+        'one': '1 participant',
+        'other': '{} participants'}"></span>
+  </div>
+  <div ng-repeat="(eventKey, event) in chapter.events" ng-init="event = events[eventKey]">
+    <strong>{{event.name}}</strong> {{event.date}} &bull; {{(event.participants | keys).length}} participants
+  </div>
+
+</div>
