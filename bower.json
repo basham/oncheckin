@@ -19,7 +19,8 @@
     "underscore": "~1.6.0",
     "angular-bootstrap": "~0.10.0",
     "momentjs": "~2.5.1",
-    "angular-moment": "~0.6.2"
+    "angular-moment": "~0.6.2",
+    "firebase-util": "firebase/firebase-util"
   },
   "devDependencies": {
     "angular-mocks": "1.2.6",
