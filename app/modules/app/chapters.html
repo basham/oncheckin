@@ -1,7 +1,8 @@
-<div ng-repeat="(chapterKey, chapter) in chapters">
+<div ng-repeat="chapter in chapters | orderByPriority">
   <h1>{{chapter.name}} ({{chapter.shortName}})</h1>
   <div>
-    <a class="btn btn-primary" ng-click="addEvent(chapterKey)">New Event</a>
+    <datepicker ng-model="newEvent.date" show-weeks="false"></datepicker>
+    <a class="btn btn-primary" ng-click="addEvent(chapter.$id)">New Event</a>
   </div>
   <div>
     <span
@@ -20,19 +21,22 @@
         'one': '1 participant',
         'other': '{} participants'}"></span>
   </div>
-  <div ng-repeat="(eventKey, event) in chapter.events">
-    <strong>{{events[eventKey].name}}</strong>
-    {{events[eventKey].date | date:'longDate'}}
+
+  <hr/>
+
+  <div ng-repeat="event in eventsByChapter[chapter.$id] | orderByPriority | orderBy:'-date'">
+    <strong>{{event.name}}</strong>
+    {{event.date | date:'mediumDate'}}
     &bull;
     <span
       ng-pluralize
-      count="(events[eventKey].participants | keyCount)"
+      count="(event.participants | keyCount)"
       when="{
         '0': 'No participants',
         'one': '1 participant',
         'other': '{} participants'}"></span>
     &bull;
-    <a ng-click="removeEvent(eventKey, chapterKey)" href>Remove event</a>
+    <a ng-click="removeEvent(event.$id, chapter.$id)" href>Remove event</a>
   </div>
 
 </div>

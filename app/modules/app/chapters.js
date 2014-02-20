@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppChaptersCtrl', function ($scope, $firebase, firebaseRef, Firebase) {
+  .controller('AppChaptersCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter) {
     
     // Grab the list of chapters.
     var chaptersRef = firebaseRef('chapters');
@@ -9,16 +9,19 @@ angular.module('oncheckinApp')
 
     // Initialize scope objects.
     $scope.chapters = $firebase(chaptersRef);
-    $scope.events = {};
+    $scope.eventsByChapter = {};
+    $scope.newEvent = { date: new Date() };
 
     $scope.addEvent = function(chapterKey) {
+      var date = dateFilter($scope.newEvent.date, 'yyyy-MM-dd');
       var chapterRef = firebaseRef('chapters/' + chapterKey);
       var newEventRef = eventsRef.push({
         name: 'Hash',
-        date: Firebase.ServerValue.TIMESTAMP,
+        date: date,
         chapter: chapterRef.name()
       });
-      chapterRef.child('events/' + newEventRef.name()).set(true);
+      newEventRef.setPriority(date);
+      chapterRef.child('events/' + newEventRef.name()).setWithPriority(true, date);
     };
 
     $scope.removeEvent = function(eventKey, chapterKey) {
@@ -27,17 +30,13 @@ angular.module('oncheckinApp')
     };
 
     // Iterate through each chapter once the data is available.
-    chaptersRef.on('value', function(chaptersSnap) {
+    chaptersRef.once('value', function(chaptersSnap) {
       chaptersSnap.forEach(function(chapterSnap) {
-        // Grab and store the data for each event.
-        chapterSnap.child('events').forEach(function(eventSnap) {
-          var eventId = eventSnap.name();
-          // Create the reference only if it's not already initialized.
-          if( angular.isUndefined($scope.events[eventId]) ) {
-            var eventRef = firebaseRef('events/' + eventId);
-            $scope.events[eventId] = $firebase(eventRef);
-          }
-        });
+        // Find all the events for each chapter.
+        var chapterEventsRef = chapterSnap.child('events').ref();
+        var eventsRef = firebaseRef('events');
+        var ref = Firebase.util.intersection(chapterEventsRef, eventsRef);
+        $scope.eventsByChapter[chapterSnap.name()] = $firebase(ref);
       });
     });
 

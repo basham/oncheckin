@@ -9,7 +9,10 @@ angular.module('oncheckinApp', [
   'angularfire.firebase',
   'angularfire.login',
   'firebase',
-  'angular-underscore'
+  'angular-underscore',
+  'ui.bootstrap',
+  'ui.bootstrap.tpls',
+  'angularMoment'
 ])
   .config(function ($routeProvider, $stateProvider, $urlRouterProvider) {
     /*
