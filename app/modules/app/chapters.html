@@ -22,7 +22,7 @@
   </div>
   <div ng-repeat="(eventKey, event) in chapter.events">
     <strong>{{events[eventKey].name}}</strong>
-    {{events[eventKey].date}}
+    {{events[eventKey].date | date:'longDate'}}
     &bull;
     <span
       ng-pluralize

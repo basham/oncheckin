@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppChaptersCtrl', function ($scope, $firebase, firebaseRef) {
+  .controller('AppChaptersCtrl', function ($scope, $firebase, firebaseRef, Firebase) {
     
     // Grab the list of chapters.
     var chaptersRef = firebaseRef('chapters');
@@ -15,7 +15,7 @@ angular.module('oncheckinApp')
       var chapterRef = firebaseRef('chapters/' + chapterKey);
       var newEventRef = eventsRef.push({
         name: 'Hash',
-        date: (new Date()).toString(),
+        date: Firebase.ServerValue.TIMESTAMP,
         chapter: chapterRef.name()
       });
       chapterRef.child('events/' + newEventRef.name()).set(true);
