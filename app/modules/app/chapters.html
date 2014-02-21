@@ -1,9 +1,21 @@
 <div ng-repeat="chapter in chapters | orderByPriority">
+  
   <h1>{{chapter.name}} ({{chapter.shortName}})</h1>
-  <div>
-    <datepicker ng-model="newEvent.date" show-weeks="false"></datepicker>
-    <a class="btn btn-primary" ng-click="addEvent(chapter.$id)">New Event</a>
-  </div>
+
+  <form ng-submit="addEvent(chapter.$id)">
+    <div class="form-group">
+      <label for="eventNameInput">Event Name</label>
+      <input id="eventNameInput" class="form-control" type="text" ng-model="newEvent.name" placeholder="Event name" required/>
+    </div>
+    <div class="form-group">
+      <label for="eventDateInput">Event Date</label>
+      <datepicker id="eventDateInput" ng-model="newEvent.date" show-weeks="false"></datepicker>
+    </div>
+    <button type="submit" class="btn btn-primary">New Event</button>
+  </form>
+
+  <hr/>
+
   <div>
     <span
       ng-pluralize

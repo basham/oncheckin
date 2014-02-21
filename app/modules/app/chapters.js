@@ -10,13 +10,13 @@ angular.module('oncheckinApp')
     // Initialize scope objects.
     $scope.chapters = $firebase(chaptersRef);
     $scope.eventsByChapter = {};
-    $scope.newEvent = { date: new Date() };
+    $scope.newEvent = { name: 'Hash', date: new Date() };
 
     $scope.addEvent = function(chapterKey) {
       var date = dateFilter($scope.newEvent.date, 'yyyy-MM-dd');
       var chapterRef = firebaseRef('chapters/' + chapterKey);
       var newEventRef = eventsRef.push({
-        name: 'Hash',
+        name: $scope.newEvent.name,
         date: date,
         chapter: chapterRef.name()
       });
