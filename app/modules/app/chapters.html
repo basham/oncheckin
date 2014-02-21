@@ -30,8 +30,8 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="participantAliasNameInput">Hash Name</label>
-      <input id="participantAliasNameInput" class="form-control" type="text" ng-model="newParticipant.aliasName" placeholder="{{newParticipant.suggestedAliasName}}"/>
+      <label for="participantAliasInput">Hash Name</label>
+      <input id="participantAliasInput" class="form-control" type="text" ng-model="newParticipant.alias" placeholder="{{newParticipant.suggestedAlias}}"/>
     </div>
     <button type="submit" class="btn btn-primary">Add Participant</button>
   </form>
@@ -71,6 +71,23 @@
         'other': '{} participants'}"></span>
     &bull;
     <a ng-click="removeEvent(event.$id, chapter.$id)" href>Remove event</a>
+  </div>
+
+  <hr/>
+
+  <div ng-repeat="participant in participantsByChapter[chapter.$id] | orderByPriority">
+    <strong>{{participant | hashName}}</strong>
+    {{participant.firstName}} {{participant.lastName}}
+    &bull;
+    <span
+      ng-pluralize
+      count="(participant.events | keyCount)"
+      when="{
+        '0': 'No events',
+        'one': '1 event',
+        'other': '{} events'}"></span>
+    &bull;
+    <a ng-click="removeParticipant(participant.$id, chapter.$id)" href>Remove participant</a>
   </div>
 
 </div>

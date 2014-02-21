@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppChaptersCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter) {
+  .controller('AppChaptersCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter, hashNameFilter) {
     
     // Grab the list of chapters.
     var chaptersRef = firebaseRef('chapters');
@@ -11,8 +11,9 @@ angular.module('oncheckinApp')
     // Initialize scope objects.
     $scope.chapters = $firebase(chaptersRef);
     $scope.eventsByChapter = {};
+    $scope.participantsByChapter = {};
     $scope.newEvent = { name: 'Hash', date: new Date() };
-    $scope.newParticipant = {};
+    $scope.newParticipant = { firstName: '', lastName: '', alias: '' };
 
     $scope.addEvent = function(chapterKey) {
       // Grab ref to the chapter.
@@ -44,7 +45,7 @@ angular.module('oncheckinApp')
       var newParticipantRef = participantsRef.push({
         firstName: $scope.newParticipant.firstName,
         lastName: $scope.newParticipant.lastName,
-        aliasName: $scope.newParticipant.aliasName,
+        alias: $scope.newParticipant.alias,
         chapter: chapterRef.name()
       });
       // Set the priority.
@@ -54,19 +55,30 @@ angular.module('oncheckinApp')
       chapterRef.child('participants/' + newParticipantRef.name()).setWithPriority(true, priority);
     };
 
-    $scope.$watch('newParticipant.firstName', function(firstName) {
-      var hasFirstName = angular.isString(firstName) && firstName.length;
-      $scope.newParticipant.suggestedAliasName = hasFirstName ? 'Just ' + firstName : '';
+    $scope.removeParticipant = function(participantKey, chapterKey) {
+      firebaseRef('chapters/' + chapterKey + '/participants/' + participantKey).remove();
+      firebaseRef('participants/' + participantKey).remove();
+    };
+
+    $scope.$watch('newParticipant.firstName', function() {
+      $scope.newParticipant.suggestedAlias = hashNameFilter($scope.newParticipant);
     });
 
     // Iterate through each chapter once the data is available.
     chaptersRef.once('value', function(chaptersSnap) {
       chaptersSnap.forEach(function(chapterSnap) {
+
         // Find all the events for each chapter.
         var chapterEventsRef = chapterSnap.child('events').ref();
         var eventsRef = firebaseRef('events');
-        var ref = Firebase.util.intersection(chapterEventsRef, eventsRef);
-        $scope.eventsByChapter[chapterSnap.name()] = $firebase(ref);
+        var eRef = Firebase.util.intersection(chapterEventsRef, eventsRef);
+        $scope.eventsByChapter[chapterSnap.name()] = $firebase(eRef);
+
+        // Find all the participants for each chapter.
+        var chapterParticipantsRef = chapterSnap.child('participants').ref();
+        var participantsRef = firebaseRef('participants');
+        var pRef = Firebase.util.intersection(chapterParticipantsRef, participantsRef);
+        $scope.participantsByChapter[chapterSnap.name()] = $firebase(pRef);
       });
     });
 
