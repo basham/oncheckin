@@ -1,7 +1,8 @@
 <div ng-repeat="chapter in chapters | orderByPriority">
-  
+
   <h1>{{chapter.name}} ({{chapter.shortName}})</h1>
 
+  <h2>New Event</h2>
   <form ng-submit="addEvent(chapter.$id)">
     <div class="form-group">
       <label for="eventNameInput">Event Name</label>
@@ -11,7 +12,28 @@
       <label for="eventDateInput">Event Date</label>
       <datepicker id="eventDateInput" ng-model="newEvent.date" show-weeks="false"></datepicker>
     </div>
-    <button type="submit" class="btn btn-primary">New Event</button>
+    <button type="submit" class="btn btn-primary">Add Event</button>
+  </form>
+
+  <hr/>
+
+  <h2>New Participant</h2>
+  <form ng-submit="addParticipant(chapter.$id)">
+    <div class="form-group form-inline">
+      <div class="form-group">
+        <label for="participantFirstNameInput">First Name</label>
+        <input id="participantFirstNameInput" class="form-control" type="text" ng-model="newParticipant.firstName"/>
+      </div>
+      <div class="form-group">
+        <label for="participantLastNameInput">Last Name</label>
+        <input id="participantLastNameInput" class="form-control" type="text" ng-model="newParticipant.lastName"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="participantAliasNameInput">Hash Name</label>
+      <input id="participantAliasNameInput" class="form-control" type="text" ng-model="newParticipant.aliasName" placeholder="{{newParticipant.suggestedAliasName}}"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Participant</button>
   </form>
 
   <hr/>
