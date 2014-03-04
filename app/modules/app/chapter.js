@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter, hashNameFilter, $modal, $stateParams) {
+  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter, $modal, $stateParams) {
     
     // Grab the list of chapters.
     var chapterRef = firebaseRef('chapters/' + $stateParams.id);
@@ -9,17 +9,10 @@ angular.module('oncheckinApp')
     var eventsRef = firebaseRef('events');
     var participantsRef = firebaseRef('participants');
 
-
     // Initialize scope objects.
-    $scope.chapters = $firebase(chaptersRef);
-    $scope.eventsByChapter = {};
-    $scope.participantsByChapter = {};
-    $scope.newEvent = { name: 'Hash', date: new Date() };
-    $scope.newParticipant = { firstName: '', lastName: '', alias: '' };
-
+    $scope.chapter = $firebase(chapterRef);
     $scope.participants = $firebase(participantsRef);
     $scope.selectedParticipant = null;
-    $scope.chapter = $firebase(chapterRef);
 
     // Find all the events for each chapter.
     var chapterEventsRef = chapterRef.child('events');
@@ -36,31 +29,10 @@ angular.module('oncheckinApp')
       firebaseRef('events/' + eventKey).remove();
     };
 
-    $scope.addParticipant = function(chapterKey) {
-      // Grab ref to the chapter.
-      var chapterRef = firebaseRef('chapters/' + chapterKey);
-      // Create the new participant.
-      var newParticipantRef = participantsRef.push({
-        firstName: $scope.newParticipant.firstName,
-        lastName: $scope.newParticipant.lastName,
-        alias: $scope.newParticipant.alias,
-        chapter: chapterRef.name()
-      });
-      // Set the priority.
-      var priority = [$scope.newParticipant.lastName, $scope.newParticipant.firstName].join(', ');
-      newParticipantRef.setPriority(priority);
-      // Link the participant to the chapter.
-      chapterRef.child('participants/' + newParticipantRef.name()).setWithPriority(true, priority);
-    };
-
     $scope.removeParticipant = function(participantKey, chapterKey) {
       firebaseRef('chapters/' + chapterKey + '/participants/' + participantKey).remove();
       firebaseRef('participants/' + participantKey).remove();
     };
-
-    $scope.$watch('newParticipant.firstName', function() {
-      $scope.newParticipant.suggestedAlias = hashNameFilter($scope.newParticipant);
-    });
 
     $scope.selectParticipant = function() {
       console.log('woo', $scope.selectedParticipant);
@@ -82,11 +54,11 @@ angular.module('oncheckinApp')
       chapterRef.child('events/' + newEventRef.name()).setWithPriority(true, priority);
     }
 
-    $scope.openNewEventModal = function() {
+    $scope.openAddEventModal = function() {
       $modal
         .open({
-          templateUrl: 'modules/modal/new-event.html',
-          controller: 'ModalNewEventCtrl',
+          templateUrl: 'modules/modal/add-event.html',
+          controller: 'ModalAddEventCtrl',
           resolve: {
             chapter: function() {
               return $scope.chapter;
@@ -95,6 +67,37 @@ angular.module('oncheckinApp')
         })
         .result.then(function(model) {
           addEvent(model);
+        });
+    };
+
+    function addParticipant(model) {
+      // Create the new participant.
+      var newParticipantRef = participantsRef.push({
+        firstName: model.firstName,
+        lastName: model.lastName,
+        alias: model.alias,
+        chapter: chapterRef.name()
+      });
+      // Set the priority.
+      var priority = [model.lastName, model.firstName].join(', ');
+      newParticipantRef.setPriority(priority);
+      // Link the participant to the chapter.
+      chapterRef.child('participants/' + newParticipantRef.name()).setWithPriority(true, priority);
+    }
+
+    $scope.openAddParticipantModal = function() {
+      $modal
+        .open({
+          templateUrl: 'modules/modal/add-participant.html',
+          controller: 'ModalAddParticipantCtrl',
+          resolve: {
+            chapter: function() {
+              return $scope.chapter;
+            }
+          }
+        })
+        .result.then(function(model) {
+          addParticipant(model);
         });
     };
 
