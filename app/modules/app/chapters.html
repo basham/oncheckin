@@ -1,3 +1,10 @@
+<input
+  type="text" class="form-control"
+  ng-model="selectedParticipant"
+  typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
+  typeahead-template-url="modules/typeahead.participant.html"
+  typeahead-on-select="selectParticipant()"/>
+
 <div ng-repeat="chapter in chapters | orderByPriority">
 
   <h1>{{chapter.name}} ({{chapter.shortName}})</h1>

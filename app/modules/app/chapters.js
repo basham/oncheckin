@@ -15,6 +15,9 @@ angular.module('oncheckinApp')
     $scope.newEvent = { name: 'Hash', date: new Date() };
     $scope.newParticipant = { firstName: '', lastName: '', alias: '' };
 
+    $scope.participants = $firebase(participantsRef);
+    $scope.selectedParticipant = null;
+
     $scope.addEvent = function(chapterKey) {
       // Grab ref to the chapter.
       var chapterRef = firebaseRef('chapters/' + chapterKey);
@@ -81,5 +84,9 @@ angular.module('oncheckinApp')
         $scope.participantsByChapter[chapterSnap.name()] = $firebase(pRef);
       });
     });
+
+    $scope.selectParticipant = function() {
+      console.log('woo', $scope.selectedParticipant);
+    };
 
   });

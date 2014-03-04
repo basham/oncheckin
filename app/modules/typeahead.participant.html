@@ -1,0 +1,6 @@
+<a>
+    <span bind-html-unsafe="match.model | hashName | typeaheadHighlight:query"></span>
+    &bull;
+    <span bind-html-unsafe="match.model.firstName | typeaheadHighlight:query"></span>
+    <span bind-html-unsafe="match.model.lastName | typeaheadHighlight:query"></span>
+</a>
