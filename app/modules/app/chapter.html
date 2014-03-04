@@ -36,7 +36,9 @@
   <hr/>
 
   <div ng-repeat="event in chapterEvents | orderByPriority | orderBy:'-date'">
-    <strong>{{event.name}}</strong>
+    <a ui-sref="app.event({ id: event.$id })">
+      <strong>{{event.name}}</strong>
+    </a>
     {{event.date | date:'mediumDate'}}
     &bull;
     <span

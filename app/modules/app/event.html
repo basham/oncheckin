@@ -1,0 +1,32 @@
+<a ui-sref="app.chapter({ id: event.chapter })">{{chapter.name}} ({{chapter.shortName}})</a>
+<h1>{{event.name}}</h1>
+<p>{{event.date | date:'longDate'}}</p>
+
+<hr/>
+
+<div>
+  <span
+    ng-pluralize
+    count="(chapter.events | keyCount)"
+    when="{
+      '0': 'No events',
+      'one': '1 event',
+      'other': '{} events'}"></span>
+  &bull;
+  <span
+    ng-pluralize
+    count="(chapter.participants | keyCount)"
+    when="{
+      '0': 'No participants',
+      'one': '1 participant',
+      'other': '{} participants'}"></span>
+</div>
+
+<hr/>
+
+<input
+  type="text" class="form-control"
+  ng-model="selectedParticipant"
+  typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
+  typeahead-template-url="modules/typeahead/participant.html"
+  typeahead-on-select="selectParticipant()"/>
