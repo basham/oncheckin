@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter, hashNameFilter) {
+  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter, hashNameFilter, $modal, $stateParams) {
     
     // Grab the list of chapters.
+    var chapterRef = firebaseRef('chapters/' + $stateParams.id);
     var chaptersRef = firebaseRef('chapters');
     var eventsRef = firebaseRef('events');
     var participantsRef = firebaseRef('participants');
+
 
     // Initialize scope objects.
     $scope.chapters = $firebase(chaptersRef);
@@ -17,24 +19,17 @@ angular.module('oncheckinApp')
 
     $scope.participants = $firebase(participantsRef);
     $scope.selectedParticipant = null;
+    $scope.chapter = $firebase(chapterRef);
 
-    $scope.addEvent = function(chapterKey) {
-      // Grab ref to the chapter.
-      var chapterRef = firebaseRef('chapters/' + chapterKey);
-      // Flatten the date object into a string.
-      var date = dateFilter($scope.newEvent.date, 'yyyy-MM-dd');
-      // Create the new event.
-      var newEventRef = eventsRef.push({
-        name: $scope.newEvent.name,
-        date: date,
-        chapter: chapterRef.name()
-      });
-      // Set the priority.
-      var priority = date;
-      newEventRef.setPriority(priority);
-      // Link the event to the chapter.
-      chapterRef.child('events/' + newEventRef.name()).setWithPriority(true, priority);
-    };
+    // Find all the events for each chapter.
+    var chapterEventsRef = chapterRef.child('events');
+    var eRef = Firebase.util.intersection(chapterEventsRef, eventsRef);
+    $scope.chapterEvents = $firebase(eRef);
+
+    // Find all the participants for each chapter.
+    var chapterParticipantsRef = chapterRef.child('participants');
+    var pRef = Firebase.util.intersection(chapterParticipantsRef, participantsRef);
+    $scope.chapterParticipants = $firebase(pRef);
 
     $scope.removeEvent = function(eventKey, chapterKey) {
       firebaseRef('chapters/' + chapterKey + '/events/' + eventKey).remove();
@@ -67,26 +62,40 @@ angular.module('oncheckinApp')
       $scope.newParticipant.suggestedAlias = hashNameFilter($scope.newParticipant);
     });
 
-    // Iterate through each chapter once the data is available.
-    chaptersRef.once('value', function(chaptersSnap) {
-      chaptersSnap.forEach(function(chapterSnap) {
-
-        // Find all the events for each chapter.
-        var chapterEventsRef = chapterSnap.child('events').ref();
-        var eventsRef = firebaseRef('events');
-        var eRef = Firebase.util.intersection(chapterEventsRef, eventsRef);
-        $scope.eventsByChapter[chapterSnap.name()] = $firebase(eRef);
-
-        // Find all the participants for each chapter.
-        var chapterParticipantsRef = chapterSnap.child('participants').ref();
-        var participantsRef = firebaseRef('participants');
-        var pRef = Firebase.util.intersection(chapterParticipantsRef, participantsRef);
-        $scope.participantsByChapter[chapterSnap.name()] = $firebase(pRef);
-      });
-    });
-
     $scope.selectParticipant = function() {
       console.log('woo', $scope.selectedParticipant);
+    };
+
+    function addEvent(model) {
+      // Flatten the date object into a string.
+      var date = dateFilter(model.date, 'yyyy-MM-dd');
+      // Create the new event.
+      var newEventRef = eventsRef.push({
+        name: model.name,
+        date: date,
+        chapter: chapterRef.name()
+      });
+      // Set the priority.
+      var priority = date;
+      newEventRef.setPriority(priority);
+      // Link the event to the chapter.
+      chapterRef.child('events/' + newEventRef.name()).setWithPriority(true, priority);
+    }
+
+    $scope.openNewEventModal = function() {
+      $modal
+        .open({
+          templateUrl: 'modules/modal/new-event.html',
+          controller: 'ModalNewEventCtrl',
+          resolve: {
+            chapter: function() {
+              return $scope.chapter;
+            }
+          }
+        })
+        .result.then(function(model) {
+          addEvent(model);
+        });
     };
 
   });

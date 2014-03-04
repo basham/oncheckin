@@ -1,4 +1,27 @@
 <a ui-sref="app.chapters">All chapters</a>
+<h1>{{chapter.name}} ({{chapter.shortName}})</h1>
+
+<a class="btn btn-default" ng-click="openNewEventModal()">New event</a>
+
+<hr/>
+
+<div>
+  <span
+    ng-pluralize
+    count="(chapter.events | keyCount)"
+    when="{
+      '0': 'No events',
+      'one': '1 event',
+      'other': '{} events'}"></span>
+  &bull;
+  <span
+    ng-pluralize
+    count="(chapter.participants | keyCount)"
+    when="{
+      '0': 'No participants',
+      'one': '1 participant',
+      'other': '{} participants'}"></span>
+</div>
 
 <hr/>
 
@@ -6,25 +29,8 @@
   type="text" class="form-control"
   ng-model="selectedParticipant"
   typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
-  typeahead-template-url="modules/typeahead.participant.html"
+  typeahead-template-url="modules/typeahead/participant.html"
   typeahead-on-select="selectParticipant()"/>
-
-<div ng-repeat="chapter in chapters | orderByPriority">
-
-  <h1>{{chapter.name}} ({{chapter.shortName}})</h1>
-
-  <h2>New Event</h2>
-  <form ng-submit="addEvent(chapter.$id)">
-    <div class="form-group">
-      <label for="eventNameInput">Event Name</label>
-      <input id="eventNameInput" class="form-control" type="text" ng-model="newEvent.name" placeholder="Event name" required/>
-    </div>
-    <div class="form-group">
-      <label for="eventDateInput">Event Date</label>
-      <datepicker id="eventDateInput" ng-model="newEvent.date" show-weeks="false"></datepicker>
-    </div>
-    <button type="submit" class="btn btn-primary">Add Event</button>
-  </form>
 
   <hr/>
 
@@ -49,27 +55,7 @@
 
   <hr/>
 
-  <div>
-    <span
-      ng-pluralize
-      count="(chapter.events | keyCount)"
-      when="{
-        '0': 'No events',
-        'one': '1 event',
-        'other': '{} events'}"></span>
-    &bull;
-    <span
-      ng-pluralize
-      count="(chapter.participants | keyCount)"
-      when="{
-        '0': 'No participants',
-        'one': '1 participant',
-        'other': '{} participants'}"></span>
-  </div>
-
-  <hr/>
-
-  <div ng-repeat="event in eventsByChapter[chapter.$id] | orderByPriority | orderBy:'-date'">
+  <div ng-repeat="event in chapterEvents | orderByPriority | orderBy:'-date'">
     <strong>{{event.name}}</strong>
     {{event.date | date:'mediumDate'}}
     &bull;
@@ -86,7 +72,7 @@
 
   <hr/>
 
-  <div ng-repeat="participant in participantsByChapter[chapter.$id] | orderByPriority">
+  <div ng-repeat="participant in chapterParticipants | orderByPriority">
     <strong>{{participant | hashName}}</strong>
     {{participant.firstName}} {{participant.lastName}}
     &bull;
@@ -100,5 +86,3 @@
     &bull;
     <a ng-click="removeParticipant(participant.$id, chapter.$id)" href>Remove participant</a>
   </div>
-
-</div>
