@@ -43,7 +43,7 @@
     &bull;
     <span
       ng-pluralize
-      count="(event.participants | keyCount)"
+      count="(event.attendances | keyCount)"
       when="{
         '0': 'No participants',
         'one': '1 participant',
@@ -60,7 +60,7 @@
     &bull;
     <span
       ng-pluralize
-      count="(participant.events | keyCount)"
+      count="(participant.attendances | keyCount)"
       when="{
         '0': 'No events',
         'one': '1 event',

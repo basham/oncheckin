@@ -1,28 +1,18 @@
 <a ui-sref="app.chapter({ id: event.chapter })">{{chapter.name}}</a>
 <h1>{{event.name}}</h1>
-<p>{{event.date | date:'longDate'}}</p>
-
-<button class="btn btn-default" ng-click="removeEvent()">Remove Event</button>
-
-<hr/>
-
-<div>
-  <span
-    ng-pluralize
-    count="(chapter.events | keyCount)"
-    when="{
-      '0': 'No events',
-      'one': '1 event',
-      'other': '{} events'}"></span>
+<p>
+  {{event.date | date:'longDate'}}
   &bull;
   <span
-    ng-pluralize
-    count="(chapter.participants | keyCount)"
-    when="{
-      '0': 'No participants',
-      'one': '1 participant',
-      'other': '{} participants'}"></span>
-</div>
+  ng-pluralize
+  count="(event.attendances | keyCount)"
+  when="{
+    '0': 'No attendees',
+    'one': '1 attendee',
+    'other': '{} attendees'}"></span>
+</p>
+
+<button class="btn btn-default" ng-click="removeEvent()">Remove Event</button>
 
 <hr/>
 
@@ -32,3 +22,23 @@
   typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
   typeahead-template-url="modules/typeahead/participant.html"
   typeahead-on-select="selectParticipant()"/>
+
+<hr/>
+
+<h2>Hares</h2>
+<ul>
+  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
+    {{attendance.participant | hashName}}
+    &bull;
+    <a href ng-click="setHost(attendance, false)">remove hare</a>
+  </li>
+</ul>
+
+<h2>Participants</h2>
+<ul>
+  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
+    {{attendance.participant | hashName}}
+    &bull;
+    <a href ng-click="setHost(attendance, true)">make hare</a>
+  </li>
+</ul>

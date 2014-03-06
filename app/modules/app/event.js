@@ -4,11 +4,36 @@ angular.module('oncheckinApp')
   .controller('AppEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal) {
     
     // Grab the event.
-    var eventRef = firebaseRef('events/' + $stateParams.id);
+    var eventRef = firebaseRef('events').child($stateParams.id);
+    var participantsRef = firebaseRef('participants');
+    var attendancesRef = firebaseRef('attendances');
+
+    // Join the event's attendance and participant data.
+    var eventAttendancesRef = eventRef.child('attendances');
+    var participantAttendancesRef = Firebase.util.intersection(
+      eventAttendancesRef,
+      {
+        ref: attendancesRef,
+        keyMap: {
+          host: 'host',
+          participant: participantsRef
+        }
+      });
+    $scope.attendances = $firebase(participantAttendancesRef);
 
     eventRef.once('value', function(snap) {
-      var chapterRef = firebaseRef('chapters/' + snap.val().chapter);
+      var chapterRef = firebaseRef('chapters').child(snap.val().chapter);
       $scope.chapter = $firebase(chapterRef);
+
+      // Find all the participants for each chapter.
+      var chapterParticipantsRef = chapterRef.child('participants');
+      var pRef = Firebase.util.intersection(chapterParticipantsRef, participantsRef);
+      $scope.participants = $firebase(pRef);
+
+      $scope.selectParticipant = function() {
+        console.log('woo', $scope.selectedParticipant);
+        addAttendance($scope.selectedParticipant);
+      };
 
       $scope.removeEvent = function() {
         $modal
@@ -28,6 +53,32 @@ angular.module('oncheckinApp')
           });
       };
     });
+
+    function addAttendance(participant) {
+      // Get attendance reference.
+      var attendancesRef = firebaseRef('attendances');
+      var participantRef = firebaseRef('participants').child(participant.$id);
+      // Create attendance.
+      var isHost = false;
+      var newAttendanceRef = attendancesRef.push({
+        event: eventRef.name(),
+        participant: participantRef.name(),
+        host: isHost
+      });
+      // Set priority to host. Priority can't be boolean.
+      var priority = isHost ? 1 : 0;
+      newAttendanceRef.setPriority(priority);
+      // Add foreign references.
+      eventRef.child('attendances').child(newAttendanceRef.name()).setWithPriority(true, priority);
+      participantRef.child('attendances').child(newAttendanceRef.name()).setWithPriority(true, priority);
+      // Clear typeahead selection.
+      $scope.selectedParticipant = null;
+    }
+
+    $scope.setHost = function(attendance, value) {
+      var attendanceRef = firebaseRef('attendances').child(attendance.$id);
+      attendanceRef.child('host').set(value);
+    };
 
     // Initialize scope objects.
     $scope.event = $firebase(eventRef);
