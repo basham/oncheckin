@@ -1,6 +1,8 @@
-<a ui-sref="app.chapter({ id: event.chapter })">{{chapter.name}} ({{chapter.shortName}})</a>
+<a ui-sref="app.chapter({ id: event.chapter })">{{chapter.name}}</a>
 <h1>{{event.name}}</h1>
 <p>{{event.date | date:'longDate'}}</p>
+
+<button class="btn btn-default" ng-click="removeEvent()">Remove Event</button>
 
 <hr/>
 

@@ -1,0 +1,13 @@
+<form ng-submit="submit()">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+    <h4 class="modal-title">Remove Event on {{event.date | date:'mediumDate'}}</h4>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to remove the event called <em>{{event.name}}</em>? This cannot be undone.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Remove Event</button>
+  </div>
+</form>

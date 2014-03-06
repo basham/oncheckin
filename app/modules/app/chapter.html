@@ -1,5 +1,5 @@
 <a ui-sref="app.chapters">All chapters</a>
-<h1>{{chapter.name}} ({{chapter.shortName}})</h1>
+<h1>{{chapter.name}}</h1>
 
 <a class="btn btn-default" ng-click="openAddEventModal()">New Event</a>
 <a class="btn btn-default" ng-click="openAddParticipantModal()">New Participant</a>
@@ -48,8 +48,6 @@
         '0': 'No participants',
         'one': '1 participant',
         'other': '{} participants'}"></span>
-    &bull;
-    <a ng-click="removeEvent(event.$id, chapter.$id)" href>Remove event</a>
   </div>
 
   <hr/>
