@@ -56,6 +56,11 @@ angular.module('oncheckinApp', [
         templateUrl: 'modules/app/event.html',
         controller: 'AppEventCtrl'
       })
+      .state('app.participant', {
+        url: '/participants/:id',
+        templateUrl: 'modules/app/participant.html',
+        controller: 'AppParticipantCtrl'
+      })
       .state('app.login', {
         url: '/login',
         templateUrl: 'modules/app/login.html',

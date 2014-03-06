@@ -10,7 +10,7 @@ angular.module('oncheckinApp')
       var chapterRef = firebaseRef('chapters/' + snap.val().chapter);
       $scope.chapter = $firebase(chapterRef);
 
-      $scope.removeEvent = function(eventKey, chapterKey) {
+      $scope.removeEvent = function() {
         $modal
           .open({
             templateUrl: 'modules/modal/remove-event.html',

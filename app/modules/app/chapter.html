@@ -53,7 +53,9 @@
   <hr/>
 
   <div ng-repeat="participant in chapterParticipants | orderByPriority">
-    <strong>{{participant | hashName}}</strong>
+    <a ui-sref="app.participant({ id: participant.$id })">
+      <strong>{{participant | hashName}}</strong>
+    </a>
     {{participant.firstName}} {{participant.lastName}}
     &bull;
     <span
@@ -63,6 +65,4 @@
         '0': 'No events',
         'one': '1 event',
         'other': '{} events'}"></span>
-    &bull;
-    <a ng-click="removeParticipant(participant.$id, chapter.$id)" href>Remove participant</a>
   </div>

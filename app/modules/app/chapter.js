@@ -24,11 +24,6 @@ angular.module('oncheckinApp')
     var pRef = Firebase.util.intersection(chapterParticipantsRef, participantsRef);
     $scope.chapterParticipants = $firebase(pRef);
 
-    $scope.removeParticipant = function(participantKey, chapterKey) {
-      firebaseRef('chapters/' + chapterKey + '/participants/' + participantKey).remove();
-      firebaseRef('participants/' + participantKey).remove();
-    };
-
     $scope.selectParticipant = function() {
       console.log('woo', $scope.selectedParticipant);
     };
