@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter, $modal, $stateParams) {
+  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, dateFilter, $modal, $stateParams, $state) {
     
     // Grab the list of chapters.
     var chapterRef = firebaseRef('chapters/' + $stateParams.id);
@@ -42,6 +42,8 @@ angular.module('oncheckinApp')
       newEventRef.setPriority(priority);
       // Link the event to the chapter.
       chapterRef.child('events/' + newEventRef.name()).setWithPriority(true, priority);
+      // Redirect to event view.
+      $state.transitionTo('app.event', { id: newEventRef.name() });
     }
 
     $scope.openAddEventModal = function() {
@@ -73,6 +75,8 @@ angular.module('oncheckinApp')
       newParticipantRef.setPriority(priority);
       // Link the participant to the chapter.
       chapterRef.child('participants/' + newParticipantRef.name()).setWithPriority(true, priority);
+      // Redirect to participant view.
+      $state.transitionTo('app.participant', { id: newParticipantRef.name() });
     }
 
     $scope.openAddParticipantModal = function() {
