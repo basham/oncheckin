@@ -85,9 +85,16 @@ angular.module('oncheckinApp')
     $scope.removeAttendance = function(attendance) {
       var aId = attendance.$id;
       var pId = attendance['.id:participant'];
-      attendancesRef.child(aId).remove();
+      // Remove foreign key references to the attendance record.
       participantsRef.child(pId).child('attendances').child(aId).remove();
-      eventRef.child('attendances').child(aId).remove();
+      eventRef.child('attendances').child(aId).remove(function(error) {
+        if(error) {
+          return;
+        }
+        // Remove the attendance record only after
+        // the references have been successfully removed.
+        attendancesRef.child(aId).remove();
+      });
     };
 
   });
