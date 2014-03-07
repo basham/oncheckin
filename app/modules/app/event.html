@@ -28,7 +28,7 @@
 <h2>Hares</h2>
 <ul>
   <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
-    {{attendance.participant | hashName}}
+    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
     &bull;
     <a href ng-click="setHost(attendance, false)">remove hare</a>
     &bull;
@@ -39,7 +39,7 @@
 <h2>Participants</h2>
 <ul>
   <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
-    {{attendance.participant | hashName}}
+    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
     &bull;
     <a href ng-click="setHost(attendance, true)">make hare</a>
     &bull;
