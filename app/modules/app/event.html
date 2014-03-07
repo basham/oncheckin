@@ -31,6 +31,8 @@
     {{attendance.participant | hashName}}
     &bull;
     <a href ng-click="setHost(attendance, false)">remove hare</a>
+    &bull;
+    <a href ng-click="removeAttendance(attendance)">remove attendance</a>
   </li>
 </ul>
 
@@ -40,5 +42,7 @@
     {{attendance.participant | hashName}}
     &bull;
     <a href ng-click="setHost(attendance, true)">make hare</a>
+    &bull;
+    <a href ng-click="removeAttendance(attendance)">remove attendance</a>
   </li>
 </ul>

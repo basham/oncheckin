@@ -8,6 +8,9 @@ angular.module('oncheckinApp')
     var participantsRef = firebaseRef('participants');
     var attendancesRef = firebaseRef('attendances');
 
+    // Initialize scope objects.
+    $scope.event = $firebase(eventRef);
+
     // Join the event's attendance and participant data.
     var eventAttendancesRef = eventRef.child('attendances');
     var participantAttendancesRef = Firebase.util.intersection(
@@ -31,7 +34,6 @@ angular.module('oncheckinApp')
       $scope.participants = $firebase(pRef);
 
       $scope.selectParticipant = function() {
-        console.log('woo', $scope.selectedParticipant);
         addAttendance($scope.selectedParticipant);
       };
 
@@ -47,7 +49,7 @@ angular.module('oncheckinApp')
             }
           })
           .result.then(function(model) {
-            chapterRef.child('events/' + eventRef.name()).remove();
+            chapterRef.child('events').child(eventRef.name()).remove();
             eventRef.remove();
             $state.transitionTo('app.chapter', { id: chapterRef.name() });
           });
@@ -80,7 +82,12 @@ angular.module('oncheckinApp')
       attendanceRef.child('host').set(value);
     };
 
-    // Initialize scope objects.
-    $scope.event = $firebase(eventRef);
+    $scope.removeAttendance = function(attendance) {
+      var aId = attendance.$id;
+      var pId = attendance['.id:participant'];
+      attendancesRef.child(aId).remove();
+      participantsRef.child(pId).child('attendances').child(aId).remove();
+      eventRef.child('attendances').child(aId).remove();
+    };
 
   });
