@@ -26,4 +26,11 @@ angular.module('oncheckinApp')
       });
     $scope.attendances = $firebase(participantAttendancesRef);
 
+    // Get the chapter record.
+    eventRef.once('value', function(snap) {
+      var chapterId = snap.val().chapter;
+      var chapterRef = firebaseRef('chapters').child(chapterId);
+      $scope.chapter = $firebase(chapterRef);
+    });
+
   });
