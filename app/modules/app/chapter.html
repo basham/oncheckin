@@ -24,18 +24,9 @@
       'other': '{} participants'}"></span>
 </div>
 
-<hr/>
-
-<input
-  type="text" class="form-control"
-  ng-model="selectedParticipant"
-  typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
-  typeahead-template-url="modules/typeahead/participant.html"
-  typeahead-on-select="selectParticipant()"/>
-
   <hr/>
 
-  <div ng-repeat="event in chapterEvents | orderByPriority | orderBy:'-date'">
+  <div ng-repeat="event in events | orderByPriority | orderBy:'-date'">
     <a ui-sref="app.event({ id: event.$id })">
       <strong>{{event.name}}</strong>
     </a>
@@ -52,7 +43,7 @@
 
   <hr/>
 
-  <div ng-repeat="participant in chapterParticipants | orderByPriority">
+  <div ng-repeat="participant in participants | orderByPriority">
     <a ui-sref="app.participant({ id: participant.$id })">
       <strong>{{participant | hashName}}</strong>
     </a>

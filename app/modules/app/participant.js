@@ -1,18 +1,19 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppParticipantCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal) {
+  .controller('AppParticipantCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal, participantService) {
     
-    // Grab the event.
-    var participantRef = firebaseRef('participants').child($stateParams.id);
-    var attendancesRef = firebaseRef('attendances');
-    var eventsRef = firebaseRef('events');
+    // Get the participant record.
+    var participantId = $stateParams.id;
+    var participantRef = firebaseRef('participants').child(participantId);
 
     // Initialize scope objects.
     $scope.participant = $firebase(participantRef);
 
     // Join the event's attendance and participant data.
     var participantAttendancesRef = participantRef.child('attendances');
+    var attendancesRef = firebaseRef('attendances');
+    var eventsRef = firebaseRef('events');
     var participantAttendancesRef = Firebase.util.intersection(
       participantAttendancesRef,
       {
@@ -25,7 +26,8 @@ angular.module('oncheckinApp')
     $scope.attendances = $firebase(participantAttendancesRef);
 
     participantRef.once('value', function(snap) {
-      var chapterRef = firebaseRef('chapters').child(snap.val().chapter);
+      var chapterId = snap.val().chapter;
+      var chapterRef = firebaseRef('chapters').child(chapterId);
       $scope.chapter = $firebase(chapterRef);
 
       $scope.removeParticipant = function() {
@@ -40,9 +42,10 @@ angular.module('oncheckinApp')
             }
           })
           .result.then(function(model) {
-            chapterRef.child('participants').child(participantRef.name()).remove();
-            participantRef.remove();
-            $state.transitionTo('app.chapter', { id: chapterRef.name() });
+            // Redirect to the chapter view once the participant is removed.
+            participantService.remove(participantId).then(function() {
+              $state.transitionTo('app.chapter', { id: chapterId });
+            });
           });
       };
     });
