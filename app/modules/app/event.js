@@ -88,28 +88,31 @@ angular.module('oncheckinApp')
     }
 
     $scope.selectParticipant = function() {
-      addAttendance($scope.selectedParticipant);
+      addAttendance($scope.selectedParticipant.$id, eventRef.name());
+      // Clear typeahead selection.
+      $scope.selectedParticipant = null;
     };
 
-    function addAttendance(participant) {
+    function addAttendance(participantId, eventId) {
       // Get attendance reference.
       var attendancesRef = firebaseRef('attendances');
-      var participantRef = firebaseRef('participants').child(participant.$id);
       // Create attendance.
       var isHost = false;
       var newAttendanceRef = attendancesRef.push({
-        event: eventRef.name(),
-        participant: participantRef.name(),
+        event: eventId,
+        participant: participantId,
         host: isHost
       });
+      var id = newAttendanceRef.name();
       // Set priority to host. Priority can't be boolean.
       var priority = isHost ? 1 : 0;
       newAttendanceRef.setPriority(priority);
-      // Add foreign references.
-      eventRef.child('attendances').child(newAttendanceRef.name()).setWithPriority(true, priority);
-      participantRef.child('attendances').child(newAttendanceRef.name()).setWithPriority(true, priority);
-      // Clear typeahead selection.
-      $scope.selectedParticipant = null;
+      // Add event reference.
+      var eventRef = firebaseRef('events').child(eventId);
+      eventRef.child('attendances').child(id).setWithPriority(true, priority);
+      // Add participant reference.
+      var participantRef = firebaseRef('participants').child(participantId);
+      participantRef.child('attendances').child(id).setWithPriority(true, priority);
     }
 
     $scope.setHost = function(attendance, value) {
