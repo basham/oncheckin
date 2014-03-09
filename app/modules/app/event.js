@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal) {
+  .controller('AppEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal, $q) {
     
     // Grab the event.
     var eventRef = firebaseRef('events').child($stateParams.id);
@@ -83,16 +83,34 @@ angular.module('oncheckinApp')
     };
 
     $scope.removeAttendance = function(attendance) {
+      // Ids.
       var aId = attendance.$id;
       var pId = attendance['.id:participant'];
+
+      // Foreign key promises.
+      var promises = [];
+
+      // Have a factory create complete handlers for different deferreds,
+      // saving the promises to an array to be resolved once all complete.
+      var onCompleteFactory = function() {
+        var deferred = $q.defer();
+        promises.push(deferred.promise);
+        return function(error) {
+          if(error) {
+            deferred.reject(error);
+            return;
+          }
+          deferred.resolve();
+        };
+      };
+
       // Remove foreign key references to the attendance record.
-      participantsRef.child(pId).child('attendances').child(aId).remove();
-      eventRef.child('attendances').child(aId).remove(function(error) {
-        if(error) {
-          return;
-        }
-        // Remove the attendance record only after
-        // the references have been successfully removed.
+      participantsRef.child(pId).child('attendances').child(aId).remove(onCompleteFactory());
+      eventRef.child('attendances').child(aId).remove(onCompleteFactory());
+
+      // Remove the attendance record only after
+      // the references have been successfully removed.
+      $q.all(promises).then(function() {
         attendancesRef.child(aId).remove();
       });
     };
