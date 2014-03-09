@@ -24,10 +24,9 @@ angular.module('oncheckinApp')
       });
     $scope.attendances = $firebase(participantAttendancesRef);
 
-    var chapterJoinRef
-
     eventRef.once('value', function(snap) {
-      var chapterRef = firebaseRef('chapters').child(snap.val().chapter);
+      var chapterId = snap.val().chapter;
+      var chapterRef = firebaseRef('chapters').child(chapterId);
       $scope.chapter = $firebase(chapterRef);
 
       // Find all the participants for each chapter.
@@ -47,15 +46,45 @@ angular.module('oncheckinApp')
             }
           })
           .result.then(function(model) {
-            removeEvent(chapterRef);
+            // Redirect to the chapter view once the event is removed.
+            removeEvent(eventRef.name()).then(function() {
+              $state.transitionTo('app.chapter', { id: chapterId });
+            });
           });
       };
     });
 
-    function removeEvent(chapterRef) {
-      chapterRef.child('events').child(eventRef.name()).remove();
-      eventRef.remove();
-      $state.transitionTo('app.chapter', { id: chapterRef.name() });
+    function removeEvent(id) {
+
+      var onForeignKeysComplete = new OnCompleteFactory();
+      var onComplete = new OnCompleteFactory();
+      var onCompleteHandler = onComplete.handler();
+
+      // Get the event record.
+      var ref = firebaseRef('events').child(id);
+      ref.once('value', function(snap) {
+        // Get foreign keys.
+        var chapterId = snap.val().chapter;
+
+        // Remove participant reference.
+        var chapterRef = firebaseRef('chapters').child(chapterId);
+        chapterRef.child('events').child(id).remove(onForeignKeysComplete.handler());
+
+        // Remove all event attendances.
+        snap.child('attendances').forEach(function(attendanceSnap) {
+          var attendanceId = attendanceSnap.name();
+          var promise = removeAttendance(attendanceId);
+          onForeignKeysComplete.addPromise(promise);
+        });
+
+        // Remove the event record only after
+        // the foreign references have been successfully removed.
+        onForeignKeysComplete.all().then(function() {
+          ref.remove(onCompleteHandler);
+        });
+      });
+
+      return onComplete.all();
     }
 
     $scope.selectParticipant = function() {
@@ -99,7 +128,7 @@ angular.module('oncheckinApp')
       this.handler = function() {
         // Create and store a deferred promise.
         var deferred = $q.defer();
-        promises.push(deferred.promise);
+        this.addPromise(deferred.promise);
         // Create a unique on complete handler using this deferred.
         return function(error) {
           if(error) {
@@ -108,6 +137,10 @@ angular.module('oncheckinApp')
           }
           deferred.resolve();
         };
+      };
+
+      this.addPromise = function(promise) {
+        promises.push(promise);
       };
 
       this.all = function() {
