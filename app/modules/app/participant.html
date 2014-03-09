@@ -1,11 +1,7 @@
-<a ui-sref="app.chapter({ id: participant.chapter })">{{chapter.name}}</a>
 <h1>{{participant | hashName}} ({{participant.firstName}} {{participant.lastName}})</h1>
-
-<button class="btn btn-default" ng-click="removeParticipant()">Remove Participant</button>
-
-<hr/>
-
 <div>
+  <a ui-sref="app.chapter({ id: participant.chapter })">{{chapter.name}}</a>
+  &bull;
   <span
     ng-pluralize
     count="(participant.attendances | keyCount)"
@@ -14,6 +10,10 @@
       'one': '1 event',
       'other': '{} events'}"></span>
 </div>
+
+<hr/>
+
+<button class="btn btn-default" ng-click="removeParticipant()">Remove Participant</button>
 
 <hr/>
 
