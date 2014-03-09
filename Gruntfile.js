@@ -38,9 +38,15 @@ module.exports = function (grunt) {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'karma']
       },
-      compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+      //compass: {
+      //  files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+      //  tasks: ['compass:server', 'autoprefixer']
+      //},
+      less: {
+        files: [
+          '<%= yeoman.app %>/styles/**/*.{css,less}'
+        ],
+        tasks: ['less', 'autoprefixer']
       },
       gruntfile: {
         files: ['Gruntfile.js']
@@ -179,6 +185,25 @@ module.exports = function (grunt) {
       }
     },
 
+    // compile all non-partial LESS files into CSS
+    // and copy all CSS files into their appropriate location as well
+    less: {
+      dist: {
+        options: {
+          compress: true
+        },
+        files: [
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/styles/',
+            src: ['**/*.{less,css}', '!**/_*.{less,css}'],
+            dest: '.tmp/styles/',
+            ext: '.css'
+          }
+        ]
+      }
+    },
+
     // Renames files for browser caching purposes
     rev: {
       dist: {
@@ -294,24 +319,27 @@ module.exports = function (grunt) {
           src: ['generated/*']
         }]
       },
-      styles: {
-        expand: true,
-        cwd: '<%= yeoman.app %>/styles',
-        dest: '.tmp/styles/',
-        src: '{,*/}*.css'
-      }
+      //styles: {
+      //  expand: true,
+      //  cwd: '<%= yeoman.app %>/styles',
+      //  dest: '.tmp/styles/',
+      //  src: '{,*/}*.css'
+      //}
     },
 
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
-        'compass:server'
+        //'compass:server',
+        'less'
       ],
       test: [
-        'compass'
+        //'compass',
+        'less'
       ],
       dist: [
-        'compass:dist',
+        //'compass:dist',
+        'less',
         'imagemin',
         'svgmin'
       ]

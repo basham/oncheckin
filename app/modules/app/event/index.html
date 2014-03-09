@@ -1,16 +1,30 @@
 <a ui-sref="app.event.editAttendance({ id: eventId })" class="btn btn-default">Edit Attendance</a>
 <a ui-sref="app.event.edit({ id: eventId })" class="btn btn-default">Edit Event</a>
 
-<h2>Hares</h2>
-<ul>
-  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
-    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
-  </li>
-</ul>
+<hr/>
 
-<h2>Participants</h2>
-<ul>
-  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
-    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
-  </li>
-</ul>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Hares</h3>
+  </div>
+  <div class="oci-Panel-body">
+    <ul class="oci-PanelList">
+      <li class="oci-PanelList-item util-Grid" ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
+        <a class="util-Grid-cell" ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Participants</h3>
+  </div>
+  <div class="oci-Panel-body">
+    <ul class="oci-PanelList">
+      <li class="oci-PanelList-item util-Grid" ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
+        <a class="util-Grid-cell" ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
