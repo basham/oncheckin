@@ -1,0 +1,34 @@
+<a ui-sref="app.event.index({ id: eventId })" class="btn btn-default">Done</a>
+
+<hr/>
+
+<input
+  type="text" class="form-control"
+  ng-model="selected.participant"
+  typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
+  typeahead-template-url="modules/typeahead/participant.html"
+  typeahead-on-select="selectParticipant()"/>
+
+<hr/>
+
+<h2>Hares</h2>
+<ul>
+  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
+    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
+    &bull;
+    <a href ng-click="setHost(attendance, false)">remove hare</a>
+    &bull;
+    <a href ng-click="removeAttendance(attendance)">remove attendance</a>
+  </li>
+</ul>
+
+<h2>Participants</h2>
+<ul>
+  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
+    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
+    &bull;
+    <a href ng-click="setHost(attendance, true)">make hare</a>
+    &bull;
+    <a href ng-click="removeAttendance(attendance)">remove attendance</a>
+  </li>
+</ul>

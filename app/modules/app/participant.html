@@ -20,7 +20,7 @@
 <h2>Events</h2>
 <ul>
   <li ng-repeat="attendance in attendances | orderByPriority | orderBy:'-event.date'">
-    <a ui-sref="app.event({ id: attendance['.id:event'] })">
+    <a ui-sref="app.event.index({ id: attendance['.id:event'] })">
       {{attendance.event.name}}
     </a>
     &bull;

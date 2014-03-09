@@ -36,7 +36,7 @@ angular.module('oncheckinApp')
         .result.then(function(model) {
           var ref = eventService.add(chapterId, model);
           // Redirect to event view.
-          $state.transitionTo('app.event', { id: ref.name() });
+          $state.transitionTo('app.event.index', { id: ref.name() });
         });
     };
 

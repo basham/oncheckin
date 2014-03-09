@@ -1,0 +1,16 @@
+<a ui-sref="app.event.editAttendance({ id: eventId })" class="btn btn-default">Edit Attendance</a>
+<a ui-sref="app.event.edit({ id: eventId })" class="btn btn-default">Edit Event</a>
+
+<h2>Hares</h2>
+<ul>
+  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
+    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
+  </li>
+</ul>
+
+<h2>Participants</h2>
+<ul>
+  <li ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
+    <a ui-sref="app.participant({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
+  </li>
+</ul>

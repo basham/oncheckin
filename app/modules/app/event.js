@@ -4,12 +4,17 @@ angular.module('oncheckinApp')
   .controller('AppEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal, eventService, attendanceService) {
     
     // Grab the event.
-    var eventRef = firebaseRef('events').child($stateParams.id);
+    var eventId = $stateParams.id;
+    var eventRef = firebaseRef('events').child(eventId);
     var participantsRef = firebaseRef('participants');
     var attendancesRef = firebaseRef('attendances');
 
     // Initialize scope objects.
     $scope.event = $firebase(eventRef);
+    $scope.eventId = eventId;
+    $scope.selected = {
+      participant: null
+    };
 
     // Join the event's attendance and participant data.
     var eventAttendancesRef = eventRef.child('attendances');
@@ -47,7 +52,7 @@ angular.module('oncheckinApp')
           })
           .result.then(function(model) {
             // Redirect to the chapter view once the event is removed.
-            eventService.remove(eventRef.name()).then(function() {
+            eventService.remove(eventId).then(function() {
               $state.transitionTo('app.chapter', { id: chapterId });
             });
           });
@@ -55,9 +60,9 @@ angular.module('oncheckinApp')
     });
 
     $scope.selectParticipant = function() {
-      attendanceService.add($scope.selectedParticipant.$id, eventRef.name());
+      attendanceService.add($scope.selected.participant.$id, eventId);
       // Clear typeahead selection.
-      $scope.selectedParticipant = null;
+      $scope.selected.participant = null;
     };
 
     $scope.setHost = function(attendance, value) {

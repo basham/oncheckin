@@ -27,7 +27,7 @@
   <hr/>
 
   <div ng-repeat="event in events | orderByPriority | orderBy:'-date'">
-    <a ui-sref="app.event({ id: event.$id })">
+    <a ui-sref="app.event.index({ id: event.$id })">
       <strong>{{event.name}}</strong>
     </a>
     {{event.date | date:'mediumDate'}}

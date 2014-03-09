@@ -52,9 +52,22 @@ angular.module('oncheckinApp', [
         controller: 'AppChapterCtrl'
       })
       .state('app.event', {
+        abstract: true,
         url: '/events/:id',
         templateUrl: 'modules/app/event.html',
         controller: 'AppEventCtrl'
+      })
+      .state('app.event.index', {
+        url: '',
+        templateUrl: 'modules/app/event/index.html'
+      })
+      .state('app.event.edit', {
+        url: '',
+        templateUrl: 'modules/app/event/edit.html'
+      })
+      .state('app.event.editAttendance', {
+        url: '',
+        templateUrl: 'modules/app/event/edit-attendance.html'
       })
       .state('app.participant', {
         url: '/participants/:id',
