@@ -56,12 +56,31 @@ angular.module('oncheckinApp')
       return onComplete.all();
     }
 
+    function update(id, model) {
+      // Initiate deferred handlers.
+      var onComplete = new OnCompleteService();
+      // Flatten the date object into a string.
+      var date = dateFilter(model.date, 'yyyy-MM-dd');
+      // Set the priority.
+      var priority = date;
+      // Update the event with the model and priority.
+      var ref = firebaseRef('events').child(id);
+      ref.setPriority(priority, onComplete.handler());
+      ref.child('name').set(model.name, onComplete.handler());
+      ref.child('date').set(date, onComplete.handler());
+
+      return onComplete.all();
+    }
+
     return {
       add: function(chapterId, model) {
         return add(chapterId, model);
       },
       remove: function(id) {
         return remove(id);
+      },
+      update: function(id, model) {
+        return update(id, model);
       }
     };
   });

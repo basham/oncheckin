@@ -63,11 +63,13 @@ angular.module('oncheckinApp', [
       })
       .state('app.event.edit', {
         url: '',
-        templateUrl: 'modules/app/event/edit.html'
+        templateUrl: 'modules/app/event/edit.html',
+        controller: 'AppEventEditCtrl'
       })
       .state('app.event.editAttendance', {
         url: '',
-        templateUrl: 'modules/app/event/edit-attendance.html'
+        templateUrl: 'modules/app/event/edit-attendance.html',
+        controller: 'AppEventEditAttendanceCtrl'
       })
       .state('app.participant', {
         url: '/participants/:id',
