@@ -24,6 +24,8 @@ angular.module('oncheckinApp')
       });
     $scope.attendances = $firebase(participantAttendancesRef);
 
+    var chapterJoinRef
+
     eventRef.once('value', function(snap) {
       var chapterRef = firebaseRef('chapters').child(snap.val().chapter);
       $scope.chapter = $firebase(chapterRef);
@@ -32,10 +34,6 @@ angular.module('oncheckinApp')
       var chapterParticipantsRef = chapterRef.child('participants');
       var pRef = Firebase.util.intersection(chapterParticipantsRef, participantsRef);
       $scope.participants = $firebase(pRef);
-
-      $scope.selectParticipant = function() {
-        addAttendance($scope.selectedParticipant);
-      };
 
       $scope.removeEvent = function() {
         $modal
@@ -49,12 +47,20 @@ angular.module('oncheckinApp')
             }
           })
           .result.then(function(model) {
-            chapterRef.child('events').child(eventRef.name()).remove();
-            eventRef.remove();
-            $state.transitionTo('app.chapter', { id: chapterRef.name() });
+            removeEvent(chapterRef);
           });
       };
     });
+
+    function removeEvent(chapterRef) {
+      chapterRef.child('events').child(eventRef.name()).remove();
+      eventRef.remove();
+      $state.transitionTo('app.chapter', { id: chapterRef.name() });
+    }
+
+    $scope.selectParticipant = function() {
+      addAttendance($scope.selectedParticipant);
+    };
 
     function addAttendance(participant) {
       // Get attendance reference.
@@ -83,18 +89,18 @@ angular.module('oncheckinApp')
     };
 
     $scope.removeAttendance = function(attendance) {
-      // Ids.
-      var aId = attendance.$id;
-      var pId = attendance['.id:participant'];
+      removeAttendance(attendance.$id);
+    };
 
-      // Foreign key promises.
+    function OnCompleteFactory() {
+      // All promises part of this grouping.
       var promises = [];
 
-      // Have a factory create complete handlers for different deferreds,
-      // saving the promises to an array to be resolved once all complete.
-      var onCompleteFactory = function() {
+      this.handler = function() {
+        // Create and store a deferred promise.
         var deferred = $q.defer();
         promises.push(deferred.promise);
+        // Create a unique on complete handler using this deferred.
         return function(error) {
           if(error) {
             deferred.reject(error);
@@ -104,15 +110,41 @@ angular.module('oncheckinApp')
         };
       };
 
-      // Remove foreign key references to the attendance record.
-      participantsRef.child(pId).child('attendances').child(aId).remove(onCompleteFactory());
-      eventRef.child('attendances').child(aId).remove(onCompleteFactory());
+      this.all = function() {
+        return $q.all(promises);
+      };
+    };
 
-      // Remove the attendance record only after
-      // the references have been successfully removed.
-      $q.all(promises).then(function() {
-        attendancesRef.child(aId).remove();
+    function removeAttendance(id) {
+
+      var onForeignKeysComplete = new OnCompleteFactory();
+      var onComplete = new OnCompleteFactory();
+      var onCompleteHandler = onComplete.handler();
+
+      // Get the attendance record.
+      var ref = firebaseRef('attendances').child(id);
+      ref.once('value', function(snap) {
+        // Get foreign keys.
+        var value = snap.val();
+        var participantId = value.participant;
+        var eventId = value.event;
+
+        // Remove participant reference.
+        var participantRef = firebaseRef('participants').child(participantId);
+        participantRef.child('attendances').child(id).remove(onForeignKeysComplete.handler());
+
+        // Remove event reference.
+        var eventRef = firebaseRef('events').child(eventId);
+        eventRef.child('attendances').child(id).remove(onForeignKeysComplete.handler());
+
+        // Remove the attendance record only after
+        // the foreign references have been successfully removed.
+        onForeignKeysComplete.all().then(function() {
+          ref.remove(onCompleteHandler);
+        });
       });
+
+      return onComplete.all();
     };
 
   });
