@@ -3,14 +3,6 @@
   <a ui-sref="app.chapter({ id: event.chapter })">{{chapter.name}}</a>
   &bull;
   {{event.date | date:'longDate'}}
-  &bull;
-  <span
-  ng-pluralize
-  count="(event.attendances | keyCount)"
-  when="{
-    '0': 'No participants',
-    'one': '1 participant',
-    'other': '{} participants'}"></span>
 </p>
 
 <div ui-view></div>
