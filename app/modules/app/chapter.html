@@ -6,54 +6,62 @@
 
 <hr/>
 
-<div>
-  <span
-    ng-pluralize
-    count="(chapter.events | keyCount)"
-    when="{
-      '0': 'No events',
-      'one': '1 event',
-      'other': '{} events'}"></span>
-  &bull;
-  <span
-    ng-pluralize
-    count="(chapter.participants | keyCount)"
-    when="{
-      '0': 'No participants',
-      'one': '1 participant',
-      'other': '{} participants'}"></span>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3
+      class="panel-title"
+      ng-pluralize
+      count="(chapter.events | keyCount)"
+      when="{
+        '0': 'No Events',
+        'one': '1 Event',
+        'other': '{} Events'}"></h3>
+  </div>
+  <div class="oci-Panel-body">
+    <ul class="oci-PanelList">
+      <li class="oci-PanelList-item util-Grid util-Grid--center" ng-repeat="event in events | orderByPriority | orderBy:'-date'">
+        <span class="util-Margin--right">{{event.date | date:'mediumDate'}}</span>
+        <a class="util-Grid-cell" ui-sref="app.event.index({ id: event.$id })">
+          {{event.name}}
+        </a>
+        <span
+          ng-pluralize
+          count="(event.attendances | keyCount)"
+          when="{
+            '0': 'No participants',
+            'one': '1 participant',
+            'other': '{} participants'}"></span>
+      </li>
+    </ul>
+  </div>
 </div>
 
-  <hr/>
-
-  <div ng-repeat="event in events | orderByPriority | orderBy:'-date'">
-    <a ui-sref="app.event.index({ id: event.$id })">
-      <strong>{{event.name}}</strong>
-    </a>
-    {{event.date | date:'mediumDate'}}
-    &bull;
-    <span
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3
+      class="panel-title"
       ng-pluralize
-      count="(event.attendances | keyCount)"
+      count="(chapter.participants | keyCount)"
       when="{
-        '0': 'No participants',
-        'one': '1 participant',
-        'other': '{} participants'}"></span>
+        '0': 'No Participants',
+        'one': '1 Participant',
+        'other': '{} Participants'}"></h3>
   </div>
-
-  <hr/>
-
-  <div ng-repeat="participant in participants | orderByPriority">
-    <a ui-sref="app.participant({ id: participant.$id })">
-      <strong>{{participant | hashName}}</strong>
-    </a>
-    {{participant.firstName}} {{participant.lastName}}
-    &bull;
-    <span
-      ng-pluralize
-      count="(participant.attendances | keyCount)"
-      when="{
-        '0': 'No events',
-        'one': '1 event',
-        'other': '{} events'}"></span>
+  <div class="oci-Panel-body">
+    <ul class="oci-PanelList">
+      <li class="oci-PanelList-item util-Grid util-Grid--center" ng-repeat="participant in participants | orderByPriority">
+        <span class="util-Margin--right">{{participant.firstName}} {{participant.lastName}}</span>
+        <a class="util-Grid-cell" ui-sref="app.participant({ id: participant.$id })">
+          {{participant | hashName}}
+        </a>
+        <span
+          ng-pluralize
+          count="(participant.attendances | keyCount)"
+          when="{
+            '0': 'No events',
+            'one': '1 event',
+            'other': '{} events'}"></span>
+      </li>
+    </ul>
   </div>
+</div>
