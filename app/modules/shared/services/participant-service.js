@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .factory('participantService', function (firebaseRef, OnCompleteService, attendanceService) {
-    
+  .factory('participantService', function (firebaseRef, OnCompleteService, attendanceService, dateFilter) {
+
     function add(chapterId, model) {
       // Create the new participant.
       var ref = firebaseRef('participants').push({
@@ -12,8 +12,8 @@ angular.module('oncheckinApp')
         chapter: chapterId
       });
       var id = ref.name();
-      // Set the priority.
-      var priority = [model.lastName, model.firstName].join(', ');
+      // Priority based on number of attendances.
+      var priority = 0;
       ref.setPriority(priority);
       // Link the participant to the chapter.
       var chapterRef = firebaseRef('chapters').child(chapterId);
@@ -28,7 +28,7 @@ angular.module('oncheckinApp')
       var onComplete = new OnCompleteService();
       var onCompleteHandler = onComplete.handler();
 
-      // Get the event record.
+      // Get the record.
       var ref = firebaseRef('participants').child(id);
       ref.once('value', function(snap) {
         // Get foreign keys.
@@ -55,12 +55,67 @@ angular.module('oncheckinApp')
       return onComplete.all();
     }
 
+    function updatePriority(id) {
+
+      var onComplete = new OnCompleteService();
+      var handlerA = onComplete.handler();
+      var handlerB = onComplete.handler();
+
+      var ref = firebaseRef('participants').child(id);
+      ref.once('value', function(snap) {
+        // Get foreign keys.
+        var chapterId = snap.val().chapter;
+
+        var attendanceCount = snap.child('attendances').numChildren();
+
+        ref.setPriority(attendanceCount, handlerA);
+
+        var chapterRef = firebaseRef('chapters').child(chapterId);
+        // BUG: For whatever reason, `setPriority` is erroring, with no decent explanation.
+        chapterRef.child('participants').child(id).setWithPriority(true, attendanceCount, handlerB);
+      });
+
+      return onComplete.all();
+    }
+
+    function updateProfile(id, model) {
+      // Initiate deferred handlers.
+      var onComplete = new OnCompleteService();
+      // Update the record with the model and priority.
+      var ref = firebaseRef('participants').child(id);
+      ref.child('firstName').set(model.firstName, onComplete.handler());
+      ref.child('lastName').set(model.lastName, onComplete.handler());
+      ref.child('alias').set(model.alias, onComplete.handler());
+
+      return onComplete.all();
+    }
+
+    function updateHistory(id, model) {
+      // Initiate deferred handlers.
+      var onComplete = new OnCompleteService();
+      // Update the record with the model and priority.
+      var ref = firebaseRef('participants').child(id);
+      ref.child('recordedAttendanceCount').set(model.recordedAttendanceCount, onComplete.handler());
+      ref.child('recordedHostCount').set(model.recordedHostCount, onComplete.handler());
+      ref.child('recordedLastAttendanceDate').set(model.recordedLastAttendanceDate, onComplete.handler());
+
+      onComplete.addPromise( updatePriority(id) );
+
+      return onComplete.all();
+    }
+
     return {
       add: function(chapterId, model) {
         return add(chapterId, model);
       },
       remove: function(id) {
         return remove(id);
+      },
+      updateProfile: function(id, model) {
+        return updateProfile(id, model);
+      },
+      updateHistory: function(id, model) {
+        return updateHistory(id, model);
       }
     };
   });

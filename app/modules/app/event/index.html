@@ -17,7 +17,7 @@
   <div class="oci-Panel-body">
     <ul class="oci-PanelList">
       <li class="oci-PanelList-item util-Grid util-Grid--center" ng-repeat="attendance in attendances | orderByPriority | orderBy:'-host'">
-        <a class="util-Grid-cell" ui-sref="app.participant({ id: attendance['.id:participant'] })">
+        <a class="util-Grid-cell" ui-sref="app.participant.index({ id: attendance['.id:participant'] })">
           {{attendance.participant | hashName}}
         </a>
         <span class="label label-info" ng-if="attendance.host">HARE</span>

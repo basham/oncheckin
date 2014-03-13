@@ -8,6 +8,7 @@ angular.module('oncheckinApp')
     var participantRef = firebaseRef('participants').child(participantId);
 
     // Initialize scope objects.
+    $scope.participantId = participantId;
     $scope.participant = $firebase(participantRef);
 
     // Join the event's attendance and participant data.

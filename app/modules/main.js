@@ -72,9 +72,19 @@ angular.module('oncheckinApp', [
         controller: 'AppEventEditAttendanceCtrl'
       })
       .state('app.participant', {
+        abstract: true,
         url: '/participants/:id',
         templateUrl: 'modules/app/participant.html',
         controller: 'AppParticipantCtrl'
+      })
+      .state('app.participant.index', {
+        url: '',
+        templateUrl: 'modules/app/participant/index.html'
+      })
+      .state('app.participant.edit', {
+        url: '',
+        templateUrl: 'modules/app/participant/edit.html',
+        controller: 'AppParticipantEditCtrl'
       })
       .state('app.login', {
         url: '/login',

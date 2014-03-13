@@ -2,7 +2,7 @@
 
 angular.module('oncheckinApp')
   .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, $modal, $stateParams, $state, eventService, participantService) {
-    
+
     // Get the chapter record.
     var chapterId = $stateParams.id;
     var chapterRef = firebaseRef('chapters').child(chapterId);
@@ -54,7 +54,7 @@ angular.module('oncheckinApp')
         .result.then(function(model) {
           var ref = participantService.add(chapterId, model);
           // Redirect to event view.
-          $state.transitionTo('app.participant', { id: ref.name() });
+          $state.transitionTo('app.participant.index', { id: ref.name() });
         });
     };
 
