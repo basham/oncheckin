@@ -15,14 +15,13 @@
     <th>Hares</th>
   </thead>
   <tbody>
-    <tr ng-repeat="participant in participants | orderByPriority"
-      ng-init="attendance = attendanceByParticipantId[participant.$id]; latest = latestAttendanceByParticipantId[participant.$id]">
+    <tr ng-repeat="participant in participants | filter:{ priority: filterPriority } | orderBy:order">
       <td>{{participant.lastName}}, {{participant.firstName}}</td>
       <td><a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a></td>
-      <td>{{attendance ? (attendance.host ? 'HARE' : 'X') : ''}}</td>
-      <td>{{latest.attendanceCount + 1}}</td>
-      <td><a ui-sref="app.event.index({ id: latest.event })">{{latest.date}}</a></td>
-      <td>{{latest.hostCount + (attendance.host ? 1 : 0)}}</td>
+      <td>{{participant.attendance ? (participant.attendance.host ? 'HARE' : 'X') : ''}}</td>
+      <td>{{participant.records.attendanceCount + 1}}</td>
+      <td><a ui-sref="app.event.index({ id: participant.records.event })">{{participant.records.date}}</a></td>
+      <td>{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</td>
     </tr>
   </tbody>
 </table>
