@@ -29,7 +29,9 @@ angular.module('oncheckinApp')
 
     // Get the chapter record.
     eventRef.once('value', function(snap) {
-      var chapterId = snap.val().chapter;
+      var value = snap.val();
+      var date = value.date;
+      var chapterId = value.chapter;
       var chapterRef = firebaseRef('chapters').child(chapterId);
       $scope.chapter = $firebase(chapterRef);
 
@@ -42,7 +44,7 @@ angular.module('oncheckinApp')
       chapterParticipantsRef.once('value', function(snap) {
         snap.forEach(function(participant) {
           var pId = participant.name();
-          participantService.getLatestAttendance(pId).then(function(attendance) {
+          participantService.getLatestAttendance(pId, date).then(function(attendance) {
             $scope.latestAttendanceDateByParticipantId[pId] = attendance.getPriority();
           });
         });

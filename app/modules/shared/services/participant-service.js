@@ -22,7 +22,7 @@ angular.module('oncheckinApp')
       return ref;
     }
 
-    function getLatestAttendance(id) {
+    function getLatestAttendance(id, maxDate) {
       var deferred = $q.defer();
       // Get the record.
       var ref = firebaseRef('participants').child(id).child('attendances');
@@ -41,11 +41,19 @@ angular.module('oncheckinApp')
           if(!angular.isString(priority)) {
             return;
           }
+          // Ensure the priority is earlier than the maxDate.
+          if(priority >= maxDate) {
+            return;
+          }
           // Check to see if this date is a better match than a prior date.
           if(latest === null || latest.getPriority() < priority) {
             latest = attendance;
           }
         });
+        if(latest === null) {
+          deferred.reject('no matches');
+          return;
+        }
         deferred.resolve(latest);
       });
 
@@ -138,8 +146,8 @@ angular.module('oncheckinApp')
       add: function(chapterId, model) {
         return add(chapterId, model);
       },
-      getLatestAttendance: function(id) {
-        return getLatestAttendance(id);
+      getLatestAttendance: function(id, maxDate) {
+        return getLatestAttendance(id, maxDate);
       },
       remove: function(id) {
         return remove(id);
