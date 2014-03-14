@@ -27,13 +27,9 @@ angular.module('oncheckinApp')
       // Get the record.
       var ref = firebaseRef('participants').child(id).child('attendances');
       ref.once('value', function(snap) {
-        // Ensure there are attendances.
-        if(snap.numChildren() === 0) {
-          deferred.reject('no attendances');
-          return;
-        }
         // Loop through attendances.
         var latest = null;
+        var attendanceCount = 0;
         snap.forEach(function(attendance) {
           var priority = attendance.getPriority();
           // Ensure the priority is a string.
@@ -45,16 +41,18 @@ angular.module('oncheckinApp')
           if(priority >= maxDate) {
             return;
           }
+          // Increment the number of attendances.
+          attendanceCount++;
           // Check to see if this date is a better match than a prior date.
           if(latest === null || latest.getPriority() < priority) {
             latest = attendance;
           }
         });
-        if(latest === null) {
-          deferred.reject('no matches');
-          return;
-        }
-        deferred.resolve(latest);
+        deferred.resolve({
+          count: attendanceCount,
+          date: latest ? latest.getPriority() : null,
+          id: latest ? latest.name() : null
+        });
       });
 
       return deferred.promise;

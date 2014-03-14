@@ -12,7 +12,7 @@ angular.module('oncheckinApp')
     $scope.eventId = eventId;
 
     $scope.attendanceByParticipantId = [];
-    $scope.latestAttendanceDateByParticipantId = [];
+    $scope.latestAttendanceByParticipantId = [];
 
     // Join the event's attendance and participant data.
     var eventAttendancesRef = eventRef.child('attendances');
@@ -45,7 +45,7 @@ angular.module('oncheckinApp')
         snap.forEach(function(participant) {
           var pId = participant.name();
           participantService.getLatestAttendance(pId, date).then(function(attendance) {
-            $scope.latestAttendanceDateByParticipantId[pId] = attendance.getPriority();
+            $scope.latestAttendanceByParticipantId[pId] = attendance;
           });
         });
       });

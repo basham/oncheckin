@@ -16,12 +16,12 @@
   </thead>
   <tbody>
     <tr ng-repeat="participant in participants | orderByPriority"
-      ng-init="attendance = attendanceByParticipantId[participant.$id]; lastDate = latestAttendanceDateByParticipantId[participant.$id]">
+      ng-init="attendance = attendanceByParticipantId[participant.$id]; lastest = latestAttendanceByParticipantId[participant.$id]">
       <td>{{participant.lastName}}, {{participant.firstName}}</td>
       <td>{{participant | hashName}}</td>
       <td>{{attendance ? (attendance.host ? 'HARE' : 'X') : ''}}</td>
-      <td>{{(participant.attendances | keyCount) + 1}}</td>
-      <td>{{lastDate}}</td>
+      <td>{{lastest.count + 1}}</td>
+      <td>{{lastest.date}}</td>
       <td></td>
     </tr>
   </tbody>
