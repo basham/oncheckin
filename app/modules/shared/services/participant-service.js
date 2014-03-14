@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .factory('participantService', function (firebaseRef, OnCompleteService, attendanceService, dateFilter) {
+  .factory('participantService', function (firebaseRef, OnCompleteService, attendanceService, dateFilter, $firebase, orderByPriorityFilter, $q) {
 
     function add(chapterId, model) {
       // Create the new participant.
@@ -20,6 +20,36 @@ angular.module('oncheckinApp')
       chapterRef.child('participants').child(id).setWithPriority(true, priority);
 
       return ref;
+    }
+
+    function getLatestAttendance(id) {
+      var deferred = $q.defer();
+      // Get the record.
+      var ref = firebaseRef('participants').child(id).child('attendances');
+      ref.once('value', function(snap) {
+        // Ensure there are attendances.
+        if(snap.numChildren() === 0) {
+          deferred.reject('no attendances');
+          return;
+        }
+        // Loop through attendances.
+        var latest = null;
+        snap.forEach(function(attendance) {
+          var priority = attendance.getPriority();
+          // Ensure the priority is a string.
+          // Assuming this is a date.
+          if(!angular.isString(priority)) {
+            return;
+          }
+          // Check to see if this date is a better match than a prior date.
+          if(latest === null || latest.getPriority() < priority) {
+            latest = attendance;
+          }
+        });
+        deferred.resolve(latest);
+      });
+
+      return deferred.promise;
     }
 
     function remove(id) {
@@ -107,6 +137,9 @@ angular.module('oncheckinApp')
     return {
       add: function(chapterId, model) {
         return add(chapterId, model);
+      },
+      getLatestAttendance: function(id) {
+        return getLatestAttendance(id);
       },
       remove: function(id) {
         return remove(id);

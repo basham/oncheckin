@@ -1,0 +1,28 @@
+<h1><a ui-sref="app.event.index({ id: eventId })">{{event.name}}</a></h1>
+<p>
+  <a ui-sref="app.chapter({ id: event.chapter })">{{chapter.name}}</a>
+  &bull;
+  {{event.date | date:'longDate'}}
+</p>
+
+<table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Hash Name</th>
+    <th>Sign in</th>
+    <th>Hashes after sign in</th>
+    <th>Last Hash</th>
+    <th>Hares</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="participant in participants | orderByPriority"
+      ng-init="attendance = attendanceByParticipantId[participant.$id]; lastDate = latestAttendanceDateByParticipantId[participant.$id]">
+      <td>{{participant.lastName}}, {{participant.firstName}}</td>
+      <td>{{participant | hashName}}</td>
+      <td>{{attendance ? (attendance.host ? 'HARE' : 'X') : ''}}</td>
+      <td>{{(participant.attendances | keyCount) + 1}}</td>
+      <td>{{lastDate}}</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

@@ -71,6 +71,15 @@ angular.module('oncheckinApp', [
         templateUrl: 'modules/app/event/edit-attendance.html',
         controller: 'AppEventEditAttendanceCtrl'
       })
+      .state('print', {
+        abstract: true,
+        templateUrl: 'modules/print.html'
+      })
+      .state('print.event', {
+        url: '/events/:id/print',
+        templateUrl: 'modules/print/event.html',
+        controller: 'PrintEventCtrl'
+      })
       .state('app.participant', {
         abstract: true,
         url: '/participants/:id',

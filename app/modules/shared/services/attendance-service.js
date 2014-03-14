@@ -2,7 +2,7 @@
 
 angular.module('oncheckinApp')
   .factory('attendanceService', function (firebaseRef, OnCompleteService) {
-    
+
     function add(participantId, eventId) {
       // Get attendance reference.
       var attendancesRef = firebaseRef('attendances');
@@ -15,14 +15,17 @@ angular.module('oncheckinApp')
       });
       var id = ref.name();
       // Set priority to host. Priority can't be boolean.
-      var priority = isHost ? 1 : 0;
-      ref.setPriority(priority);
+      // Lower number is prioritized higher.
+      var priority = isHost ? 0 : 1;
       // Add event reference.
       var eventRef = firebaseRef('events').child(eventId);
       eventRef.child('attendances').child(id).setWithPriority(true, priority);
-      // Add participant reference.
-      var participantRef = firebaseRef('participants').child(participantId);
-      participantRef.child('attendances').child(id).setWithPriority(true, priority);
+      // Add participant reference. Priority based on event date.
+      eventRef.once('value', function(snap) {
+        var date = snap.val().date;
+        var participantRef = firebaseRef('participants').child(participantId);
+        participantRef.child('attendances').child(id).setWithPriority(true, date);
+      });
 
       return ref;
     }
