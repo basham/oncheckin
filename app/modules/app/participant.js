@@ -2,7 +2,7 @@
 
 angular.module('oncheckinApp')
   .controller('AppParticipantCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal, participantService) {
-    
+
     // Get the participant record.
     var participantId = $stateParams.id;
     var participantRef = firebaseRef('participants').child(participantId);
@@ -15,16 +15,16 @@ angular.module('oncheckinApp')
     var participantAttendancesRef = participantRef.child('attendances');
     var attendancesRef = firebaseRef('attendances');
     var eventsRef = firebaseRef('events');
-    var participantAttendancesRef = Firebase.util.intersection(
-      participantAttendancesRef,
+    var participantAttendancesEventsRef = Firebase.util.intersection(
+      attendancesRef,
       {
-        ref: attendancesRef,
+        ref: participantAttendancesRef,
         keyMap: {
           host: 'host',
           event: eventsRef
         }
       });
-    $scope.attendances = $firebase(participantAttendancesRef);
+    $scope.attendances = $firebase(participantAttendancesEventsRef);
 
     participantRef.once('value', function(snap) {
       var chapterId = snap.val().chapter;

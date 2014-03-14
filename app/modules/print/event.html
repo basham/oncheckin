@@ -16,13 +16,13 @@
   </thead>
   <tbody>
     <tr ng-repeat="participant in participants | orderByPriority"
-      ng-init="attendance = attendanceByParticipantId[participant.$id]; lastest = latestAttendanceByParticipantId[participant.$id]">
+      ng-init="attendance = attendanceByParticipantId[participant.$id]; latest = latestAttendanceByParticipantId[participant.$id]">
       <td>{{participant.lastName}}, {{participant.firstName}}</td>
-      <td>{{participant | hashName}}</td>
+      <td><a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a></td>
       <td>{{attendance ? (attendance.host ? 'HARE' : 'X') : ''}}</td>
-      <td>{{lastest.count + 1}}</td>
-      <td>{{lastest.date}}</td>
-      <td></td>
+      <td>{{latest.attendanceCount + 1}}</td>
+      <td><a ui-sref="app.event.index({ id: latest.event })">{{latest.date}}</a></td>
+      <td>{{latest.hostCount + (attendance.host ? 1 : 0)}}</td>
     </tr>
   </tbody>
 </table>

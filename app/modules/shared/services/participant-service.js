@@ -14,7 +14,6 @@ angular.module('oncheckinApp')
       var id = ref.name();
       // Priority based on number of attendances.
       var priority = 0;
-      ref.setPriority(priority);
       // Link the participant to the chapter.
       var chapterRef = firebaseRef('chapters').child(chapterId);
       chapterRef.child('participants').child(id).setWithPriority(true, priority);
@@ -22,36 +21,69 @@ angular.module('oncheckinApp')
       return ref;
     }
 
+    function positiveIntOrZero(n) {
+      n = parseInt(n);
+      return n > 0 ? n : 0;
+    }
+
     function getLatestAttendance(id, maxDate) {
       var deferred = $q.defer();
       // Get the record.
-      var ref = firebaseRef('participants').child(id).child('attendances');
+      var ref = firebaseRef('participants').child(id);
       ref.once('value', function(snap) {
-        // Loop through attendances.
+        // Primary data.
         var latest = null;
         var attendanceCount = 0;
-        snap.forEach(function(attendance) {
-          var priority = attendance.getPriority();
-          // Ensure the priority is a string.
+        var hostCount = 0;
+        // Legacy attendance data.
+        var recordedAttendanceCount = snap.child('recordedAttendanceCount').val();
+        var recordedHostCount = snap.child('recordedHostCount').val();
+        var recordedLastAttendanceDate = snap.child('recordedLastAttendanceDate').val();
+        // Accomodate missing legacy data.
+        recordedAttendanceCount = positiveIntOrZero(recordedAttendanceCount);
+        recordedHostCount = positiveIntOrZero(recordedHostCount);
+        // Check for if legacy data should be accomodated.
+        var hasLegacy = recordedLastAttendanceDate !== null;
+        // Loop through attendances.
+        snap.child('attendances').forEach(function(attendance) {
+          // Get details about this attendance.
+          var date = attendance.getPriority();
+          var isHost = attendance.val().host;
+          // Ensure the date is a string.
           // Assuming this is a date.
-          if(!angular.isString(priority)) {
+          if(!angular.isString(date)) {
             return;
           }
-          // Ensure the priority is earlier than the maxDate.
-          if(priority >= maxDate) {
+          // If this attendance occured before the use of this system,
+          // then we're starting to back-fill data. Accomodate it in the counts.
+          if(hasLegacy && date < recordedLastAttendanceDate) {
+            recordedAttendanceCount--;
+            if(isHost) {
+              recordedHostCount--;
+            }
+          }
+          // Ensure the date is earlier than the maxDate.
+          if(date >= maxDate) {
             return;
           }
-          // Increment the number of attendances.
+          // Increment the attendance count.
           attendanceCount++;
+          // Increment the host count.
+          if(isHost) {
+            hostCount++;
+          }
           // Check to see if this date is a better match than a prior date.
-          if(latest === null || latest.getPriority() < priority) {
+          if(latest === null || latest.getPriority() < date) {
             latest = attendance;
           }
         });
+        // Resolve the promise with these attendance calculations.
         deferred.resolve({
-          count: attendanceCount,
+          attendanceCount: attendanceCount + recordedAttendanceCount,
+          hostCount: hostCount + recordedHostCount,
           date: latest ? latest.getPriority() : null,
-          id: latest ? latest.name() : null
+          attendance: latest ? latest.name() : null,
+          event: latest ? latest.val().event : null
         });
       });
 

@@ -14,17 +14,17 @@ angular.module('oncheckinApp')
         host: isHost
       });
       var id = ref.name();
-      // Set priority to host. Priority can't be boolean.
-      // Lower number is prioritized higher.
-      var priority = isHost ? 0 : 1;
       // Add event reference.
       var eventRef = firebaseRef('events').child(eventId);
-      eventRef.child('attendances').child(id).setWithPriority(true, priority);
+      eventRef.child('attendances').child(id).set(true);
       // Add participant reference. Priority based on event date.
       eventRef.once('value', function(snap) {
         var date = snap.val().date;
         var participantRef = firebaseRef('participants').child(participantId);
-        participantRef.child('attendances').child(id).setWithPriority(true, date);
+        participantRef.child('attendances').child(id).setWithPriority({
+          event: eventId,
+          host: isHost
+        }, date);
       });
 
       return ref;
@@ -65,6 +65,11 @@ angular.module('oncheckinApp')
     function setHost(id, value) {
       var attendanceRef = firebaseRef('attendances').child(id);
       attendanceRef.child('host').set(value);
+      // Duplicate the host value on the participant attendance reference.
+      attendanceRef.once('value', function(snap) {
+        var pId = snap.val().participant;
+        firebaseRef('participants').child(pId).child('attendances').child(id).child('host').set(value);
+      });
     }
 
     return {
