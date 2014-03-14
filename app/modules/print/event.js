@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('PrintEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, participantService, OnCompleteService, $q) {
+  .controller('PrintEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, participantService, $q) {
 
     // Get the event.
     var eventId = $stateParams.id;
