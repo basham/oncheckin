@@ -9,27 +9,27 @@
   <thead>
     <th>Name</th>
     <th>Hash Name</th>
-    <th>Sign in</th>
-    <th>Hashes after sign in</th>
+    <th class="text-center util--nowrap">Sign in</th>
+    <th class="text-right">Hashes <small class="util--nowrap">after sign in</small></th>
     <th>Last Hash</th>
-    <th>Hares</th>
+    <th class="text-right">Hares</th>
   </thead>
   <tbody>
     <tr ng-repeat="participant in participants | filter:{ priority: filterPriority } | orderBy:order">
       <td>{{participant.lastName}}, {{participant.firstName}}</td>
       <td>
         <a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a>
-        <span ng-if="participant.location">({{participant.location}})</span>
+        <span class="util--nowrap" ng-if="participant.location">({{participant.location}})</span>
       </td>
-      <td>{{participant.attendance ? (participant.attendance.host ? 'HARE' : 'X') : ''}}</td>
-      <td>{{participant.records.attendanceCount + 1}}</td>
+      <td class="text-center">{{participant.attendance ? (participant.attendance.host ? 'HARE' : 'X') : ''}}</td>
+      <td class="text-right">{{participant.records.attendanceCount + 1}}</td>
       <td>
-        <a ng-if="participant.records.date" ui-sref="app.event.index({ id: participant.records.event })">
+        <a class="util--nowrap" ng-if="participant.records.date" ui-sref="app.event.index({ id: participant.records.event })">
           {{participant.records.date}}
         </a>
-        <span ng-if="!participant.records.date">{{participant.recordedLastAttendanceDate}}</span>
+        <span class="util--nowrap" ng-if="!participant.records.date">{{participant.recordedLastAttendanceDate}}</span>
       </td>
-      <td>{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</td>
+      <td class="text-right">{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</td>
     </tr>
   </tbody>
 </table>
