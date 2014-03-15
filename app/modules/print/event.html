@@ -24,7 +24,9 @@
       <td>{{participant.attendance ? (participant.attendance.host ? 'HARE' : 'X') : ''}}</td>
       <td>{{participant.records.attendanceCount + 1}}</td>
       <td>
-        <a ui-sref="app.event.index({ id: participant.records.event })">{{participant.records.date}}</a>
+        <a ng-if="participant.records.date" ui-sref="app.event.index({ id: participant.records.event })">
+          {{participant.records.date}}
+        </a>
         <span ng-if="!participant.records.date">{{participant.recordedLastAttendanceDate}}</span>
       </td>
       <td>{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</td>
