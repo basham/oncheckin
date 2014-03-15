@@ -27,7 +27,7 @@
         <a class="util--nowrap" ng-if="participant.records.date" ui-sref="app.event.index({ id: participant.records.event })">
           {{participant.records.date}}
         </a>
-        <span class="util--nowrap" ng-if="!participant.records.date && event.date !== participant.recordedLastAttendanceDate">
+        <span class="util--nowrap" ng-if="!participant.records.date && event.date > participant.recordedLastAttendanceDate">
           {{participant.recordedLastAttendanceDate}}
         </span>
       </td>
