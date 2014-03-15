@@ -36,7 +36,8 @@ angular.module('oncheckinApp')
           })
           .result.then(function(model) {
             // Stop watching the model.
-            unbindWatchModel();
+            unbindWatchModelName();
+            unbindWatchModelDate();
             // Redirect to the chapter view once the participant is removed.
             participantService.remove(participantId).then(function() {
               $state.transitionTo('app.chapter', { id: chapterId });
@@ -63,12 +64,12 @@ angular.module('oncheckinApp')
       });
     };
 
-    var unbindWatchModel = $scope.$watch('model.firstName', function() {
+    var unbindWatchModelName = $scope.$watch('model.firstName', function() {
       $scope.model.suggestedAlias = hashNameFilter($scope.model);
     });
 
     // Manually create a Date object, since Datepicker doesn't handle timezones well.
-    $scope.$watch('model.recordedLastAttendanceDate', function(val) {
+    var unbindWatchModelDate = $scope.$watch('model.recordedLastAttendanceDate', function(val) {
       var date = null;
       if (angular.isString(val)) {
         var parts = val.split('-');
