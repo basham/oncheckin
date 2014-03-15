@@ -12,11 +12,9 @@ angular.module('oncheckinApp')
         chapter: chapterId
       });
       var id = ref.name();
-      // Priority based on number of attendances.
-      var priority = 0;
       // Link the participant to the chapter.
       var chapterRef = firebaseRef('chapters').child(chapterId);
-      chapterRef.child('participants').child(id).setWithPriority(true, priority);
+      chapterRef.child('participants').child(id).set(true);
 
       return ref;
     }
@@ -123,29 +121,6 @@ angular.module('oncheckinApp')
       return onComplete.all();
     }
 
-    function updatePriority(id) {
-
-      var onComplete = new OnCompleteService();
-      var handlerA = onComplete.handler();
-      var handlerB = onComplete.handler();
-
-      var ref = firebaseRef('participants').child(id);
-      ref.once('value', function(snap) {
-        // Get foreign keys.
-        var chapterId = snap.val().chapter;
-
-        var attendanceCount = snap.child('attendances').numChildren();
-
-        ref.setPriority(attendanceCount, handlerA);
-
-        var chapterRef = firebaseRef('chapters').child(chapterId);
-        // BUG: For whatever reason, `setPriority` is erroring, with no decent explanation.
-        chapterRef.child('participants').child(id).setWithPriority(true, attendanceCount, handlerB);
-      });
-
-      return onComplete.all();
-    }
-
     function updateProfile(id, model) {
       // Initiate deferred handlers.
       var onComplete = new OnCompleteService();
@@ -166,8 +141,6 @@ angular.module('oncheckinApp')
       ref.child('recordedAttendanceCount').set(model.recordedAttendanceCount, onComplete.handler());
       ref.child('recordedHostCount').set(model.recordedHostCount, onComplete.handler());
       ref.child('recordedLastAttendanceDate').set(model.recordedLastAttendanceDate, onComplete.handler());
-
-      onComplete.addPromise( updatePriority(id) );
 
       return onComplete.all();
     }
