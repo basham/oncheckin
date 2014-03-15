@@ -25,6 +25,23 @@ angular.module('oncheckinApp')
       'firstName'
     ];
 
+    $scope.signinMark = function(priority) {
+      if( priority === 2 ) {
+        return 'HARE';
+      }
+      if( priority == 1 ) {
+        return 'X';
+      }
+      return '';
+    };
+
+    $scope.isAnniversary = function(n) {
+      if( n % 5 === 0 || n === 69 || n === 6 ) {
+        return true;
+      }
+      return false;
+    };
+
     var participantsDeferred = $q.defer();
     var attendancesDeferred = $q.defer();
     var attendanceRecordsDeferred = $q.defer();

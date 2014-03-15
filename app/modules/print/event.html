@@ -21,8 +21,12 @@
         <a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a>
         <span class="util--nowrap" ng-if="participant.location">({{participant.location}})</span>
       </td>
-      <td class="text-center">{{participant.attendance ? (participant.attendance.host ? 'HARE' : 'X') : ''}}</td>
-      <td class="text-right">{{participant.records.attendanceCount + 1}}</td>
+      <td class="text-center" ng-class="{ 'print--highlight': participant.priority == 2 }">
+        {{signinMark(participant.priority)}}
+      </td>
+      <td class="text-right" ng-class="{ 'print--highlight': isAnniversary(participant.records.attendanceCount + 1)}">
+        {{participant.records.attendanceCount + 1}}
+      </td>
       <td>
         <a class="util--nowrap" ng-if="participant.records.date" ui-sref="app.event.index({ id: participant.records.event })">
           {{participant.records.date}}
