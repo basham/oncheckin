@@ -17,7 +17,10 @@
   <tbody>
     <tr ng-repeat="participant in participants | filter:{ priority: filterPriority } | orderBy:order">
       <td>{{participant.lastName}}, {{participant.firstName}}</td>
-      <td><a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a></td>
+      <td>
+        <a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a>
+        <span ng-if="participant.location">({{participant.location}})</span>
+      </td>
       <td>{{participant.attendance ? (participant.attendance.host ? 'HARE' : 'X') : ''}}</td>
       <td>{{participant.records.attendanceCount + 1}}</td>
       <td><a ui-sref="app.event.index({ id: participant.records.event })">{{participant.records.date}}</a></td>
