@@ -54,7 +54,7 @@ angular.module('oncheckinApp')
           }
           // If this attendance occured before the use of this system,
           // then we're starting to back-fill data. Accomodate it in the counts.
-          if(hasLegacy && date < recordedLastAttendanceDate) {
+          if(hasLegacy && date <= recordedLastAttendanceDate) {
             recordedAttendanceCount--;
             if(isHost) {
               recordedHostCount--;
