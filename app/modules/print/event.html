@@ -5,12 +5,15 @@
   {{event.date | date:'longDate'}}
 </p>
 
-<table class="table">
+<table class="print-Table">
   <thead>
     <th>Name</th>
     <th>Hash Name</th>
     <th class="text-center util--nowrap">Sign in</th>
-    <th class="text-right">Hashes <small class="util--nowrap">after sign in</small></th>
+    <th class="text-right">
+      <span class="util--block">Hashes</span>
+      <small class="util--nowrap">after sign in</small>
+    </th>
     <th>Last Hash</th>
     <th class="text-right">Hares</th>
   </thead>
@@ -21,11 +24,11 @@
         <a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a>
         <span class="util--nowrap" ng-if="participant.location">({{participant.location}})</span>
       </td>
-      <td class="text-center" ng-class="{ 'print--highlight': participant.priority == 2 }">
-        {{signinMark(participant.priority)}}
+      <td class="text-center">
+        <span ng-class="{ 'print--highlight': participant.priority == 2 }">{{signinMark(participant.priority)}}</span>
       </td>
-      <td class="text-right" ng-class="{ 'print--highlight': isAnniversary(participant.records.attendanceCount + 1)}">
-        {{participant.records.attendanceCount + 1}}
+      <td class="text-right">
+        <span ng-class="{ 'print--highlight': isAnniversary(participant.records.attendanceCount + 1)}">{{participant.records.attendanceCount + 1}}</span>
       </td>
       <td>
         <a class="util--nowrap" ng-if="participant.records.date" ui-sref="app.event.index({ id: participant.records.event })">
