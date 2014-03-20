@@ -2,7 +2,7 @@
 
 angular.module('oncheckinApp')
   .factory('eventService', function (firebaseRef, OnCompleteService, attendanceService, dateFilter) {
-    
+
     function add(chapterId, model) {
       // Flatten the date object into a string.
       var date = dateFilter(model.date, 'yyyy-MM-dd');
@@ -19,7 +19,7 @@ angular.module('oncheckinApp')
       // Link the event to the chapter.
       var chapterRef = firebaseRef('chapters').child(chapterId);
       chapterRef.child('events').child(id).setWithPriority(true, priority);
-      
+
       return ref;
     }
 
@@ -73,14 +73,8 @@ angular.module('oncheckinApp')
     }
 
     return {
-      add: function(chapterId, model) {
-        return add(chapterId, model);
-      },
-      remove: function(id) {
-        return remove(id);
-      },
-      update: function(id, model) {
-        return update(id, model);
-      }
+      add: add,
+      remove: remove,
+      update: update
     };
   });

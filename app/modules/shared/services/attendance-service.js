@@ -73,14 +73,8 @@ angular.module('oncheckinApp')
     }
 
     return {
-      add: function(participantId, eventId) {
-        return add(participantId, eventId);
-      },
-      remove: function(id) {
-        return remove(id);
-      },
-      setHost: function(id, value) {
-        setHost(id, value);
-      }
+      add: add,
+      remove: remove,
+      setHost: setHost
     };
   });
