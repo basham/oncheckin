@@ -51,4 +51,8 @@ angular.module('oncheckinApp')
       };
     });
 
+    participantService.getLatestAttendance(participantId).then(function(attendance) {
+      $scope.attendanceRecord = attendance;
+    });
+
   });

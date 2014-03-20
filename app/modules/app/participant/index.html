@@ -4,14 +4,22 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3
-      class="panel-title"
-      ng-pluralize
-      count="(participant.attendances | keyCount)"
-      when="{
-        '0': 'No Events',
-        'one': '1 Event',
-        'other': '{} Events'}"></h3>
+    <h3 class="panel-title">
+      <span class="util-Margin--right"
+        ng-pluralize
+        count="attendanceRecord.attendanceCount"
+        when="{
+          '0': 'No Attendances',
+          'one': '1 Attendance',
+          'other': '{} Attendances'}"></span>
+      <span
+        ng-pluralize
+        count="attendanceRecord.hostCount"
+        when="{
+          '0': '',
+          'one': '1 Hare',
+          'other': '{} Hares'}"></span>
+    </h3>
   </div>
   <div class="oci-Panel-body">
     <ul class="oci-PanelList">
@@ -23,5 +31,22 @@
         <span class="label label-info" ng-if="attendance.host">HARE</span>
       </li>
     </ul>
+  </div>
+  <div class="alert alert-warning"
+    ng-if="attendanceRecord.hasUnaccountedRecords">
+    <span class="util--nowrap"
+      ng-pluralize
+      count="attendanceRecord.unaccountedAttendanceCount"
+      when="{
+        'one': '1 unaccounted attendance.',
+        'other': '{} unaccounted attendances.'
+      }"></span>
+    <span class="util--nowrap"
+      ng-pluralize
+      count="attendanceRecord.unaccountedHostCount"
+      when="{
+        'one': '1 unaccounted attendance as a hare.',
+        'other': '{} unaccounted attendances as a hare.'
+      }"></span>
   </div>
 </div>

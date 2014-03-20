@@ -78,7 +78,10 @@ angular.module('oncheckinApp')
         // Resolve the promise with these attendance calculations.
         deferred.resolve({
           attendanceCount: attendanceCount + recordedAttendanceCount,
+          unaccountedAttendanceCount: recordedAttendanceCount,
           hostCount: hostCount + recordedHostCount,
+          unaccountedHostCount: recordedHostCount,
+          hasUnaccountedRecords: recordedAttendanceCount > 0 || recordedHostCount > 0,
           date: latest ? latest.getPriority() : null,
           attendance: latest ? latest.name() : null,
           event: latest ? latest.val().event : null
