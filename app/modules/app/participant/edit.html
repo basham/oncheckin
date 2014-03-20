@@ -1,6 +1,6 @@
-<form class="panel panel-default" ng-submit="updateProfile()">
+<form class="panel panel-default" ng-submit="updateName()">
   <div class="panel-heading">
-    <h3 class="panel-title">Edit Profile</h3>
+    <h3 class="panel-title">Edit Name</h3>
   </div>
   <div class="panel-body">
     <div class="form-group form-inline">
@@ -19,6 +19,25 @@
     </div>
   </div>
   <div class="panel-footer">
+    <button type="submit" class="btn btn-primary">Update Name</button>
+  </div>
+</form>
+
+<form class="panel panel-default" name="profileForm" ng-submit="updateProfile()">
+  <div class="panel-heading">
+    <h3 class="panel-title">Edit Profile</h3>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <label for="locationInput">Location</label>
+      <input id="locationInput" class="form-control" type="text" ng-model="model.location" placeholder="Local"/>
+    </div>
+    <div class="form-group">
+      <label for="notesInput">Notes</label>
+      <textarea id="notesInput" class="form-control" ng-model="model.notes" placeholder="Notes"></textarea>
+    </div>
+  </div>
+  <div class="panel-footer">
     <button type="submit" class="btn btn-primary">Update Profile</button>
   </div>
 </form>
@@ -31,11 +50,11 @@
     <div class="form-group form-inline">
       <div class="form-group">
         <label for="recordedAttendanceCountInput">Recorded number of attendances</label>
-        <input id="recordedAttendanceCountInput" class="form-control" type="number" ng-model="model.recordedAttendanceCount"/>
+        <input id="recordedAttendanceCountInput" class="form-control" type="number" ng-model="model.recordedAttendanceCount" placeholder="0"/>
       </div>
       <div class="form-group">
         <label for="recordedHostCountInput">Recorded number of hares</label>
-        <input id="recordedHostCountInput" class="form-control" type="number" ng-model="model.recordedHostCount"/>
+        <input id="recordedHostCountInput" class="form-control" type="number" ng-model="model.recordedHostCount" placeholder="0"/>
       </div>
     </div>
     <div class="form-group">

@@ -51,16 +51,26 @@ angular.module('oncheckinApp')
       $scope.model = angular.copy(snap.val());
     });
 
+    function transitionBack() {
+      $state.transitionTo('app.participant.index', { id: participantId });
+    }
+
+    $scope.updateName = function() {
+      participantService.updateName(participantId, $scope.model).then(function() {
+        transitionBack();
+      });
+    };
+
     $scope.updateProfile = function() {
       participantService.updateProfile(participantId, $scope.model).then(function() {
-        $state.transitionTo('app.participant.index', { id: participantId });
+        transitionBack();
       });
     };
 
     $scope.updateHistory = function() {
       $scope.model.recordedLastAttendanceDate = dateFilter($scope.model.$recordedLastAttendanceDate, 'yyyy-MM-dd');
       participantService.updateHistory(participantId, $scope.model).then(function() {
-        $state.transitionTo('app.participant.index', { id: participantId });
+        transitionBack();
       });
     };
 

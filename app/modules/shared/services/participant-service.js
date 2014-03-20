@@ -121,14 +121,25 @@ angular.module('oncheckinApp')
       return onComplete.all();
     }
 
-    function updateProfile(id, model) {
+    function updateName(id, model) {
       // Initiate deferred handlers.
       var onComplete = new OnCompleteService();
-      // Update the record with the model and priority.
+      // Update the record with the model.
       var ref = firebaseRef('participants').child(id);
       ref.child('firstName').set(model.firstName, onComplete.handler());
       ref.child('lastName').set(model.lastName, onComplete.handler());
       ref.child('alias').set(model.alias, onComplete.handler());
+
+      return onComplete.all();
+    }
+
+    function updateProfile(id, model) {
+      // Initiate deferred handlers.
+      var onComplete = new OnCompleteService();
+      // Update the record with the model.
+      var ref = firebaseRef('participants').child(id);
+      ref.child('location').set(model.location || null, onComplete.handler());
+      ref.child('notes').set(model.notes || null, onComplete.handler());
 
       return onComplete.all();
     }
@@ -146,20 +157,11 @@ angular.module('oncheckinApp')
     }
 
     return {
-      add: function(chapterId, model) {
-        return add(chapterId, model);
-      },
-      getLatestAttendance: function(id, maxDate) {
-        return getLatestAttendance(id, maxDate);
-      },
-      remove: function(id) {
-        return remove(id);
-      },
-      updateProfile: function(id, model) {
-        return updateProfile(id, model);
-      },
-      updateHistory: function(id, model) {
-        return updateHistory(id, model);
-      }
+      add: add,
+      getLatestAttendance: getLatestAttendance,
+      remove: remove,
+      updateName: updateName,
+      updateProfile: updateProfile,
+      updateHistory: updateHistory
     };
   });
