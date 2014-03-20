@@ -2,6 +2,10 @@
 
 <hr/>
 
+<p class="alert alert-info" ng-if="participant.location">
+  Visitor from <strong>{{participant.location}}</strong>.
+</p>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">
@@ -48,5 +52,14 @@
         'one': '1 unaccounted attendance as a hare.',
         'other': '{} unaccounted attendances as a hare.'
       }"></span>
+  </div>
+</div>
+
+<div class="panel panel-default" ng-if="participant.notes">
+  <div class="panel-heading">
+    <h3 class="panel-title">Notes</h3>
+  </div>
+  <div class="panel-body">
+    <p>{{participant.notes}}</p>
   </div>
 </div>
