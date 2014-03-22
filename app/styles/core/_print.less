@@ -1,0 +1,32 @@
+@page {
+  margin: 3pc auto 5pc;
+}
+
+@media print {
+
+  body {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  table {
+    //page-break-inside: avoid;
+  }
+
+  tr, td {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  thead {
+    //display: table-header-group;
+  }
+
+  tfoot {
+    //display: table-footer-group;
+  }
+}

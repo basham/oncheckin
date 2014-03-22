@@ -1,143 +1,23 @@
 
+@import 'core/_base.less';
+@import 'core/_print.less';
+
+@import 'modules/oci/_button.less';
+@import 'modules/oci/_input.less';
+@import 'modules/oci/_panel.less';
+@import 'modules/oci/_panel-list.less';
+
+@import 'modules/print/_print.less';
+@import 'modules/print/_table.less';
+
+@import 'modules/util/_grid.less';
+@import 'modules/util/_util.less';
+
 .panel {
 
   .alert {
     border-radius: 0;
     margin-bottom: 0;
     padding: 0.5em 1em;
-  }
-}
-
-input, textarea {
-
-  &.ng-dirty {
-    background-color: lighten(yellow, 45%);
-  }
-}
-
-.print--highlight {
-  border: 2px solid #000;
-  border-radius: 0.25em;
-  padding: 0.25em;
-  font-weight: bold;
-}
-
-.print-Table {
-  width: 100%;
-
-  thead > tr {
-    border-bottom: 2pt solid #000;
-    border-top: none;
-  }
-
-  tr {
-    border-top: 1pt solid #000;
-  }
-
-  th {
-    vertical-align: bottom;
-  }
-
-  th, td {
-    padding: 0.5em;
-  }
-}
-
-@page {
-  margin: 3pc auto 5pc;
-}
-
-@media print {
-
-  body {
-    font-size: 12px;
-  }
-
-  h1 {
-    font-size: 20px;
-    margin: 0;
-  }
-
-  table {
-    //page-break-inside: avoid;
-  }
-
-  tr, td {
-    page-break-inside: avoid;
-    page-break-after: auto;
-  }
-
-  thead {
-    //display: table-header-group;
-  }
-
-  tfoot {
-    //display: table-footer-group;
-  }
-}
-
-.util--block {
-  display: block;
-}
-
-.util--nowrap {
-  white-space: nowrap;
-}
-
-.util-Margin {
-
-  &--right {
-    margin-right: 1em;
-  }
-}
-.oci-Button {
-
-  &--group {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-}
-
-.oci-Input {
-
-  &--group {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-}
-
-.oci-Panel {
-
-  &-body {
-    padding: 0 1em;
-  }
-}
-.oci-PanelList {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  &-item {
-    padding: 0.5em 0;
-
-    .btn + .btn {
-      margin-left: 0.5rem;
-    }
-  }
-
-  &-item + &-item {
-    border-top: 1px solid #eee;
-  }
-}
-
-.util-Grid {
-  display: flex;
-
-  &--center {
-    align-items: center;
-  }
-
-  &-cell {
-    flex: 1;
   }
 }
