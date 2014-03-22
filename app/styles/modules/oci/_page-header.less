@@ -2,7 +2,6 @@
   border-bottom: 1px solid #ddd;
   flex-direction: column;
   margin: 0 0 1em;
-  padding-bottom: 0.5em;
 
   @media @xs {
     align-items: center;
@@ -11,8 +10,13 @@
   }
 
   &-title {
-    font-size: 2em;
+    font-size: 1.6em;
     margin: 1rem 0 0;
+
+    @media @xs {
+      font-size: 2em;
+      margin-top: 2rem;
+    }
   }
 
   &-details {
@@ -20,6 +24,14 @@
 
     * + * {
       margin-left: 1em;
+    }
+  }
+
+  &-actions {
+    padding-bottom: 0.5em;
+
+    @media @xs {
+      padding: 0;
     }
   }
 }

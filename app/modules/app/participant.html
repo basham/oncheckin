@@ -1,6 +1,11 @@
-<h1><a ui-sref="app.participant.index({ id: participantId })">{{participant | hashName}}</a> ({{participant.firstName}} {{participant.lastName}})</h1>
-<p>
-  <a ui-sref="app.chapter({ id: participant.chapter })">{{chapter.name}}</a>
-</p>
+<header class="oci-PageHeader">
+  <h1 class="oci-PageHeader-title">
+    <a ui-sref="app.participant.index({ id: participantId })">{{participant | hashName}}</a>
+  </h1>
+  <p class="oci-PageHeader-details">
+    <span>{{participant.firstName}} {{participant.lastName}}</span>
+    <a ui-sref="app.chapter({ id: participant.chapter })">{{chapter.name}}</a>
+  </p>
+</header>
 
 <div ui-view></div>
