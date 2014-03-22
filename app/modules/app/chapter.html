@@ -1,16 +1,16 @@
-<header class="oci-PageHeader util-Grid util-Grid--center">
-  <h1 class="oci-PageHeader-title util-Grid-cell">{{chapter.name}}</h1>
+<header class="oci-PageHeader util-Grid">
+  <div class="util-Grid-cell">
+    <h1 class="oci-PageHeader-title">{{chapter.name}}</h1>
+    <p class="oci-PageHeader-details">
+      <span>{{chapter.location}}</span>
+      <a href="{{chapter.url}}" ng-if="chapter.url">{{chapter.url | urlHostname }}</a>
+    </p>
+  </div>
   <div>
     <a class="btn btn-default" ng-click="openAddEventModal()">New Event</a>
     <a class="btn btn-default" ng-click="openAddParticipantModal()">New Participant</a>
   </div>
 </header>
-
-<div>
-  {{chapter.location}}
-  &bull;
-  <a href="{{chapter.url}}">{{chapter.url | urlHostname }}</a>
-</div>
 
 <div class="panel panel-default">
   <div class="panel-heading">
