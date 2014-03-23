@@ -5,7 +5,14 @@
   <p class="oci-PageHeader-details">
     <span>{{participant.firstName}} {{participant.lastName}}</span>
     <a ui-sref="app.chapter.index({ id: participant.chapter })">{{chapter.name}}</a>
+    <a ui-sref="app.participant.edit({ id: participantId })">Edit</a>
   </p>
 </header>
 
-<div ui-view></div>
+<nav class="oci-PageNav">
+  <a class="oci-PageNav-item"
+    ui-sref="app.participant.index({ id: participantId })"
+    ui-sref-active="oci-PageNav-item--active">Overview</a>
+</nav>
+
+<div class="oci-PageBody" ui-view autoscroll="false"></div>
