@@ -1,28 +1,26 @@
-<a ui-sref="app.event.editAttendance({ id: eventId })" class="btn btn-default">Edit Attendance</a>
-<a ui-sref="app.event.edit({ id: eventId })" class="btn btn-default">Edit Event</a>
-<a ui-sref="print.event({ id: eventId })" class="btn btn-default">Print Roster</a>
-
-<hr/>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3
-      class="panel-title"
+<section class="oci-Panel">
+  <header class="oci-Panel-header">
+    <h1
+      class="oci-Panel-title"
       ng-pluralize
       count="(event.attendances | keyCount)"
       when="{
         '0': 'No Participants',
         'one': '1 Participant',
-        'other': '{} Participants'}"></h3>
+        'other': '{} Participants'}"></h1>
+    <a ui-sref="app.event.editAttendance({ id: eventId })"
+      class="oci-Button oci-Button--primary oci-Button--small">Edit Attendance</a>
+  </header>
+  <div class="oci-Panel-body oci-List">
+    <a class="oci-List-item util-Grid util-Grid--center"
+      ng-repeat="attendance in attendances | orderByPriority | orderBy:'-host'"
+      ui-sref="app.participant.index({ id: attendance['.id:participant'] })">
+      <div class="util-Grid-cell">
+        <strong class="util--block">{{attendance.participant | hashName}}</strong>
+        <span>{{attendance.participant.firstName}} {{attendance.participant.lastName}}</span>
+        <span class="util--nowrap">{{attendance.participant.location}}</span>
+      </div>
+      <span class="label label-info" ng-if="attendance.host">HARE</span>
+    </a>
   </div>
-  <div class="oci-Panel-body">
-    <ul class="oci-PanelList">
-      <li class="oci-PanelList-item util-Grid util-Grid--center" ng-repeat="attendance in attendances | orderByPriority | orderBy:'-host'">
-        <a class="util-Grid-cell" ui-sref="app.participant.index({ id: attendance['.id:participant'] })">
-          {{attendance.participant | hashName}}
-        </a>
-        <span class="label label-info" ng-if="attendance.host">HARE</span>
-      </li>
-    </ul>
-  </div>
-</div>
+</section>

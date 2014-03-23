@@ -1,11 +1,19 @@
 <header class="oci-PageHeader">
-  <h1 class="oci-PageHeader-title">
-    <a ui-sref="app.event.index({ id: eventId })">{{event.name}}</a>
-  </h1>
+  <h1 class="oci-PageHeader-title">{{event.name}}</h1>
   <p class="oci-PageHeader-details">
     <span>{{event.date | date:'longDate'}}</span>
     <a ui-sref="app.chapter.index({ id: event.chapter })">{{chapter.name}}</a>
+    <a ui-sref="app.event.edit({ id: eventId })">Edit Event</a>
   </p>
 </header>
 
-<div ui-view></div>
+<nav class="oci-PageNav">
+  <a class="oci-PageNav-item"
+    ui-sref="app.event.index({ id: eventId })"
+    ui-sref-active="oci-PageNav-item--active">Overview</a>
+  <a class="oci-PageNav-item"
+    ui-sref="print.event({ id: eventId })"
+    ui-sref-active="oci-PageNav-item--active">Print Roster</a>
+</nav>
+
+<div class="oci-PageBody" ui-view autoscroll="false"></div>

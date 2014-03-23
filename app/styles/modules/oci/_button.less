@@ -1,7 +1,43 @@
 .oci-Button {
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  cursor: pointer;
+  padding: 0.5em 1em;
 
-  &--group {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+  &:hover {
+    text-decoration: none;
+  }
+
+  &--default {
+    .mixin(@color-Content, #222);
+  }
+
+  &--primary {
+    .mixin(@color-Ix);
+  }
+
+  &--danger {
+    .mixin(@color-Danger);
+  }
+
+  &--small {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .mixin(@color, @textColor: #fff) {
+    background-color: @color;
+    border-color: darken(@color, 10%);
+    color: @textColor;
+    text-shadow: 0 1px darken(@color, 20%);
+
+    &:hover, &:active {
+      background-color: darken(@color, 10%);
+      border-color: darken(@color, 20%);
+      color: @textColor;
+    }
+
+    &:active {
+      box-shadow: inset 0 1px 1px 0 darken(@color, 20%);
+    }
   }
 }
