@@ -47,9 +47,22 @@ angular.module('oncheckinApp', [
         controller: 'AppChaptersCtrl'
       })
       .state('app.chapter', {
+        abstract: true,
         url: '/chapters/:id',
         templateUrl: 'modules/app/chapter.html',
         controller: 'AppChapterCtrl'
+      })
+      .state('app.chapter.index', {
+        url: '',
+        templateUrl: 'modules/app/chapter/index.html'
+      })
+      .state('app.chapter.events', {
+        url: '/events',
+        templateUrl: 'modules/app/chapter/events.html'
+      })
+      .state('app.chapter.participants', {
+        url: '/participants',
+        templateUrl: 'modules/app/chapter/participants.html'
       })
       .state('app.event', {
         abstract: true,

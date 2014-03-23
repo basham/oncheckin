@@ -1,0 +1,31 @@
+<section class="oci-Panel">
+  <header class="oci-Panel-header">
+    <h1
+      class="oci-Panel-title"
+      ng-pluralize
+      count="(chapter.participants | keyCount)"
+      when="{
+        '0': 'No Participants',
+        'one': '1 Participant',
+        'other': '{} Participants'}"></h1>
+    <a class="btn btn-primary btn-sm" ng-click="openAddParticipantModal()">New Participant</a>
+  </header>
+  <div class="oci-Panel-body oci-List">
+    <a class="oci-List-item util-Grid util-Grid--center"
+      ng-repeat="participant in participants | orderByPriority"
+      ui-sref="app.participant.index({ id: participant.$id })">
+      <div class="util-Grid-cell">
+        <strong class="util--block">{{participant | hashName}}</strong>
+        <span>{{participant.firstName}} {{participant.lastName}}</span>
+        <span class="util--nowrap">{{participant.location}}</span>
+      </div>
+      <div
+        ng-pluralize
+        count="(participant.attendances | keyCount)"
+        when="{
+          '0': 'No events',
+          'one': '1 event',
+          'other': '{} events'}"></div>
+    </a>
+  </div>
+</section>

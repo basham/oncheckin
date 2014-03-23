@@ -1,92 +1,27 @@
-<header class="oci-PageHeader util-Grid">
-  <div class="util-Grid-cell">
-    <h1 class="oci-PageHeader-title">{{chapter.name}}</h1>
-    <p class="oci-PageHeader-details">
-      <span>{{chapter.location}}</span>
-      <a href="{{chapter.url}}" ng-if="chapter.url">{{chapter.url | urlHostname }}</a>
-    </p>
-  </div>
-  <div class="oci-PageHeader-actions">
-    <a class="btn btn-default" ng-click="openAddEventModal()">New Event</a>
-    <a class="btn btn-default" ng-click="openAddParticipantModal()">New Participant</a>
-  </div>
+<header class="oci-PageHeader">
+  <h1 class="oci-PageHeader-title">{{chapter.name}}</h1>
+  <p class="oci-PageHeader-details">
+    <span>{{chapter.location}}</span>
+    <a href="{{chapter.url}}" ng-if="chapter.url">{{chapter.url | urlHostname }}</a>
+  </p>
 </header>
 
 <nav class="oci-PageNav">
-  <a class="oci-PageNav-item oci-PageNav-item--active" ui-sref="app.chapter.index({ id: chapter.$id })">Overview</a>
-  <a class="oci-PageNav-item" ui-sref="app.chapter.events({ id: chapter.$id })">
+  <a class="oci-PageNav-item"
+    ui-sref="app.chapter.index({ id: chapterId })"
+    ui-sref-active="oci-PageNav-item--active">Overview</a>
+  <a class="oci-PageNav-item"
+    ui-sref="app.chapter.events({ id: chapterId })"
+    ui-sref-active="oci-PageNav-item--active">
     Events
     <small>{{chapter.events | keyCount}}</small>
   </a>
-  <a class="oci-PageNav-item" ui-sref="app.chapter.participants({ id: chapter.$id })">
+  <a class="oci-PageNav-item"
+    ui-sref="app.chapter.participants({ id: chapterId })"
+    ui-sref-active="oci-PageNav-item--active">
     Participants
     <small>{{chapter.participants | keyCount}}</small>
   </a>
 </nav>
 
-<div class="oci-PageBody">
-
-  <section class="oci-Panel">
-    <header class="oci-Panel-header">
-      <h1
-        class="oci-Panel-title"
-        ng-pluralize
-        count="(chapter.events | keyCount)"
-        when="{
-          '0': 'No Events',
-          'one': '1 Event',
-          'other': '{} Events'}"></h1>
-      <a class="btn btn-primary btn-sm" ng-click="openAddEventModal()">New Event</a>
-    </header>
-    <div class="oci-Panel-body oci-List">
-      <a class="oci-List-item util-Grid util-Grid--center"
-        ng-repeat="event in events | orderByPriority | orderBy:'-date'"
-        ui-sref="app.event.index({ id: event.$id })">
-        <div class="util-Grid-cell">
-          <strong class="util--block">{{event.name}}</strong>
-          <span>{{event.date | date:'mediumDate'}}</span>
-        </div>
-        <div
-          ng-pluralize
-          count="(event.attendances | keyCount)"
-          when="{
-            '0': 'No participants',
-            'one': '1 participant',
-            'other': '{} participants'}"></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="oci-Panel">
-    <header class="oci-Panel-header">
-      <h1
-        class="oci-Panel-title"
-        ng-pluralize
-        count="(chapter.participants | keyCount)"
-        when="{
-          '0': 'No Participants',
-          'one': '1 Participant',
-          'other': '{} Participants'}"></h1>
-      <a class="btn btn-primary btn-sm" ng-click="openAddParticipantModal()">New Participant</a>
-    </header>
-    <div class="oci-Panel-body oci-List">
-      <a class="oci-List-item util-Grid util-Grid--center"
-        ng-repeat="participant in participants | orderByPriority"
-        ui-sref="app.participant.index({ id: participant.$id })">
-        <div class="util-Grid-cell">
-          <strong class="util--block">{{participant | hashName}}</strong>
-          <span>{{participant.firstName}} {{participant.lastName}}</span>
-          <span class="util--nowrap">{{participant.location}}</span>
-        </div>
-        <div
-          ng-pluralize
-          count="(participant.attendances | keyCount)"
-          when="{
-            '0': 'No events',
-            'one': '1 event',
-            'other': '{} events'}"></div>
-      </a>
-    </div>
-  </section>
-
-</div>
+<div class="oci-PageBody" ui-view autoscroll="false"></div>

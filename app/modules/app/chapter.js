@@ -8,6 +8,7 @@ angular.module('oncheckinApp')
     var chapterRef = firebaseRef('chapters').child(chapterId);
 
     // Initialize scope objects.
+    $scope.chapterId = chapterId;
     $scope.chapter = $firebase(chapterRef);
 
     // Find all the events for each chapter.

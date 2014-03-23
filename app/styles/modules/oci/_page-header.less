@@ -1,38 +1,26 @@
 .oci-PageHeader {
   background-color: @color-Content;
   border-bottom: 1px solid @color-Border;
-  flex-direction: column;
-  padding: 0 0.5em;
+  padding: 0.75em 0.5em 0;
 
   @media @xs {
-    align-items: center;
-    flex-direction: row;
-    padding: 0 1em;
+    padding: 1.5em 1em 0.5em;
   }
 
   &-title {
     font-size: 1.6em;
-    margin: 1.5rem 0 0;
+    margin: 0;
 
     @media @xs {
       font-size: 2em;
-      margin-top: 2rem;
     }
   }
 
   &-details {
-    margin: 0.5em 0 1em;
+    margin-top: 0.5em;
 
     * + * {
       margin-left: 1em;
-    }
-  }
-
-  &-actions {
-    padding-bottom: 0.5em;
-
-    @media @xs {
-      padding: 0;
     }
   }
 }

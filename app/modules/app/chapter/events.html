@@ -1,0 +1,30 @@
+<section class="oci-Panel">
+  <header class="oci-Panel-header">
+    <h1
+      class="oci-Panel-title"
+      ng-pluralize
+      count="(chapter.events | keyCount)"
+      when="{
+        '0': 'No Events',
+        'one': '1 Event',
+        'other': '{} Events'}"></h1>
+    <a class="btn btn-primary btn-sm" ng-click="openAddEventModal()">New Event</a>
+  </header>
+  <div class="oci-Panel-body oci-List">
+    <a class="oci-List-item util-Grid util-Grid--center"
+      ng-repeat="event in events | orderByPriority | orderBy:'-date'"
+      ui-sref="app.event.index({ id: event.$id })">
+      <div class="util-Grid-cell">
+        <strong class="util--block">{{event.name}}</strong>
+        <span>{{event.date | date:'mediumDate'}}</span>
+      </div>
+      <div
+        ng-pluralize
+        count="(event.attendances | keyCount)"
+        when="{
+          '0': 'No participants',
+          'one': '1 participant',
+          'other': '{} participants'}"></div>
+    </a>
+  </div>
+</section>

@@ -1,4 +1,5 @@
 .oci-PageNav {
+  align-items: center;
   background-color: @color-Component;
   border-bottom: 0.25em solid @color-Border;
   display: flex;
@@ -21,5 +22,11 @@
       background-color: @color-Ix-bg;
       box-shadow: 0 0.25em 0 0 @color-Ix-bg--active;
     }
+  }
+
+  &-actions {
+    flex: 1;
+    text-align: right;
+    padding: 0 0.5em;
   }
 }
