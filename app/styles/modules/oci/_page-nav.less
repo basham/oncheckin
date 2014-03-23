@@ -1,0 +1,25 @@
+.oci-PageNav {
+  background-color: @color-Component;
+  border-bottom: 0.25em solid @color-Border;
+  display: flex;
+
+  &-item {
+    background-color: #fff;
+    border-right: 1px solid @color-Border;
+    padding: 1em;
+
+    &:hover, &:active {
+      background-color: @color-Ix-bg;
+      text-decoration: none;
+    }
+
+    > small {
+      color: @color-Muted;
+    }
+
+    &--active {
+      background-color: @color-Ix-bg;
+      box-shadow: 0 0.25em 0 0 @color-Ix-bg--active;
+    }
+  }
+}

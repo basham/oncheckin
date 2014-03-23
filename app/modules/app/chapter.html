@@ -12,6 +12,18 @@
   </div>
 </header>
 
+<nav class="oci-PageNav">
+  <a class="oci-PageNav-item oci-PageNav-item--active" ui-sref="app.chapter.index({ id: chapter.$id })">Overview</a>
+  <a class="oci-PageNav-item" ui-sref="app.chapter.events({ id: chapter.$id })">
+    Events
+    <small>{{chapter.events | keyCount}}</small>
+  </a>
+  <a class="oci-PageNav-item" ui-sref="app.chapter.participants({ id: chapter.$id })">
+    Participants
+    <small>{{chapter.participants | keyCount}}</small>
+  </a>
+</nav>
+
 <div class="oci-PageBody">
 
   <section class="oci-Panel">

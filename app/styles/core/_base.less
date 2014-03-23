@@ -1,5 +1,13 @@
 body {
-  background-color: darken(#fff, 10%);
+  background-color: @color-Bg;
+}
+
+a {
+  color: @color-Ix-text;
+
+  &:hover, &:active {
+    color: @color-Ix-text--active;
+  }
 }
 
 input, textarea {
