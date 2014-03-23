@@ -7,7 +7,11 @@
   &-item {
     background-color: #fff;
     border-right: 1px solid @color-Border;
-    padding: 1em;
+    padding: 0.75em 0.5em;
+
+    @media @xs {
+      padding: 1em;
+    }
 
     &:hover, &:focus {
       background-color: @color-Ix-bg;
