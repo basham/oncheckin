@@ -2,19 +2,19 @@
   "name": "oncheckin",
   "version": "0.0.0",
   "dependencies": {
-    "angular": "1.2.6",
-    "json3": "~3.2.6",
-    "es5-shim": "~2.1.0",
-    "jquery": "~1.10.2",
+    "angular": "~1.3.0",
+    "json3": "~3.3.0",
+    "es5-shim": "~2.3.0",
+    "jquery": "~2.1.0",
     "sass-bootstrap": "~3.0.2",
-    "angular-resource": "1.2.6",
-    "angular-cookies": "1.2.6",
-    "angular-sanitize": "1.2.6",
-    "angular-route": "1.2.6",
+    "angular-resource": "~1.3.0",
+    "angular-cookies": "~1.3.0",
+    "angular-sanitize": "~1.3.0",
+    "angular-route": "~1.3.0",
     "firebase": "~1.0.2",
-    "angularfire": "~0.6.0",
-    "firebase-simple-login": "~1.0.2",
-    "angular-ui-router": "0.2.8-bowratic-tedium",
+    "angularfire": "~0.7.0",
+    "firebase-simple-login": "~1.3.0",
+    "angular-ui-router": "~0.2.10",
     "angular-underscore": "*",
     "underscore": "~1.6.0",
     "angular-bootstrap": "~0.10.0",
@@ -23,7 +23,7 @@
     "firebase-util": "firebase/firebase-util"
   },
   "devDependencies": {
-    "angular-mocks": "1.2.6",
-    "angular-scenario": "1.2.6"
+    "angular-mocks": "~1.3.0",
+    "angular-scenario": "~1.3.0"
   }
 }
