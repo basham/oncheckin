@@ -120,4 +120,9 @@ angular.module('oncheckinApp', [
 
     // For any unmatched url, send to a default route
     $urlRouterProvider.otherwise('/');
+  })
+  .run(function() {
+    // Integrating FastClick to eliminate 300ms mobile touch delays.
+    // http://stackoverflow.com/a/21113518
+    FastClick.attach(document.body);
   });
