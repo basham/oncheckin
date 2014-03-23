@@ -1,4 +1,4 @@
-<header class="oci-Header util-Grid util-Grid--center">
+<div class="oci-Header util-Grid util-Grid--center">
   <div class="util-Grid-cell">
     <a ui-sref="app.chapters" class="oci-Header-title">oncheckin</a>
     <span class="label label-warning" ng-if="!connectionState.isConnected">offline</span>
@@ -7,10 +7,10 @@
     <a ui-sref="app.login">Login</a>
     <button class="btn btn-default btn-sm" ng-click="logout()">Log out</button>
   </nav>
-</header>
+</div>
 
-<main class="oci-Body" ui-view></main>
+<div class="oci-Body" ui-view></div>
 
-<footer class="oci-Footer">
+<div class="oci-Footer">
   <a href="https://github.com/basham/oncheckin">GitHub</a>
-</footer>
+</div>
