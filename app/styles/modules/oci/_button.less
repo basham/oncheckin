@@ -4,7 +4,7 @@
   cursor: pointer;
   padding: 0.5em 1em;
 
-  &:hover {
+  &:hover, &:focus {
     text-decoration: none;
   }
 
@@ -30,7 +30,7 @@
     color: @textColor;
     text-shadow: 0 1px darken(@color, 20%);
 
-    &:hover, &:active {
+    &:hover, &:focus {
       background-color: darken(@color, 10%);
       border-color: darken(@color, 20%);
       color: @textColor;
