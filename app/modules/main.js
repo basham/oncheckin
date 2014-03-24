@@ -44,7 +44,10 @@ angular.module('oncheckinApp', [
       .state('app.chapters', {
         url: '/',
         templateUrl: 'modules/app/chapters.html',
-        controller: 'AppChaptersCtrl'
+        controller: 'AppChaptersCtrl',
+        data: {
+          title: 'Chapters'
+        }
       })
       .state('app.chapter', {
         abstract: true,
@@ -58,11 +61,17 @@ angular.module('oncheckinApp', [
       })
       .state('app.chapter.events', {
         url: '/events',
-        templateUrl: 'modules/app/chapter/events.html'
+        templateUrl: 'modules/app/chapter/events.html',
+        data: {
+          title: 'Events'
+        }
       })
       .state('app.chapter.participants', {
         url: '/participants',
-        templateUrl: 'modules/app/chapter/participants.html'
+        templateUrl: 'modules/app/chapter/participants.html',
+        data: {
+          title: 'Participants'
+        }
       })
       .state('app.event', {
         abstract: true,
@@ -77,12 +86,18 @@ angular.module('oncheckinApp', [
       .state('app.event.edit', {
         url: '',
         templateUrl: 'modules/app/event/edit.html',
-        controller: 'AppEventEditCtrl'
+        controller: 'AppEventEditCtrl',
+        data: {
+          title: 'Edit'
+        }
       })
       .state('app.event.editAttendance', {
         url: '',
         templateUrl: 'modules/app/event/edit-attendance.html',
-        controller: 'AppEventEditAttendanceCtrl'
+        controller: 'AppEventEditAttendanceCtrl',
+        data: {
+          title: 'Edit Attendance'
+        }
       })
       .state('print', {
         abstract: true,
@@ -106,7 +121,10 @@ angular.module('oncheckinApp', [
       .state('app.participant.edit', {
         url: '',
         templateUrl: 'modules/app/participant/edit.html',
-        controller: 'AppParticipantEditCtrl'
+        controller: 'AppParticipantEditCtrl',
+        data: {
+          title: 'Edit'
+        }
       })
       .state('app.login', {
         url: '/login',
@@ -121,8 +139,11 @@ angular.module('oncheckinApp', [
     // For any unmatched url, send to a default route
     $urlRouterProvider.otherwise('/');
   })
-  .run(function() {
+  .run(function($rootScope, pageTitleService) {
     // Integrating FastClick to eliminate 300ms mobile touch delays.
     // http://stackoverflow.com/a/21113518
     FastClick.attach(document.body);
+
+    // Update the title whenever the state changes.
+    $rootScope.$on('$stateChangeSuccess', pageTitleService.update);
   });

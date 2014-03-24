@@ -1,12 +1,12 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" ng-app="oncheckinApp"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" ng-app="oncheckinApp"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" ng-app="oncheckinApp"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="oncheckinApp"> <!--<![endif]-->
   <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title></title>
+  <title ng-bind-html="pageTitle">OnCheckIn</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
   </head>
-  <body ng-app="oncheckinApp">
+  <body>
   <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -84,12 +84,14 @@
   <script src="modules/modal/remove-event.js"></script>
   <script src="modules/modal/remove-participant.js"></script>
   <script src="modules/print/event.js"></script>
+  <script src="modules/shared/config.js"></script>
   <script src="modules/shared/filters/hash-name.js"></script>
   <script src="modules/shared/filters/key-count.js"></script>
   <script src="modules/shared/filters/url-hostname-filter.js"></script>
   <script src="modules/shared/services/attendance-service.js"></script>
   <script src="modules/shared/services/event-service.js"></script>
   <script src="modules/shared/services/on-complete-service.js"></script>
+  <script src="modules/shared/services/page-title-service.js"></script>
   <script src="modules/shared/services/participant-service.js"></script>
   <script src="scripts/angularfire/config.js"></script>
   <script src="scripts/services/firebase.js"></script>

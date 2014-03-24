@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppParticipantCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal, participantService) {
+  .controller('AppParticipantCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, $state, $modal, participantService, pageTitleService, hashNameFilter) {
 
     // Get the participant record.
     var participantId = $stateParams.id;
@@ -10,6 +10,15 @@ angular.module('oncheckinApp')
     // Initialize scope objects.
     $scope.participantId = participantId;
     $scope.participant = $firebase(participantRef);
+
+    // Promise to send the page title.
+    var titleDeferred = pageTitleService.defer('app.participant');
+
+    // Resolve the promised page title.
+    participantRef.once('value', function(snap) {
+      var alias = hashNameFilter(snap.val());
+      titleDeferred.resolve(alias);
+    });
 
     // Join the event's attendance and participant data.
     var participantAttendancesRef = participantRef.child('attendances');

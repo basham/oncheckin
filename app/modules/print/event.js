@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('PrintEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, participantService, $q) {
+  .controller('PrintEventCtrl', function ($scope, $firebase, firebaseRef, Firebase, $stateParams, participantService, $q, pageTitleService) {
 
     // Get the event.
     var eventId = $stateParams.id;
@@ -10,6 +10,15 @@ angular.module('oncheckinApp')
     // Initialize scope objects.
     $scope.event = $firebase(eventRef);
     $scope.eventId = eventId;
+
+    // Promise to send the page title.
+    var titleDeferred = pageTitleService.defer('print.event');
+
+    // Resolve the promised page title.
+    eventRef.once('value', function(snap) {
+      var eventName = snap.val().name;
+      titleDeferred.resolve(['Roster', eventName]);
+    });
 
     var filterPriority = {
       all: '',

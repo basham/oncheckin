@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('oncheckinApp')
-  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, $modal, $stateParams, $state, eventService, participantService) {
+  .controller('AppChapterCtrl', function ($scope, $firebase, firebaseRef, Firebase, $modal, $stateParams, $state, eventService, participantService, pageTitleService) {
 
     // Get the chapter record.
     var chapterId = $stateParams.id;
@@ -10,6 +10,15 @@ angular.module('oncheckinApp')
     // Initialize scope objects.
     $scope.chapterId = chapterId;
     $scope.chapter = $firebase(chapterRef);
+
+    // Promise to send the page title.
+    var titleDeferred = pageTitleService.defer('app.chapter');
+
+    // Resolve the promised page title.
+    chapterRef.once('value', function(snap) {
+      var chapterName = snap.val().name;
+      titleDeferred.resolve(chapterName);
+    });
 
     // Find all the events for each chapter.
     var chapterEventsRef = chapterRef.child('events');
