@@ -47,7 +47,7 @@ angular.module('oncheckinApp')
       }
       // Use the default page title if there's no alternative.
       if( promises.length === 0 ) {
-        promises.push(config.appName);
+        promises.push(config.defaultPageTitle);
       }
       // Update the page title
       $q.all(promises).then(function(res) {
@@ -65,7 +65,7 @@ angular.module('oncheckinApp')
           }
         });
         // Complete the title by joining all the parts.
-        $rootScope.pageTitle = arr.join(' &mdash; ');
+        $rootScope.pageTitle = arr.join(config.pageTitleDelimiter);
       });
     }
 

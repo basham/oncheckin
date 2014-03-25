@@ -2,5 +2,6 @@
 
 angular.module('oncheckinApp')
   .constant('config', {
-    appName: 'OnCheckIn'
+    defaultPageTitle: 'OnCheckIn',
+    pageTitleDelimiter: ' &mdash; '
   });
