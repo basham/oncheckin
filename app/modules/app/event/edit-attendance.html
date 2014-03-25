@@ -8,32 +8,38 @@
     typeahead-on-select="selectParticipant()"/>
 </form>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Hares</h3>
-  </div>
+<section class="oci-Panel">
+  <header class="oci-Panel-header">
+    <h1 class="oci-Panel-title">Hares</h1>
+  </header>
   <div class="oci-Panel-body">
-    <ul class="oci-PanelList">
-      <li class="oci-PanelList-item util-Grid util-Grid--center" ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
-        <a class="util-Grid-cell" ui-sref="app.participant.index({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
-        <a href ng-click="setHost(attendance, false)" class="btn btn-default btn-sm">Make Participant</a>
-        <a href ng-click="removeAttendance(attendance)" class="btn btn-danger btn-sm">Remove Attendance</a>
+    <ul class="oci-List">
+      <li class="oci-List-item util-Grid util-Grid--center" ng-repeat="attendance in attendances | orderByPriority | filter:{ host: true }">
+        <div class="util-Grid-cell">
+          <strong class="util--block">{{attendance.participant | hashName}}</strong>
+          <span>{{attendance.participant.firstName}} {{attendance.participant.lastName}}</span>
+        </div>
+        <a href ng-click="setHost(attendance, false)" class="oci-Button oci-Button--default util-Margin--right">Make Participant</a>
+        <a href ng-click="removeAttendance(attendance)" class="oci-Button oci-Button--danger" title="Remove Attendance">Remove</a>
       </li>
     </ul>
   </div>
-</div>
+</section>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Participants</h3>
-  </div>
+<section class="oci-Panel">
+  <header class="oci-Panel-header">
+    <h1 class="oci-Panel-title">Participants</h1>
+  </header>
   <div class="oci-Panel-body">
-    <ul class="oci-PanelList">
-      <li class="oci-PanelList-item util-Grid util-Grid--center" ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
-        <a class="util-Grid-cell" ui-sref="app.participant.index({ id: attendance['.id:participant'] })">{{attendance.participant | hashName}}</a>
-        <a href ng-click="setHost(attendance, true)" class="btn btn-default btn-sm">Make Hare</a>
-        <a href ng-click="removeAttendance(attendance)" class="btn btn-danger btn-sm">Remove Attendance</a>
+    <ul class="oci-List">
+      <li class="oci-List-item util-Grid util-Grid--center" ng-repeat="attendance in attendances | orderByPriority | filter:{ host: false }">
+        <div class="util-Grid-cell">
+          <strong class="util--block">{{attendance.participant | hashName}}</strong>
+          <span>{{attendance.participant.firstName}} {{attendance.participant.lastName}}</span>
+        </div>
+        <a href ng-click="setHost(attendance, true)" class="oci-Button oci-Button--default util-Margin--right">Make Hare</a>
+        <a href ng-click="removeAttendance(attendance)" class="oci-Button oci-Button--danger" title="Remove Attendance">Remove</a>
       </li>
     </ul>
   </div>
-</div>
+</section>

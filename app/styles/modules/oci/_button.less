@@ -9,7 +9,7 @@
   }
 
   &--default {
-    .mixin(@color-Content, #222);
+    .mixin(@color-Content);
   }
 
   &--primary {
@@ -21,23 +21,25 @@
   }
 
   &--small {
-    padding: 0.25rem 0.5rem;
+    padding: 0.25em 0.75em;
   }
 
-  .mixin(@color, @textColor: #fff) {
+  .mixin(@color) {
+    @textColor: contrast(@color, #fff, #222);
     background-color: @color;
-    border-color: darken(@color, 10%);
+    border-color: darken(@color, 15%);
+    box-shadow: inset 0 1px 0 0 tint(@color, 15%);
     color: @textColor;
-    text-shadow: 0 1px darken(@color, 20%);
+    text-shadow: 0 1px contrast(@textColor, darken(@color, 30%), #fff);
 
-    &:hover, &:focus {
-      background-color: darken(@color, 10%);
-      border-color: darken(@color, 20%);
+    &:hover, &:focus, &:active {
+      background-color: darken(@color, 15%);
+      border-color: darken(@color, 30%);
       color: @textColor;
     }
 
     &:active {
-      box-shadow: inset 0 1px 1px 0 darken(@color, 20%);
+      box-shadow: inset 0 1px 1px 0 darken(@color, 30%);
     }
   }
 }
