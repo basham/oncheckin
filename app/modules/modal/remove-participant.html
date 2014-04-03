@@ -1,13 +1,15 @@
-<form ng-submit="submit()">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
-    <h4 class="modal-title">Remove Participant</h4>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to remove the participant called <em>{{participant | hashName}}</em>? This cannot be undone.</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <button type="submit" class="btn btn-primary">Remove Participant</button>
-  </div>
-</form>
+<section class="oci-Panel oci-Panel--danger">
+  <form ng-submit="submit()">
+    <header class="oci-Panel-header">
+      <h1 class="oci-Panel-title">Remove Participant</h1>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+    </header>
+    <div class="oci-Panel-body">
+      <p>Are you sure you want to remove the participant called <em>{{participant | hashName}}</em>? This cannot be undone.</p>
+    </div>
+    <footer class="oci-Panel-footer">
+      <button type="submit" class="oci-Button oci-Button--danger">Remove Participant</button>
+      <button type="button" class="oci-Button oci-Button--default" ng-click="cancel()">Cancel</button>
+    </footer>
+  </form>
+</section>

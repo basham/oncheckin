@@ -51,11 +51,11 @@
   </footer>
 </section>
 
-<div class="panel panel-default" ng-if="participant.notes">
-  <div class="panel-heading">
-    <h3 class="panel-title">Notes</h3>
-  </div>
-  <div class="panel-body">
+<section class="oci-Panel" ng-if="participant.notes">
+  <header class="oci-Panel-header">
+    <h1 class="oci-Panel-title">Notes</h1>
+  </header>
+  <div class="oci-Panel-body">
     <p>{{participant.notes}}</p>
   </div>
-</div>
+</section>

@@ -1,26 +1,26 @@
-<form ng-submit="submit()">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
-    <h4 class="modal-title">New Participant for {{chapter.name}}</h4>
-  </div>
-  <div class="modal-body">
-    <div class="form-group form-inline">
-      <div class="form-group">
-        <label for="participantFirstNameInput">First Name</label>
-        <input id="participantFirstNameInput" class="form-control" type="text" ng-model="model.firstName"/>
-      </div>
-      <div class="form-group">
-        <label for="participantLastNameInput">Last Name</label>
-        <input id="participantLastNameInput" class="form-control" type="text" ng-model="model.lastName"/>
-      </div>
+<section class="oci-Panel">
+  <form ng-submit="submit()">
+    <header class="oci-Panel-header">
+      <h1 class="oci-Panel-title">New Participant for {{chapter.name}}</h1>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+    </header>
+    <div class="oci-Panel-body">
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">First Name</div>
+        <input class="oci-FormControl-input" type="text" ng-model="model.firstName"/>
+      </label>
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Last Name</div>
+        <input class="oci-FormControl-input" type="text" ng-model="model.lastName"/>
+      </label>
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Hash Name</div>
+        <input class="oci-FormControl-input" type="text" ng-model="model.alias" placeholder="{{model.suggestedAlias}}"/>
+      </label>
     </div>
-    <div class="form-group">
-      <label for="participantAliasInput">Hash Name</label>
-      <input id="participantAliasInput" class="form-control" type="text" ng-model="model.alias" placeholder="{{model.suggestedAlias}}"/>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-    <button type="submit" class="btn btn-primary">Add Participant</button>
-  </div>
-</form>
+    <footer class="oci-Panel-footer">
+      <button type="submit" class="oci-Button oci-Button--primary">Add Participant</button>
+      <button type="button" class="oci-Button oci-Button--default" ng-click="cancel()">Cancel</button>
+    </footer>
+  </form>
+</section>

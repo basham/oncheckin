@@ -1,89 +1,89 @@
-<form class="panel panel-default" ng-submit="updateName()">
-  <div class="panel-heading">
-    <h3 class="panel-title">Edit Name</h3>
-  </div>
-  <div class="panel-body">
-    <div class="form-group form-inline">
-      <div class="form-group">
-        <label for="participantFirstNameInput">First Name</label>
-        <input id="participantFirstNameInput" class="form-control" type="text" ng-model="model.firstName"/>
-      </div>
-      <div class="form-group">
-        <label for="participantLastNameInput">Last Name</label>
-        <input id="participantLastNameInput" class="form-control" type="text" ng-model="model.lastName"/>
-      </div>
+<section class="oci-Panel">
+  <form ng-submit="updateName()">
+    <header class="oci-Panel-header">
+      <h1 class="oci-Panel-title">Edit Name</h1>
+    </header>
+    <div class="oci-Panel-body">
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">First Name</div>
+        <input class="oci-FormControl-input" type="text" ng-model="model.firstName"/>
+      </label>
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Last Name</div>
+        <input class="oci-FormControl-input" type="text" ng-model="model.lastName"/>
+      </label>
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Hash Name</div>
+        <input class="oci-FormControl-input" type="text" ng-model="model.alias" placeholder="{{model.suggestedAlias}}"/>
+      </label>
     </div>
-    <div class="form-group">
-      <label for="participantAliasInput">Hash Name</label>
-      <input id="participantAliasInput" class="form-control" type="text" ng-model="model.alias" placeholder="{{model.suggestedAlias}}"/>
-    </div>
-  </div>
-  <div class="panel-footer">
-    <button type="submit" class="btn btn-primary">Update Name</button>
-  </div>
-</form>
+    <footer class="oci-Panel-footer">
+      <button type="submit" class="oci-Button oci-Button--primary">Update Name</button>
+    </footer>
+  </form>
+</section>
 
-<form class="panel panel-default" name="profileForm" ng-submit="updateProfile()">
-  <div class="panel-heading">
-    <h3 class="panel-title">Edit Profile</h3>
-  </div>
-  <div class="panel-body">
-    <div class="form-group">
-      <label for="locationInput">Location</label>
-      <input id="locationInput" class="form-control" type="text" ng-model="model.location" placeholder="Local"/>
+<section class="oci-Panel">
+  <form ng-submit="updateProfile()">
+    <header class="oci-Panel-header">
+      <h1 class="oci-Panel-title">Edit Profile</h1>
+    </header>
+    <div class="oci-Panel-body">
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Location</div>
+        <input class="oci-FormControl-input" type="text" ng-model="model.location" placeholder="Local"/>
+      </label>
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Last Name</div>
+        <textarea class="oci-FormControl-input" ng-model="model.notes" placeholder="Notes"></textarea>
+      </label>
     </div>
-    <div class="form-group">
-      <label for="notesInput">Notes</label>
-      <textarea id="notesInput" class="form-control" ng-model="model.notes" placeholder="Notes"></textarea>
-    </div>
-  </div>
-  <div class="panel-footer">
-    <button type="submit" class="btn btn-primary">Update Profile</button>
-  </div>
-</form>
+    <footer class="oci-Panel-footer">
+      <button type="submit" class="oci-Button oci-Button--primary">Update Profile</button>
+    </footer>
+  </form>
+</section>
 
-<form class="panel panel-default" ng-submit="updateHistory()">
-  <div class="panel-heading">
-    <h3 class="panel-title">Edit History</h3>
-  </div>
-  <div class="panel-body">
-    <div class="form-group form-inline">
-      <div class="form-group">
-        <label for="recordedAttendanceCountInput">Recorded number of attendances</label>
-        <input id="recordedAttendanceCountInput" class="form-control" type="number" ng-model="model.recordedAttendanceCount" placeholder="0"/>
-      </div>
-      <div class="form-group">
-        <label for="recordedHostCountInput">Recorded number of hares</label>
-        <input id="recordedHostCountInput" class="form-control" type="number" ng-model="model.recordedHostCount" placeholder="0"/>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="recordedLastAttendanceDateInput">Last recorded attendance date</label>
-      <div class="input-group">
-        <input type="text" class="form-control" id="recordedLastAttendanceDateInput"
-          ng-model="model.$recordedLastAttendanceDate"
-          datepicker-popup="{{datepicker.format}}" is-open="opened"
-          datepicker-options="datepicker.options"
-          ng-required="true" close-text="Close" />
-        <span class="input-group-btn">
-          <button class="btn btn-default" ng-click="open($event)">
+<section class="oci-Panel">
+  <form ng-submit="updateHistory()">
+    <header class="oci-Panel-header">
+      <h1 class="oci-Panel-title">Edit History</h1>
+    </header>
+    <div class="oci-Panel-body">
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Recorded number of attendances</div>
+        <input class="oci-FormControl-input" type="number" ng-model="model.recordedAttendanceCount" placeholder="0"/>
+      </label>
+      <label class="oci-FormControl">
+        <div class="oci-FormControl-label">Recorded number of hares</div>
+        <input class="oci-FormControl-input" type="number" ng-model="model.recordedHostCount" placeholder="0"/>
+      </label>
+      <div class="oci-FormControl">
+        <label for="recordedLastAttendanceDateInput" class="oci-FormControl-label">Last recorded attendance date</label>
+        <div class="util-Grid">
+          <input type="text" class="oci-FormControl-input" id="recordedLastAttendanceDateInput"
+            ng-model="model.$recordedLastAttendanceDate"
+            datepicker-popup="{{datepicker.format}}" is-open="opened"
+            datepicker-options="datepicker.options"
+            ng-required="true" close-text="Close" />
+          <button class="oci-Button oci-Button--default oci-FormControl-button" ng-click="open($event)">
             <i class="glyphicon glyphicon-calendar"></i>
           </button>
-        </span>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="panel-footer">
-    <button type="submit" class="btn btn-primary">Update History</button>
-  </div>
-</form>
+    <footer class="oci-Panel-footer">
+      <button type="submit" class="oci-Button oci-Button--primary">Update History</button>
+    </footer>
+  </form>
+</section>
 
-<div class="panel panel-danger">
-  <div class="panel-heading">
-    <h3 class="panel-title">Remove Participant</h3>
-  </div>
-  <div class="panel-body">
+<section class="oci-Panel oci-Panel--danger">
+  <header class="oci-Panel-header">
+    <h1 class="oci-Panel-title">Remove Participant</h1>
+  </header>
+  <div class="oci-Panel-body">
     <p>Removing an participant deletes all associated attendance records.</p>
-    <button class="btn btn-danger" ng-click="remove()">Remove Participant</button>
+    <button class="oci-Button oci-Button--danger" ng-click="remove()">Remove Participant</button>
   </div>
-</div>
+</section>

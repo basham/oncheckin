@@ -1,13 +1,22 @@
 body {
   background-color: @color-Bg;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
   text-shadow: 0 1px @color-Content;
 }
 
 a {
   color: @color-Ix-text;
+  text-decoration: none;
 
   &:hover, &:active {
     color: @color-Ix-text--active;
+  }
+}
+
+.underlined-links() {
+  a:hover {
+    text-decoration: underline;
   }
 }
 

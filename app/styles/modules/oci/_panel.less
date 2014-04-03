@@ -6,6 +6,31 @@
     margin-top: 1em;
   }
 
+  &--danger {
+    .mixin(@color-Danger);
+  }
+
+  @ns: oci-Panel;
+  .mixin(@color) {
+    background-color: tint(@color, 75%);
+    box-shadow: 0 0 0 1px tint(@color, 50%);
+
+    & .@{ns} {
+
+      &-title {
+        color: darken(@color, 10%);
+      }
+
+      &-header {
+        box-shadow: inset 0 1px 0 0 tint(@color, 85%);
+
+        + .@{ns}-body {
+          border-top: 1px solid tint(@color, 50%);
+        }
+      }
+    }
+  }
+
   &-header {
     align-items: center;
     box-shadow: inset 0 1px 0 0 @color-Content;
@@ -19,23 +44,37 @@
     margin: 0.5rem 0 0.5rem 0.5rem;
   }
 
+  &-body {
+    background-color: @color-Content;
+
+    > p {
+      margin: 0;
+      padding: 1em;
+    }
+
+    > button {
+      margin: 0 1em 1em 1em;
+    }
+  }
+
   &-header + &-body {
     border-top: 1px solid @color-Border;
   }
 
   &-footer {
+    background-color: @color-Component;
     border-top: 1px solid @color-Border;
     padding: 1em;
 
     &--warning {
       .mixin(@color-Warning);
     }
-  }
 
-  .mixin(@color) {
-    background-color: tint(@color, 80%);
-    border-color: tint(@color, 40%);
-    box-shadow: inset 0 1px 1px 0 tint(@color, 60%);
-    color: darken(@color, 20%);
+    .mixin(@color) {
+      background-color: tint(@color, 80%);
+      border-color: tint(@color, 40%);
+      box-shadow: inset 0 1px 1px 0 tint(@color, 60%);
+      color: darken(@color, 20%);
+    }
   }
 }

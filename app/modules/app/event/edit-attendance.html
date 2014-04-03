@@ -1,11 +1,15 @@
-<form class="form-group">
-  <label for="participantInput">Add Participant</label>
-  <input
-    id="participantInput" type="text" class="form-control util-Grid-cell"
-    ng-model="selected.participant"
-    typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
-    typeahead-template-url="modules/typeahead/participant.html"
-    typeahead-on-select="selectParticipant()"/>
+<form class="oci-Panel">
+  <div class="oci-Panel-body">
+    <div class="oci-FormControl">
+      <label for="participantInput" class="oci-FormControl-label">Add Participant</label>
+      <input
+        id="participantInput" type="text" class="oci-FormControl-input util-Grid-cell"
+        ng-model="selected.participant"
+        typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
+        typeahead-template-url="modules/typeahead/participant.html"
+        typeahead-on-select="selectParticipant()"/>
+    </div>
+  </div>
 </form>
 
 <section class="oci-Panel">
