@@ -33,6 +33,7 @@
     "grunt-usemin": "~2.0.0",
     "gulp": "^3.6.0",
     "gulp-angular-templatecache": "^1.1.1",
+    "gulp-autoprefixer": "0.0.7",
     "gulp-concat": "^2.2.0",
     "gulp-imagemin": "^0.2.0",
     "gulp-inject": "^0.4.1",

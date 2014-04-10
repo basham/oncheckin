@@ -88,10 +88,11 @@ function styles(cb) {
       .pipe(plugins.plumber())
       .pipe(plugins.less({
         paths: ['app/bower_components'],
-        sourceMap: true
+        sourceMap: false
         //includePaths: ['app/bower_components'],
         //sourceComments: 'map'
       }))
+      .pipe(plugins.autoprefixer())
       .pipe(gulp.dest(expressRoot + '/styles'))
       .pipe(plugins.minifyCss())
       .pipe(plugins.streamify(plugins.rev()))
