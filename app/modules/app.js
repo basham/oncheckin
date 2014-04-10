@@ -1,17 +1,16 @@
 'use strict';
 
-angular.module('oncheckinApp')
-  .controller('AppCtrl', function ($scope, simpleLogin, firebaseRef) {
+module.exports = function($scope, simpleLogin, firebaseRef) {
 
-    $scope.logout = simpleLogin.logout;
+  $scope.logout = simpleLogin.logout;
 
-    $scope.connectionState = {
-      isConnected: true
-    };
+  $scope.connectionState = {
+    isConnected: true
+  };
 
-    // Dynamically update connection state.
-    var connectedRef = firebaseRef('.info/connected');
-    connectedRef.on('value', function(snap) {
-      $scope.connectionState.isConnected = snap.val();
-    });
+  // Dynamically update connection state.
+  var connectedRef = firebaseRef('.info/connected');
+  connectedRef.on('value', function(snap) {
+    $scope.connectionState.isConnected = snap.val();
   });
+};

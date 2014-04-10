@@ -10,16 +10,8 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-  <!-- build:css styles/vendor.css -->
-  <!-- bower:css -->
-  <!--<link rel="stylesheet" href="bower_components/sass-bootstrap/dist/css/bootstrap.css" />-->
-  <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
-  <!-- endbower -->
   <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css" />
-  <!-- endbuild -->
-  <!-- build:css({.tmp,app}) styles/main.css -->
-  <link rel="stylesheet" href="styles/main.css">
-  <!-- endbuild -->
+  <!-- inject:app-style:css --><!-- endinject -->
   </head>
   <body>
   <!--[if lt IE 7]>
@@ -42,65 +34,11 @@
   </script>
   -->
 
-  <!-- build:js scripts/ie.js -->
   <!--[if lt IE 9]>
-  <script src="bower_components/es5-shim/es5-shim.js"></script>
-  <script src="bower_components/json3/lib/json3.min.js"></script>
+  <!-- inject:shim:js --><!-- endinject -->
   <![endif]-->
-  <!-- endbuild -->
-
-  <!-- build:js scripts/vendor.js -->
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-resource/angular-resource.js"></script>
-  <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
-  <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-  <script src="bower_components/angular-route/angular-route.min.js"></script>
-  <script src="bower_components/firebase/firebase.js"></script>
-  <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-  <script src="bower_components/firebase-simple-login/firebase-simple-login.js"></script>
-  <script src="bower_components/angularfire/angularfire.min.js"></script>
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="bower_components/underscore/underscore.js"></script>
-  <script src="bower_components/angular-underscore/angular-underscore.min.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-  <script src="bower_components/moment/min/moment.min.js"></script>
-  <script src="bower_components/angular-moment/angular-moment.min.js"></script>
-  <script src="bower_components/firebase-util/firebase-util.min.js"></script>
-  <script src="bower_components/fastclick/lib/fastclick.js"></script>
-  <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-  <script src="modules/main.js"></script>
-  <script src="modules/app.js"></script>
-  <script src="modules/app/chapter.js"></script>
-  <script src="modules/app/chapters.js"></script>
-  <script src="modules/app/event.js"></script>
-  <script src="modules/app/event/edit.js"></script>
-  <script src="modules/app/event/edit-attendance.js"></script>
-  <script src="modules/app/login.js"></script>
-  <script src="modules/app/participant.js"></script>
-  <script src="modules/app/participant/edit.js"></script>
-  <script src="modules/modal/add-event.js"></script>
-  <script src="modules/modal/add-participant.js"></script>
-  <script src="modules/modal/remove-event.js"></script>
-  <script src="modules/modal/remove-participant.js"></script>
-  <script src="modules/print/event.js"></script>
-  <script src="modules/shared/config.js"></script>
-  <script src="modules/shared/filters/hash-name.js"></script>
-  <script src="modules/shared/filters/key-count.js"></script>
-  <script src="modules/shared/filters/url-hostname-filter.js"></script>
-  <script src="modules/shared/services/attendance-service.js"></script>
-  <script src="modules/shared/services/event-service.js"></script>
-  <script src="modules/shared/services/on-complete-service.js"></script>
-  <script src="modules/shared/services/page-title-service.js"></script>
-  <script src="modules/shared/services/participant-service.js"></script>
-  <script src="scripts/angularfire/config.js"></script>
-  <script src="scripts/services/firebase.js"></script>
-  <script src="scripts/services/login.js"></script>
-  <script src="scripts/services/waitforauth.js"></script>
-  <script src="scripts/directives/ngcloakauth.js"></script>
-  <script src="scripts/angularfire/routesecurity.js"></script>
-    <!-- endbuild -->
+  <!-- inject:vendor:js --><!-- endinject -->
+  <!-- inject:app:js --><!-- endinject -->
+  <!-- inject:templates:js --><!-- endinject -->
 </body>
 </html>

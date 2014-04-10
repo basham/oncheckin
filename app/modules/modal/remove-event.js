@@ -1,16 +1,15 @@
 'use strict';
 
-angular.module('oncheckinApp')
-  .controller('ModalRemoveEventCtrl', function ($scope, $modalInstance, event) {
-    
-    $scope.event = event;
+module.exports = function($scope, $modalInstance, event) {
 
-    $scope.submit = function() {
-      $modalInstance.close();
-    };
+  $scope.event = event;
 
-    $scope.cancel = function() {
-      $modalInstance.dismiss('cancel');
-    };
+  $scope.submit = function() {
+    $modalInstance.close();
+  };
 
-  });
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+};

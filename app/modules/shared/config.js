@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('oncheckinApp')
-  .constant('config', {
-    defaultPageTitle: 'OnCheckIn',
-    pageTitleDelimiter: ' &mdash; '
-  });
+module.exports = {
+  defaultPageTitle: 'OnCheckIn',
+  pageTitleDelimiter: ' &mdash; '
+};

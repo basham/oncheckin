@@ -1,17 +1,16 @@
 'use strict';
 
-angular.module('oncheckinApp')
-  .controller('ModalAddEventCtrl', function ($scope, $modalInstance, chapter) {
-    
-    $scope.chapter = chapter;
-    $scope.model = { name: 'Hash', date: new Date() };
+module.exports = function($scope, $modalInstance, chapter) {
 
-    $scope.submit = function() {
-      $modalInstance.close($scope.model);
-    };
+  $scope.chapter = chapter;
+  $scope.model = { name: 'Hash', date: new Date() };
 
-    $scope.cancel = function() {
-      $modalInstance.dismiss('cancel');
-    };
+  $scope.submit = function() {
+    $modalInstance.close($scope.model);
+  };
 
-  });
+  $scope.cancel = function() {
+    $modalInstance.dismiss('cancel');
+  };
+
+};
