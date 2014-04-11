@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-  defaultPageTitle: require('../../../package.json').title,
+  defaultPageTitle: require('../../app.json').title,
   pageTitleDelimiter: ' &mdash; '
 };

@@ -15,6 +15,8 @@ var connectLr         = require('connect-livereload'),
     watchify          = require('watchify'),
     browserify        = require('browserify');
 
+var moduleName = require('./app/app.json').name;
+
 function startExpress() {
   app.use(connectLr());
   app.use(express.static(expressRoot));
@@ -110,7 +112,7 @@ function templates(cb) {
     gulp.src('app/modules/**/*.html')
       .pipe(plugins.angularTemplatecache({
         root: 'modules/',
-        module: 'oncheckinApp'
+        module: moduleName
       }))
       //.pipe(plugins.streamify(plugins.rev()))
       .pipe(gulp.dest(expressRoot + '/scripts'))

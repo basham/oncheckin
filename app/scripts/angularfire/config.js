@@ -1,7 +1,9 @@
 'use strict';
 
+var moduleName = require('../../app.json').name;
+
 // Declare app level module which depends on filters, and services
-angular.module('oncheckinApp')
+angular.module(moduleName)
 
   // version of this seed app is compatible with angularFire 0.6
   // see tags for other versions: https://github.com/firebase/angularFire-seed/tags

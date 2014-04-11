@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('oncheckinApp', [
+var moduleName = require('../app.json').name;
+
+angular.module(moduleName, [
   'ngCookies',
   'ngResource',
   'ngSanitize',
