@@ -36,7 +36,7 @@ angular.module('oncheckinApp', [
   //
   // Constants
   //
-  .constant('config', require('./common/config'));
+  .constant('config', require('./common/config.constant'));
 
 require('../scripts/angularfire/config');
 require('../scripts/services/firebase');

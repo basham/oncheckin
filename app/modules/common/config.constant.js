@@ -1,6 +1,6 @@
 'use strict';
 
 module.exports = {
-  defaultPageTitle: 'OnCheckIn',
+  defaultPageTitle: require('../../../package.json').title,
   pageTitleDelimiter: ' &mdash; '
 };
