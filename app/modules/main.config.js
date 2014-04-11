@@ -23,12 +23,12 @@ module.exports = function ($routeProvider, $stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('app', {
       abstract: true,
-      templateUrl: 'modules/app.html',
+      templateUrl: 'app.html',
       controller: require('./app.ctrl')
     })
     .state('app.chapters', {
       url: '/',
-      templateUrl: 'modules/app/chapters.html',
+      templateUrl: 'app/chapters.html',
       controller: require('./app/chapters.ctrl'),
       data: {
         title: 'Chapters'
@@ -37,23 +37,23 @@ module.exports = function ($routeProvider, $stateProvider, $urlRouterProvider) {
     .state('app.chapter', {
       abstract: true,
       url: '/chapters/:id',
-      templateUrl: 'modules/app/chapter.html',
+      templateUrl: 'app/chapter.html',
       controller: require('./app/chapter.ctrl')
     })
     .state('app.chapter.index', {
       url: '',
-      templateUrl: 'modules/app/chapter/index.html'
+      templateUrl: 'app/chapter/index.html'
     })
     .state('app.chapter.events', {
       url: '/events',
-      templateUrl: 'modules/app/chapter/events.html',
+      templateUrl: 'app/chapter/events.html',
       data: {
         title: 'Events'
       }
     })
     .state('app.chapter.participants', {
       url: '/participants',
-      templateUrl: 'modules/app/chapter/participants.html',
+      templateUrl: 'app/chapter/participants.html',
       data: {
         title: 'Participants'
       }
@@ -61,16 +61,16 @@ module.exports = function ($routeProvider, $stateProvider, $urlRouterProvider) {
     .state('app.event', {
       abstract: true,
       url: '/events/:id',
-      templateUrl: 'modules/app/event.html',
+      templateUrl: 'app/event.html',
       controller: require('./app/event.ctrl')
     })
     .state('app.event.index', {
       url: '',
-      templateUrl: 'modules/app/event/index.html'
+      templateUrl: 'app/event/index.html'
     })
     .state('app.event.edit', {
       url: '',
-      templateUrl: 'modules/app/event/edit.html',
+      templateUrl: 'app/event/edit.html',
       controller: require('./app/event/edit.ctrl'),
       data: {
         title: 'Edit'
@@ -78,7 +78,7 @@ module.exports = function ($routeProvider, $stateProvider, $urlRouterProvider) {
     })
     .state('app.event.editAttendance', {
       url: '',
-      templateUrl: 'modules/app/event/edit-attendance.html',
+      templateUrl: 'app/event/edit-attendance.html',
       controller: require('./app/event/edit-attendance.ctrl'),
       data: {
         title: 'Edit Attendance'
@@ -86,26 +86,26 @@ module.exports = function ($routeProvider, $stateProvider, $urlRouterProvider) {
     })
     .state('print', {
       abstract: true,
-      templateUrl: 'modules/print.html'
+      templateUrl: 'print.html'
     })
     .state('print.event', {
       url: '/events/:id/print',
-      templateUrl: 'modules/print/event.html',
+      templateUrl: 'print/event.html',
       controller: require('./print/event.ctrl')
     })
     .state('app.participant', {
       abstract: true,
       url: '/participants/:id',
-      templateUrl: 'modules/app/participant.html',
+      templateUrl: 'app/participant.html',
       controller: require('./app/participant.ctrl')
     })
     .state('app.participant.index', {
       url: '',
-      templateUrl: 'modules/app/participant/index.html'
+      templateUrl: 'app/participant/index.html'
     })
     .state('app.participant.edit', {
       url: '',
-      templateUrl: 'modules/app/participant/edit.html',
+      templateUrl: 'app/participant/edit.html',
       controller: require('./app/participant/edit.ctrl'),
       data: {
         title: 'Edit'
@@ -113,7 +113,7 @@ module.exports = function ($routeProvider, $stateProvider, $urlRouterProvider) {
     })
     .state('app.login', {
       url: '/login',
-      templateUrl: 'modules/app/login.html',
+      templateUrl: 'app/login.html',
       controller: require('./app/login.ctrl')
     });
 

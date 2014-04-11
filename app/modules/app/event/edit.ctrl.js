@@ -12,7 +12,7 @@ module.exports = function($scope, firebaseRef, $stateParams, $state, $modal, eve
     $scope.removeEvent = function() {
       $modal
         .open({
-          templateUrl: 'modules/modal/remove-event.html',
+          templateUrl: 'modal/remove-event.html',
           controller: require('../../modal/remove-event.ctrl'),
           resolve: {
             event: function() {

@@ -25,7 +25,7 @@ module.exports = function($scope, firebaseRef, $stateParams, $state, $modal, par
     $scope.remove = function() {
       $modal
         .open({
-          templateUrl: 'modules/modal/remove-participant.html',
+          templateUrl: 'modal/remove-participant.html',
           controller: require('../../modal/remove-participant.ctrl'),
           resolve: {
             participant: function() {

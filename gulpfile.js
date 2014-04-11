@@ -111,7 +111,6 @@ function templates(cb) {
 
     gulp.src('app/modules/**/*.html')
       .pipe(plugins.angularTemplatecache({
-        root: 'modules/',
         module: moduleName
       }))
       //.pipe(plugins.streamify(plugins.rev()))
