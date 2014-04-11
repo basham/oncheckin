@@ -113,9 +113,9 @@ function templates(cb) {
       .pipe(plugins.angularTemplatecache({
         module: moduleName
       }))
-      //.pipe(plugins.streamify(plugins.rev()))
-      .pipe(gulp.dest(expressRoot + '/scripts'))
       .pipe(plugins.streamify(plugins.rev()))
+      .pipe(plugins.size({ showFiles: true }))
+      .pipe(gulp.dest(expressRoot + '/scripts'))
       .pipe(gulp.dest(publicDir + '/scripts'))
       .on('end', cb || function() {})
       .on('error', plugins.util.log);
