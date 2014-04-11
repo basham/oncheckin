@@ -35,7 +35,7 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $modal, $sta
     $modal
       .open({
         templateUrl: 'modules/modal/add-event.html',
-        controller: 'ModalAddEventCtrl',
+        controller: require('../modal/add-event.ctrl'),
         resolve: {
           chapter: function() {
             return $scope.chapter;
@@ -53,7 +53,7 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $modal, $sta
     $modal
       .open({
         templateUrl: 'modules/modal/add-participant.html',
-        controller: 'ModalAddParticipantCtrl',
+        controller: require('../modal/add-participant.ctrl'),
         resolve: {
           chapter: function() {
             return $scope.chapter;

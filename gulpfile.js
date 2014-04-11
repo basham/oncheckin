@@ -53,7 +53,7 @@ function clean(relativePath, cb) {
 }
 
 function scripts(cb) {
-  var bundler = watchify('./app/modules/main.js');
+  var bundler = watchify('./app/modules/main.module.js');
 
   function rebundle() {
     clean('/scripts/app*.js', function() {
