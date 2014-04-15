@@ -44,7 +44,17 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
   };
 
   $scope.isAnniversary = function(n) {
-    if( n % 5 === 0 || n === 69 || n === 6 ) {
+    // Anniversaries are every 5 and those ending in 69 (69, 169, etc.).
+    if( n % 5 === 0 || n.toString().match(/69$/) ) {
+      return true;
+    }
+    return false;
+  };
+
+  $scope.shouldBeNamed = function(participant) {
+    var n = participant.records.attendanceCount + 1;
+    var alias = participant.alias;
+    if( n >= 6 && !alias.length ) {
       return true;
     }
     return false;

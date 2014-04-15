@@ -21,7 +21,8 @@
     <tr ng-repeat="participant in participants | filter:{ priority: filterPriority } | orderBy:order">
       <td>{{participant.lastName}}, {{participant.firstName}}</td>
       <td>
-        <a ui-sref="app.participant.index({ id: participant.$id })">{{participant | hashName}}</a>
+        <a ui-sref="app.participant.index({ id: participant.$id })"
+          ng-class="{ 'print--highlight': shouldBeNamed(participant)}">{{participant | hashName}}</a>
         <span class="util--nowrap" ng-if="participant.location">({{participant.location}})</span>
       </td>
       <td class="text-center">
