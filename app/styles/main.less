@@ -29,3 +29,96 @@
     padding: 0.5em 1em;
   }
 }
+
+@zindex-dropdown: 1000;
+@font-size-base: 16px;
+@dropdown-bg: @color-Content;
+@dropdown-fallback-border: @color-Border;
+@dropdown-border: @color-Border;
+@border-radius-base: 0.25em;
+@dropdown-divider-bg: @color-Border;
+@line-height-base: 1;
+@dropdown-link-color: @color-Ix-text;
+@dropdown-link-hover-color: @color-Ix-text--active;
+@dropdown-link-hover-bg: @color-Ix-bg;
+@dropdown-link-active-color: @color-Ix-text;
+@dropdown-link-active-bg: @color-Ix-bg;
+@dropdown-link-disabled-color: @color-Ix-text;
+
+// The dropdown menu (ul)
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: @zindex-dropdown;
+  display: none; // none by default, but block on "open" of the menu
+  float: left;
+  min-width: 10em;
+  padding: 0.25em 0;
+  margin: 0.25em 0 0; // override default ul
+  list-style: none;
+  font-size: @font-size-base;
+  text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+  background-color: @dropdown-bg;
+  border: 1px solid @dropdown-fallback-border; // IE8 fallback
+  border: 1px solid @dropdown-border;
+  border-radius: @border-radius-base;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  background-clip: padding-box;
+
+  // Links within the dropdown menu
+  > li > a {
+    display: block;
+    padding: 0.5em 1em;
+    clear: both;
+    font-weight: normal;
+    line-height: @line-height-base;
+    color: @dropdown-link-color;
+    white-space: nowrap; // prevent links from randomly breaking onto new lines
+  }
+}
+
+// Hover/Focus state
+.dropdown-menu > li > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: @dropdown-link-hover-color;
+    background-color: @dropdown-link-hover-bg;
+  }
+}
+
+// Active state
+.dropdown-menu > .active > a {
+  &,
+  &:hover,
+  &:focus {
+    color: @dropdown-link-active-color;
+    text-decoration: none;
+    outline: 0;
+    background-color: @dropdown-link-active-bg;
+  }
+}
+
+// Disabled state
+//
+// Gray out text and ensure the hover/focus state remains gray
+
+.dropdown-menu > .disabled > a {
+  &,
+  &:hover,
+  &:focus {
+    color: @dropdown-link-disabled-color;
+  }
+}
+// Nuke hover/focus effects
+.dropdown-menu > .disabled > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background-color: transparent;
+    background-image: none; // Remove CSS gradient
+    //.reset-filter();
+    cursor: not-allowed;
+  }
+}
