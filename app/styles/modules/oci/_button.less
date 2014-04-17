@@ -21,7 +21,6 @@
   }
 
   &--small {
-    padding: 0.25em 0.75em;
   }
 
   .mixin(@color) {
@@ -30,7 +29,7 @@
     border-color: darken(@color, 15%);
     box-shadow: inset 0 1px 0 0 tint(@color, 15%);
     color: @textColor;
-    text-shadow: 0 1px contrast(@textColor, darken(@color, 30%), #fff);
+    text-shadow: 0 -1px contrast(@textColor, darken(@color, 30%), #fff);
 
     &:hover, &:focus, &:active {
       background-color: darken(@color, 15%);
