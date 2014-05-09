@@ -246,7 +246,7 @@ gulp.task('default', function () {
   startExpress();
   startLiveReload();
   fonts();
-  images();
+  //images();
   vendor(indexHtml);
   styles(indexHtml);
   templates(indexHtml);
