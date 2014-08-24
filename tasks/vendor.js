@@ -9,7 +9,7 @@ gulp.task('vendor', function() {
       filter: /\.js$/i,
       debugging: true
     }), {
-      base: './src/bower_components'
+      base: './bower_components'
     })
     //.pipe(uglify())
     .pipe(concat('vendor.js'))
