@@ -3,7 +3,6 @@
 var moduleName = require('../app.json').name;
 
 angular.module(moduleName, [
-  'ngCookies',
   'ngResource',
   'ngSanitize',
   'ngRoute',
