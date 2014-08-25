@@ -2,5 +2,5 @@
 
 module.exports = {
   defaultPageTitle: require('../../app.json').title,
-  pageTitleDelimiter: ' &mdash; '
+  pageTitleDelimiter: ' &middot; '
 };
