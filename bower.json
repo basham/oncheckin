@@ -62,17 +62,11 @@
     "angularfire": {
       "main": "./*.min.js"
     },
-    "es5-shim": {
-      "main": "./*.min.js"
-    },
     "firebase-util": {
       "main": "./*.min.js"
     },
     "jquery": {
       "main": "./dist/*.min.js"
-    },
-    "json3": {
-      "main": "./lib/*.min.js"
     },
     "moment": {
       "main": "./min/moment.min.js"
