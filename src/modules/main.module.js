@@ -12,7 +12,6 @@ angular.module(moduleName, [
   'firebase',
   'angular-underscore',
   'ui.bootstrap',
-  'ui.bootstrap.tpls',
   'angularMoment'
 ])
   .config(require('./main.config'))

@@ -28,7 +28,7 @@
       "main": "./*.min.js"
     },
     "angular-bootstrap": {
-      "main": "./*.min.js"
+      "main": "./ui-bootstrap.min.js"
     },
     "angular-cookies": {
       "main": "./*.min.js"
