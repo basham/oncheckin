@@ -8,6 +8,18 @@
     text-decoration: none;
   }
 
+  &--clear {
+    @color: @color-Content;
+    //.mixin(@color-Content);
+
+    background-color: transparent;
+    //border: none;
+
+    &:hover, &:focus, &:active {
+      background-color: darken(@color, 10%);
+    }
+  }
+
   &--default {
     .mixin(@color-Content);
   }
@@ -20,8 +32,19 @@
     .mixin(@color-Danger);
   }
 
+  &--active {
+    .mixin(@color-Info);
+  }
+
   &--small {
   }
+
+  &--block {
+    display: block;
+    width: 100%;
+  }
+
+
 
   .mixin(@color) {
     @textColor: contrast(@color, #fff, #222);
