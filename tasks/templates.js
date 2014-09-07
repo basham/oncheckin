@@ -3,10 +3,12 @@ var htmlmin = require('gulp-htmlmin');
 var templateCache = require('gulp-angular-templatecache');
 var browserSync = require('browser-sync');
 
+var icons = require('./icons');
 var moduleName = require('../src/app.json').name;
 
 function task() {
   return gulp.src('./src/modules/**/*.html')
+    .pipe(icons.replace())
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true

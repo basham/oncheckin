@@ -6,6 +6,8 @@ var filter = require('gulp-filter');
 
 var styles = require('./styles');
 
+var icons = require('./icons');
+
 gulp.task('index-html', function() {
   /*
   //var assets = gulp.src('./dist/assets/*')
@@ -22,5 +24,6 @@ gulp.task('index-html', function() {
   */
 
   return gulp.src('./src/index.html')
+    .pipe(icons.inject())
     .pipe(gulp.dest('./dist'));
 });
