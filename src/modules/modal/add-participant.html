@@ -2,7 +2,13 @@
   <form ng-submit="submit()">
     <header class="oci-Panel-header">
       <h1 class="oci-Panel-title">New Participant for {{chapter.name}}</h1>
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+      <button type="button"
+        class="oci-Button oci-Button--clear oci-Button--icon"
+        data-dismiss="modal"
+        aria-hidden="true"
+        ng-click="cancel()">
+        <icon-x/>
+      </button>
     </header>
     <div class="oci-Panel-body">
       <label class="oci-FormControl">

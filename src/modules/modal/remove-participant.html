@@ -2,7 +2,13 @@
   <form ng-submit="submit()">
     <header class="oci-Panel-header">
       <h1 class="oci-Panel-title">Remove Participant</h1>
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">&times;</button>
+      <button type="button"
+        class="oci-Button oci-Button--clear oci-Button--icon"
+        data-dismiss="modal"
+        aria-hidden="true"
+        ng-click="cancel()">
+        <icon-x/>
+      </button>
     </header>
     <div class="oci-Panel-body">
       <p>Are you sure you want to remove the participant called <em>{{participant | hashName}}</em>? This cannot be undone.</p>
