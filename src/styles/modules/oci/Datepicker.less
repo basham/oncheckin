@@ -3,7 +3,8 @@
   display: inline-block;
 
   &-nav {
-    background-color: @color-Border;
+    background-color: @color-Component;
+    border-bottom: 1px solid @color-Border;
     display: flex;
     padding: 0.5em;
   }
@@ -21,7 +22,7 @@
     padding: 0.5em 0.75em;
 
     &--muted {
-      color: @color-Border;
+      color: lighten(@color-Muted, 20%);
     }
   }
 }

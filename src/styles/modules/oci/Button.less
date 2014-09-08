@@ -10,10 +10,7 @@
 
   &--clear {
     @color: @color-Content;
-    //.mixin(@color-Content);
-
     background-color: transparent;
-    //border: none;
 
     &:hover, &:focus, &:active {
       background-color: darken(@color, 10%);
@@ -33,7 +30,7 @@
   }
 
   &--active {
-    .mixin(@color-Info);
+    .mixin(@color-Ix-bg);
   }
 
   &--small {
@@ -44,7 +41,10 @@
     width: 100%;
   }
 
-
+  &--icon {
+    display: flex;
+    padding: 0.25em 0.5em;
+  }
 
   .mixin(@color) {
     @textColor: contrast(@color, #fff, #222);
