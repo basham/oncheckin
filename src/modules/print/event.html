@@ -66,7 +66,8 @@
         </span>
       </td>
       <td class="text-right">
-        <span ng-class="{ 'print--highlight': participant.attendance.host && isAnniversary(participant.records.hostCount + (participant.attendance.host ? 1 : 0)) }">{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</span>
+        <span ng-if="participant.records.hostCount > 0 || participant.attendance.host"
+          ng-class="{ 'print--highlight': participant.attendance.host && isAnniversary(participant.records.hostCount + (participant.attendance.host ? 1 : 0)) }">{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</span>
       </td>
     </tr>
   </tbody>
