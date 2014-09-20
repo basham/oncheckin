@@ -1,0 +1,22 @@
+.print-Agenda {
+  margin-top: 0.5em;
+  padding: 0.25em 0;
+  text-align: center;
+
+  &-list {
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-item {
+    display: inline-block;
+    white-space: nowrap;
+
+    & + &::before {
+      content: '\00b7';
+      padding: 0 0.5em;
+    }
+  }
+}
