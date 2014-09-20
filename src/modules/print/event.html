@@ -1,9 +1,11 @@
-<h1><a ui-sref="app.event.index({ id: eventId })">{{event.name}}</a></h1>
-<p>
-  {{event.date | date:'longDate'}}
-  &bull;
-  <a ui-sref="app.chapter.index({ id: event.chapter })">{{chapter.name}}</a>
-</p>
+<header class="print-Header">
+  <h1 class="print-Header-title"><a ui-sref="app.event.index({ id: eventId })">{{event.name}}</a></h1>
+  <p class="print-Header-details">
+    {{event.date | date:'longDate'}}
+    &middot;
+    <a ui-sref="app.chapter.index({ id: event.chapter })">{{chapter.name}}</a>
+  </p>
+</header>
 
 <table class="print-Table">
   <thead>
