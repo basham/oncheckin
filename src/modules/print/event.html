@@ -65,7 +65,9 @@
           {{participant.recordedLastAttendanceDate}}
         </span>
       </td>
-      <td class="text-right">{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</td>
+      <td class="text-right">
+        <span ng-class="{ 'print--highlight': participant.attendance.host && isAnniversary(participant.records.hostCount + (participant.attendance.host ? 1 : 0)) }">{{participant.records.hostCount + (participant.attendance.host ? 1 : 0)}}</span>
+      </td>
     </tr>
   </tbody>
 </table>
