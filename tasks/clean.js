@@ -1,7 +1,7 @@
 var gulp = require('gulp');
-var clean = require('gulp-clean');
+var rimraf = require('gulp-rimraf');
 
 gulp.task('clean', function() {
   return gulp.src('./dist', { read: false })
-    .pipe(clean({ force: true }));
+    .pipe(rimraf({ force: true }));
 });
