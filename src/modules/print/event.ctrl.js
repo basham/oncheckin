@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams, participantService, $q, pageTitleService) {
+module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams, participantService, $q, pageTitleService, config) {
 
   // Get the event.
   var eventId = $stateParams.id;
@@ -58,6 +58,16 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
       return true;
     }
     return false;
+  };
+
+  $scope.isReturner = function(eventDate, lastAttendanceDate) {
+    // Convert strings to dates.
+    var a = new Date(eventDate);
+    var b = new Date(lastAttendanceDate);
+    // Calculate diff in days.
+    var daysDiff = (a - b) / (1000 * 60 * 60 * 24);
+
+    return daysDiff > config.minDaysToBeReturner;
   };
 
   var participantsDeferred = $q.defer();

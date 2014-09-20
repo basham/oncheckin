@@ -36,10 +36,15 @@
         <span ng-class="{ 'print--highlight': isAnniversary(participant.records.attendanceCount + 1)}">{{participant.records.attendanceCount + 1}}</span>
       </td>
       <td>
-        <a class="util--nowrap" ng-if="participant.records.date" ui-sref="app.event.index({ id: participant.records.event })">
+        <a class="util--nowrap"
+          ng-if="participant.records.date"
+          ng-class="{ 'print--highlight': isReturner(event.date, participant.records.date) }"
+          ui-sref="app.event.index({ id: participant.records.event })">
           {{participant.records.date}}
         </a>
-        <span class="util--nowrap" ng-if="!participant.records.date && event.date > participant.recordedLastAttendanceDate">
+        <span class="util--nowrap"
+          ng-if="!participant.records.date && event.date > participant.recordedLastAttendanceDate"
+          ng-class="{ 'print--highlight': isReturner(event.date, participant.recordedLastAttendanceDate) }">
           {{participant.recordedLastAttendanceDate}}
         </span>
       </td>
