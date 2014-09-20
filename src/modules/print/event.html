@@ -1,9 +1,10 @@
 <header class="print-Header">
   <h1 class="print-Header-title"><a ui-sref="app.event.index({ id: eventId })">{{event.name}}</a></h1>
   <p class="print-Header-details">
-    {{event.date | date:'longDate'}}
-    &middot;
-    <a ui-sref="app.chapter.index({ id: event.chapter })">{{chapter.name}}</a>
+    <span class="print-Header-detail">{{event.date | date:'longDate'}}</span>
+    <span class="print-Header-detail">
+      <a ui-sref="app.chapter.index({ id: event.chapter })">{{chapter.name}}</a>
+    </span>
   </p>
 </header>
 

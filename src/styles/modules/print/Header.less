@@ -5,6 +5,18 @@
   }
 
   &-details {
+    display: flex;
     margin: 0.5em 0 0;
+  }
+
+  &-detail {
+
+    & + & {
+
+      &::before {
+        content: '\00b7';
+        padding: 0 0.5em;
+      }
+    }
   }
 }
