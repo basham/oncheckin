@@ -38,7 +38,7 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
       return 'HARE';
     }
     if( priority == 1 ) {
-      return 'X';
+      return '&times;';
     }
     return '';
   };

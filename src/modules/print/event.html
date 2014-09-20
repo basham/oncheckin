@@ -29,7 +29,8 @@
         <span class="util--nowrap" ng-if="participant.location">({{participant.location}})</span>
       </td>
       <td class="text-center">
-        <span ng-class="{ 'print--highlight': participant.priority == 2 }">{{signinMark(participant.priority)}}</span>
+        <span ng-class="{ 'print--highlight': participant.priority == 2 }"
+          ng-bind-html="signinMark(participant.priority)"></span>
       </td>
       <td class="text-right">
         <span ng-class="{ 'print--highlight': isAnniversary(participant.records.attendanceCount + 1)}">{{participant.records.attendanceCount + 1}}</span>
