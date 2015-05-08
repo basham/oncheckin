@@ -90,11 +90,12 @@ module.exports = function($scope, firebaseRef, $firebase, Firebase, $stateParams
     // that there could be overlap between the attendance values.
     pRef.once('value', function(participants) {
       var a = [];
-      participants.forEach(function(p) {
-        p = p.val();
+      participants.forEach(function(participant) {
+        var p = participant.val();
         var aCount = p.recordedAttendanceCount || 0;
         var bCount = Object.keys(p.attendances || {}).length;
         p.approximateAttendanceCount = aCount + bCount;
+        p.$id = participant.name();
         a.push(p);
       });
       $scope.participants = a;
