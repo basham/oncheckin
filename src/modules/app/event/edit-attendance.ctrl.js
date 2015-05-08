@@ -15,6 +15,10 @@ module.exports = function($scope, firebaseRef, $firebase, Firebase, $stateParams
     return source.search(new RegExp(input, 'i')) >= 0
   }
 
+  function startsAtWord(source, input) {
+    return !!source.match(new RegExp('\\b' + input, 'i'));
+  }
+
   $scope.filterParticipants = function(value) {
     return function(item) {
       // Retain those matching a name.
@@ -41,7 +45,24 @@ module.exports = function($scope, firebaseRef, $firebase, Firebase, $stateParams
     };
   };
 
-  $scope.order = '-approximateAttendanceCount';
+  $scope.orderParticipants = function(value) {
+
+    // Prioritize matches at the start of a word, rather than within the word.
+    function order(item) {
+      var hasAliasMatch = startsAtWord(item.alias, value);
+      var hasFirstNameMatch = startsAtWord(item.firstName, value);
+      var hasLastNameMatch = startsAtWord(item.lastName, value);
+      if(hasAliasMatch || hasFirstNameMatch || hasLastNameMatch) {
+        return 0;
+      };
+      return 1;
+    }
+
+    return [
+      order,
+      '-approximateAttendanceCount'
+    ];
+  };
 
   $scope.selectParticipant = function() {
     attendanceService.add($scope.selected.participant.$id, eventId);
