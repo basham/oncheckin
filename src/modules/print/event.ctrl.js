@@ -60,14 +60,16 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
     return false;
   };
 
-  $scope.isReturner = function(eventDate, lastAttendanceDate) {
+  function diffDays(a, b) {
     // Convert strings to dates.
-    var a = new Date(eventDate);
-    var b = new Date(lastAttendanceDate);
+    a = new Date(a);
+    b = new Date(b);
     // Calculate diff in days.
-    var daysDiff = (a - b) / (1000 * 60 * 60 * 24);
+    return (a - b) / (1000 * 60 * 60 * 24);
+  }
 
-    return daysDiff > config.minDaysToBeReturner;
+  $scope.isReturner = function(eventDate, lastAttendanceDate) {
+    return diffDays(eventDate, lastAttendanceDate) > config.minDaysToBeReturner;
   };
 
   var participantsDeferred = $q.defer();
@@ -99,6 +101,12 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
         }
       }
       arr.push(participant);
+    });
+    // Retain only those who have participated in the last year.
+    arr = arr.filter(function(participant) {
+      var lastAttendanceDate = participant.records.date || participant.recordedLastAttendanceDate;
+      var days = diffDays($scope.event.date, lastAttendanceDate);
+      return days < 365;
     });
     $scope.participants = arr;
   });
