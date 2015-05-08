@@ -27,8 +27,8 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
   $scope.order = [
     '-priority',
     '-records.attendanceCount',
-    '-records.hostCount',
     '-records.date',
+    '-records.hostCount',
     'lastName',
     'firstName'
   ];
