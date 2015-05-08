@@ -41,6 +41,8 @@ module.exports = function($scope, firebaseRef, $firebase, Firebase, $stateParams
     };
   };
 
+  $scope.order = '-approximateAttendanceCount';
+
   $scope.selectParticipant = function() {
     attendanceService.add($scope.selected.participant.$id, eventId);
     // Clear typeahead selection.
@@ -61,7 +63,21 @@ module.exports = function($scope, firebaseRef, $firebase, Firebase, $stateParams
     var chapterParticipantsRef = firebaseRef('chapters').child(chapterId).child('participants');
     var participantsRef = firebaseRef('participants');
     var pRef = Firebase.util.intersection(chapterParticipantsRef, participantsRef);
-    $scope.participants = $firebase(pRef);
+    // Add an appoximation of the number of attendances of a participant
+    // to provide more meaningful sort order in typeahead component.
+    // This is an approximate count because this isn't taking into account
+    // that there could be overlap between the attendance values.
+    pRef.once('value', function(participants) {
+      var a = [];
+      participants.forEach(function(p) {
+        p = p.val();
+        var aCount = p.recordedAttendanceCount || 0;
+        var bCount = Object.keys(p.attendances || {}).length;
+        p.approximateAttendanceCount = aCount + bCount;
+        a.push(p);
+      });
+      $scope.participants = a;
+    });
   });
 
 };
