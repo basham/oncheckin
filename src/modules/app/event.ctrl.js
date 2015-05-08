@@ -32,6 +32,7 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
         participant: participantsRef
       }
     });
+  $scope.participantAttendancesRef = participantAttendancesRef;
   $scope.attendances = $firebase(participantAttendancesRef);
 
   // Get the chapter record.

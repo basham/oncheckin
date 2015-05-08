@@ -5,7 +5,7 @@
       <input
         id="participantInput" type="text" class="oci-FormControl-input util-Grid-cell"
         ng-model="selected.participant"
-        typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:{ $: $viewValue } | limitTo:8"
+        typeahead="participant as participant.alias for participant in (participants | orderByPriority) | filter:filterParticipants($viewValue) | limitTo:8"
         typeahead-template-url="typeahead/participant.html"
         typeahead-on-select="selectParticipant()"/>
     </div>
