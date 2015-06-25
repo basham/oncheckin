@@ -17,7 +17,7 @@
     "angular-bootstrap": "~0.10.0",
     "momentjs": "~2.5.1",
     "angular-moment": "~0.6.2",
-    "firebase-util": "firebase/firebase-util",
+    "firebase-util": "firebase/firebase-util#0.1.0",
     "fastclick": "~1.0.0"
   },
   "resolutions": {
