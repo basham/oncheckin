@@ -34,6 +34,26 @@ module.exports = function($scope, $firebase, firebaseRef, Firebase, $stateParams
     });
   $scope.attendances = $firebase(participantAttendancesEventsRef);
 
+  function diffDays(d1, d2) {
+    // Convert strings to dates.
+    var a = new Date(d1);
+    var b = new Date(d2);
+    // Calculate diff in days.
+    return (a - b) / (1000 * 60 * 60 * 24);
+  };
+
+  participantAttendancesEventsRef.once('value', function(snap) {
+    var count = 0;
+    angular.forEach(snap.val(), function(attendance) {
+      var d1 = Date.now();
+      var d2 = new Date(attendance.event.date);
+      if(diffDays(d1, d2) < 365) {
+        count++;
+      }
+    });
+    $scope.attendanceCountOverLastYear = count;
+  });
+
   participantRef.once('value', function(snap) {
     var chapterId = snap.val().chapter;
     var chapterRef = firebaseRef('chapters').child(chapterId);

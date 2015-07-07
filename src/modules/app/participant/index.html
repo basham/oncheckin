@@ -13,12 +13,20 @@
           'one': '1 Attendance',
           'other': '{} Attendances'}"></span>
       <span
+        class="util-Margin--right"
         ng-pluralize
         count="attendanceRecord.hostCount"
         when="{
           '0': '',
           'one': '1 Hare',
           'other': '{} Hares'}"></span>
+      <span
+        ng-pluralize
+        count="attendanceCountOverLastYear"
+        when="{
+          '0': 'No attendances over the last year',
+          'one': '1 attendance over the last year',
+          'other': '{} attendances over the last year'}"></span>
     </h1>
   </header>
   <div class="oci-Panel-body oci-List">
